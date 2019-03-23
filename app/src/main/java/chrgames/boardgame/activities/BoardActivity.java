@@ -1,16 +1,16 @@
-package chrgames.boardgame;
+package chrgames.boardgame.activities;
 
-import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
+import chrgames.boardgame.R;
+import chrgames.boardgame.models.Game;
 
 public class BoardActivity extends AppCompatActivity {
 
@@ -21,6 +21,9 @@ public class BoardActivity extends AppCompatActivity {
 
     // Constants
     private final int COUNT_OF_SELLS = 50;
+
+    // Vars
+    private Game game;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,11 @@ public class BoardActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // Start a new game
+        game = new Game();
+
+        // TODO - Update view of a board
     }
 
     public void onClickCell(View view) {
