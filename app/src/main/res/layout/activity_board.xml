@@ -64,35 +64,45 @@
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
+                    android:background="@drawable/cell"
                     android:scaleType="fitXY"
-                    android:background="@drawable/cell" />
+                    android:padding="8dp"
+                    android:onClick="onClickCell" />
 
                 <ImageView
                     android:id="@+id/cell_1"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell" />
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_2"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_3"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_4"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
             </LinearLayout>
 
             <LinearLayout
@@ -110,34 +120,44 @@
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_6"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_7"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_8"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_9"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
             </LinearLayout>
 
             <LinearLayout
@@ -155,34 +175,44 @@
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_11"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_12"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_13"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_14"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
             </LinearLayout>
 
             <LinearLayout
@@ -200,34 +230,44 @@
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_16"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_17"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_18"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_19"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
             </LinearLayout>
 
             <LinearLayout
@@ -245,34 +285,44 @@
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_21"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_22"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_23"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_24"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
             </LinearLayout>
 
             <!-- HALF -->
@@ -292,34 +342,44 @@
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_26"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_27"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_28"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_29"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
             </LinearLayout>
 
             <LinearLayout
@@ -337,34 +397,44 @@
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_31"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_32"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_33"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_34"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
             </LinearLayout>
 
             <LinearLayout
@@ -382,34 +452,44 @@
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_36"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_37"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_38"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_39"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
             </LinearLayout>
 
             <LinearLayout
@@ -427,34 +507,44 @@
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_41"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_42"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_43"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_44"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
             </LinearLayout>
 
             <LinearLayout
@@ -472,34 +562,44 @@
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_46"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_47"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_48"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
 
                 <ImageView
                     android:id="@+id/cell_49"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/cell"/>
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    android:onClick="onClickCell"/>
             </LinearLayout>
         </LinearLayout>
 

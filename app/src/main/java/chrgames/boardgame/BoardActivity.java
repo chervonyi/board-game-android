@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,5 +49,17 @@ public class BoardActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void onClickCell(View view) {
+        String fullName = view.getResources().getResourceName(view.getId());
+        String name = fullName.substring(fullName.lastIndexOf("/cell_") + 6);
+        int cellId = Integer.parseInt(name);
+
+        Log.d("CHR_GAMES_TEST", "Pressed on: cell_" + cellId);
+
+        //cells.get(cellId).setImageResource(R.drawable.stone);
+
+        // ...
     }
 }
