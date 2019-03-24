@@ -9,7 +9,14 @@ public class Stone extends Figure {
      */
     Stone() {
         cost = 2;
+
         level = Level.EASY;
+
+        ableToMove = true;
+
+        blackFigureIcon = "stone_b";
+
+        redFigureIcon = "stone_r";
     }
 
     /**
@@ -20,7 +27,7 @@ public class Stone extends Figure {
     @Override
     public ArrayList<Integer> getAvailableCellsToMoveFrom(int position) {
 
-        if (position < 0 || position >= Game.CELLS) {
+        if (!isRealPosition(position)) {
             return new ArrayList<>();
         }
 
