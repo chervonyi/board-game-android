@@ -28,28 +28,28 @@ public abstract class Figure {
     /**
      * Name of image with black (own) appropriate figure
      */
-    protected String blackFigureIcon;
+    String blackFigureIcon;
 
     /**
      * Name of image with red (enemy's) appropriate figure
      */
-    protected String redFigureIcon;
+    String redFigureIcon;
 
     /**
      * Figure price which will be shown in shop.
      */
-    protected int cost;
+    int cost;
 
     /**
      * Level of every extended figure explains importance on a board.
      */
-    protected Level level;
+    Level level;
 
     /**
      * Shows if current figure is able to move.<br>
      * This state should be always checked before using <b>'getAvailableCellsToMoveFrom'</b> method.
      */
-    protected boolean ableToMove;
+    boolean ableToMove;
 
     /**
      * Explains scheme of moves some figure.

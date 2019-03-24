@@ -20,6 +20,9 @@ public class Game {
             board.add(new Cell(i));
         }
 
+        Stone stone = new Stone();
+
+
 
     }
 
