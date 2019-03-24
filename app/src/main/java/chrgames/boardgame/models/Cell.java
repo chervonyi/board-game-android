@@ -44,4 +44,8 @@ class Cell {
         state = playerId;
     }
     */
+
+    public void getAvailableCellsToMove() {
+        // occupation.getAvailableCellsToMoveFrom(id);
+    }
 }

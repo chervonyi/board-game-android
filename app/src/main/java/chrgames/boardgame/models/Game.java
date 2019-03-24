@@ -7,11 +7,11 @@ public class Game {
     private ArrayList<Cell> board;
 
     // Constants
-    public static final int ROW = 10;
+    public static final int ROWS = 10;
 
     public static final int COLUMNS = 5;
 
-    public static final int CELLS = ROW * COLUMNS;
+    public static final int CELLS = ROWS * COLUMNS;
 
     public Game() {
         board = new ArrayList<>();
