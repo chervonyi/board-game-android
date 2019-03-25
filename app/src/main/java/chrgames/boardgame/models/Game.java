@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 public class Game {
 
+    enum PlayersState {
+        ENEMY,
+        ALLIANCE
+    }
+
     private ArrayList<Cell> board;
 
     // Constants
@@ -12,6 +17,12 @@ public class Game {
     public static final int COLUMNS = 5;
 
     public static final int CELLS = ROWS * COLUMNS;
+
+    public static final int BASE_SIZE = 3;
+
+    private Base enemyBase;
+
+    private Base allianceBase;
 
     public Game() {
         board = new ArrayList<>();
@@ -29,5 +40,6 @@ public class Game {
     private void clearBoard() {
 
     }
+
 
 }
