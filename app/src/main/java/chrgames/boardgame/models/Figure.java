@@ -13,7 +13,9 @@ public abstract class Figure {
      * And 'HARD' will be opened much more later. <br> <br>
      *
      * Also, the amount of remuneration for kill enemy's figure will depend on this level. <br>
-     * E-g. Player will be rewarded with lowest price for killing an enemy 'easy' figure.
+     * You will get $1 for kill 'EASY' figure
+     * You will get $2 for kill 'NORMAL' figure
+     * You will get $3 for kill 'HARD' figure
      */
     enum Level {
         EASY(1), NORMAL(2), HARD(3);
