@@ -74,7 +74,7 @@ public abstract class Figure {
      * @return array with two numbers - x and y that responsible for cell position in coordinate system.
      */
     public int[] getXY(int position) {
-        if (position >= Game.CELLS) { return new int[]{}; }
+        if (!isRealPosition(position)) { return new int[]{}; }
 
         int y = position / Game.COLUMNS;
         int x = position - Game.COLUMNS * y;
