@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Game {
 
-    enum PlayersState {
+    enum PlayerState {
         ENEMY,
         ALLIANCE
     }
@@ -31,6 +31,9 @@ public class Game {
             board.add(new Cell(i));
         }
 
+        enemyBase = new Base(BASE_SIZE, PlayerState.ENEMY);
+
+        allianceBase = new Base(BASE_SIZE, PlayerState.ALLIANCE);
     }
 
     private void locateFirstFigures() {
