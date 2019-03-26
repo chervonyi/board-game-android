@@ -14,6 +14,8 @@ public class Stone extends Figure {
 
         ableToMove = true;
 
+        ableToFight = false;
+
         blackFigureIcon = "stone_b";
 
         redFigureIcon = "stone_r";

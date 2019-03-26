@@ -12,6 +12,8 @@ public class Predator extends Figure {
 
         ableToMove = true;
 
+        ableToFight = true;
+
         blackFigureIcon = "predator_b";
 
         redFigureIcon = "predator_r";

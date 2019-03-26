@@ -59,28 +59,26 @@ public class BoardActivity extends AppCompatActivity {
         // Start a new game
         game = new Game();
 
-        updateBoard();
+        locateFiguresOnBoard();
     }
 
     /**
      * Set view of board according to data from 'game'. <br>
      * Go through all cells and check if cell's view must be changed.
      */
-    private void updateBoard() {
+    private void locateFiguresOnBoard() {
 
         ArrayList<Cell> board = game.getBoard();
 
         for (int i = 0; i < COUNT_OF_SELLS; i++) {
-            if (!board.get(i).isEmpty()) {
-                String imageName = board.get(i).getView();
 
-                if (!imageName.equals("")) {
-                    int imageId = this.getResources().getIdentifier(board.get(i).getView(),
-                            "drawable", this.getPackageName());
+            String imageName = board.get(i).getView();
 
-                    cells.get(i).setImageResource(imageId);
-                }
-
+            if (imageName.equals("")) {
+                cells.get(i).setImageDrawable(null);
+            } else {
+                int imageId = this.getResources().getIdentifier(imageName,"drawable", this.getPackageName());
+                cells.get(i).setImageResource(imageId);
             }
         }
     }
@@ -93,8 +91,16 @@ public class BoardActivity extends AppCompatActivity {
 
         Log.d("CHR_GAMES_TEST", "Pressed on: cell_" + cellId);
 
+
+
         game.selectCell(cellId);
 
+        locateFiguresOnBoard();
+
+        updateBoard(cellId);
+    }
+
+    private void updateBoard(int cellId) {
         ArrayList<Cell> board = game.getBoard();
         Cell cell;
         ImageView cellView;
@@ -120,7 +126,7 @@ public class BoardActivity extends AppCompatActivity {
                             R.drawable.cell));
                 }
 
-            } else if (i == cellId && game.isHighlighted()) {
+            } else if (i == game.getSelectedCell()) {
                 // Highlight selected cell
                 cellView.setBackground(ContextCompat.getDrawable(this,
                         R.drawable.cell_highlighted_yellow));

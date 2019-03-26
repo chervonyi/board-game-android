@@ -11,6 +11,8 @@ public class Master extends Figure {
 
         ableToMove = true;
 
+        ableToFight = true;
+
         blackFigureIcon = "master_b";
 
         redFigureIcon = "master_r";

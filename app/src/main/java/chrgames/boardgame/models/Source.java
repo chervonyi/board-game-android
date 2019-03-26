@@ -11,6 +11,8 @@ public class Source extends Figure {
 
         ableToMove = false;
 
+        ableToFight = false;
+
         blackFigureIcon = "source_b";
 
         redFigureIcon = "source_r";

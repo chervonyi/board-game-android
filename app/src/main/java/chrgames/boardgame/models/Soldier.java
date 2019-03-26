@@ -11,6 +11,8 @@ public class Soldier extends Figure {
 
         ableToMove = true;
 
+        ableToFight = true;
+
         blackFigureIcon = "soldier_b";
 
         redFigureIcon = "soldier_r";

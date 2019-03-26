@@ -24,13 +24,16 @@ public class Game {
 
     public static final int BASE_SIZE = 3;
 
+    // Bases
     private Base enemyBase;
 
     private Base allianceBase;
 
+
+    // Vars to work with selection and moves
     private ArrayList<Integer> previousSelectedCells = new ArrayList<>();
 
-    private boolean isHighlighted = false;
+    private int selectedCell;
 
     public Game() {
         board = new ArrayList<>();
@@ -147,12 +150,24 @@ public class Game {
 
     public void selectCell(int position) {
 
+        if (board.get(position).isHighlighted()) {
+
+            if (board.get(position).isEmpty() ||
+                    board.get(position).getOwner() == PlayerState.ENEMY) {
+                move(selectedCell, position);
+
+                selectedCell = -1;
+                setHighlightForSet(previousSelectedCells, false);
+                return;
+            }
+        }
+
+
         // Remove previous selection
         if (previousSelectedCells.size() > 0) {
             setHighlightForSet(previousSelectedCells, false);
+            selectedCell = -1;
         }
-
-        isHighlighted = false;
 
         // Make selection if was pressed on alliance figure
         if (board.get(position).getOwner() == PlayerState.ALLIANCE) {
@@ -162,18 +177,32 @@ public class Game {
 
             if (availableCellsToMove.size() > 0) {
                 setHighlightForSet(availableCellsToMove, true);
-                isHighlighted = true;
+                selectedCell = position;
             }
         }
     }
+
+    public int getSelectedCell() {
+        return selectedCell;
+    }
+
+    private void move(int from, int to) {
+
+        Cell cellFrom = board.get(from);
+        Cell cellTo = board.get(to);
+
+        if (!cellTo.isEmpty() && cellFrom.getOwner() != cellTo.getOwner()) {
+            // get reward for kill
+        }
+
+        cellTo.setFigure(cellFrom);
+        cellFrom.resetFigure();
+    }
+
 
     private void setHighlightForSet(ArrayList<Integer> set, boolean highlighted) {
         for (int i = 0; i < set.size(); i++) {
             board.get(set.get(i)).setHighlighted(highlighted);
         }
-    }
-
-    public boolean isHighlighted() {
-        return isHighlighted;
     }
 }

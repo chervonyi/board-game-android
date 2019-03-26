@@ -40,6 +40,11 @@ public class Cell {
         owner = playerId;
     }
 
+    public void setFigure(Cell cell) {
+        this.occupation = cell.occupation;
+        this.owner = cell.owner;
+    }
+
     /**
      * Remove figure from current cell if it has been set before.
      */
@@ -90,5 +95,8 @@ public class Cell {
     }
 
 
+    public boolean isAbleToFight() {
+        return occupation.isFighting();
+    }
 
 }

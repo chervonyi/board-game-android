@@ -62,6 +62,11 @@ public abstract class Figure {
     boolean ableToMove;
 
     /**
+     * Shows if current figure is able to fight.<br>
+     */
+    boolean ableToFight;
+
+    /**
      * Explains scheme of moves some figure.
      * @param position - absolute position on board of exactly this figure
      * @return - all possible cells to move
@@ -145,4 +150,6 @@ public abstract class Figure {
      * <b>false</b> if figure is not able to move.
      */
     public boolean isMoving() { return ableToMove; }
+
+    public boolean isFighting() { return ableToMove; }
 }
