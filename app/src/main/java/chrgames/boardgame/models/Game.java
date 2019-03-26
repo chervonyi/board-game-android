@@ -1,5 +1,6 @@
 package chrgames.boardgame.models;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -7,7 +8,7 @@ import static chrgames.boardgame.models.Figure.*;
 
 public class Game {
 
-    enum PlayerState {
+    public enum PlayerState {
         ENEMY,
         ALLIANCE
     }
@@ -26,6 +27,10 @@ public class Game {
     private Base enemyBase;
 
     private Base allianceBase;
+
+    private ArrayList<Integer> previousSelectedCells = new ArrayList<>();
+
+    private boolean isHighlighted = false;
 
     public Game() {
         board = new ArrayList<>();
@@ -138,5 +143,37 @@ public class Game {
      */
     public ArrayList<Cell> getBoard() {
         return board;
+    }
+
+    public void selectCell(int position) {
+
+        // Remove previous selection
+        if (previousSelectedCells.size() > 0) {
+            setHighlightForSet(previousSelectedCells, false);
+        }
+
+        isHighlighted = false;
+
+        // Make selection if was pressed on alliance figure
+        if (board.get(position).getOwner() == PlayerState.ALLIANCE) {
+            ArrayList<Integer> availableCellsToMove = board.get(position).getAvailableCellsToMove();
+
+            previousSelectedCells = availableCellsToMove;
+
+            if (availableCellsToMove.size() > 0) {
+                setHighlightForSet(availableCellsToMove, true);
+                isHighlighted = true;
+            }
+        }
+    }
+
+    private void setHighlightForSet(ArrayList<Integer> set, boolean highlighted) {
+        for (int i = 0; i < set.size(); i++) {
+            board.get(set.get(i)).setHighlighted(highlighted);
+        }
+    }
+
+    public boolean isHighlighted() {
+        return isHighlighted;
     }
 }

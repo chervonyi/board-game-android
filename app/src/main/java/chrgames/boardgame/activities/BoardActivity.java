@@ -1,5 +1,6 @@
 package chrgames.boardgame.activities;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,7 +38,8 @@ public class BoardActivity extends AppCompatActivity {
         String pattern = "cell_";
 
         for (int i = 0; i < COUNT_OF_SELLS; i++) {
-            cells.add((ImageView) findViewById(getResources().getIdentifier(pattern + i, "id", getPackageName())));
+            cells.add((ImageView) findViewById(getResources().getIdentifier(pattern + i,
+                    "id", getPackageName())));
         }
 
         // Some magic to get actual size of height with value of MATCH_PARENT
@@ -91,6 +93,43 @@ public class BoardActivity extends AppCompatActivity {
 
         Log.d("CHR_GAMES_TEST", "Pressed on: cell_" + cellId);
 
-        // ...
+        game.selectCell(cellId);
+
+        ArrayList<Cell> board = game.getBoard();
+        Cell cell;
+        ImageView cellView;
+
+        for (int i = 0; i < COUNT_OF_SELLS; i++) {
+            cell = board.get(i);
+            cellView = cells.get(i);
+
+            if (cell.isHighlighted()) {
+                if (cell.isEmpty()) {
+                    // Highlight free to move cells (Green)
+                    cellView.setBackground(ContextCompat.getDrawable(this,
+                            R.drawable.cell_highlighted_green));
+
+                } else if (cell.getOwner() == Game.PlayerState.ENEMY) {
+                    // Highlight cells that occupied with enemy (Red)
+                    cellView.setBackground(ContextCompat.getDrawable(this,
+                            R.drawable.cell_highlighted_red));
+
+                } else if (cell.getOwner() == Game.PlayerState.ALLIANCE) {
+                    // Highlight cells that occupied with alliance (Usual)
+                    cellView.setBackground(ContextCompat.getDrawable(this,
+                            R.drawable.cell));
+                }
+
+            } else if (i == cellId && game.isHighlighted()) {
+                // Highlight selected cell
+                cellView.setBackground(ContextCompat.getDrawable(this,
+                        R.drawable.cell_highlighted_yellow));
+
+            } else {
+                // Remove highlight from another cells
+                cellView.setBackground(ContextCompat.getDrawable(this,
+                        R.drawable.cell));
+            }
+        }
     }
 }

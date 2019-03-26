@@ -11,6 +11,14 @@
     <color name="cellColor">#F8F8F8</color>
     <color name="cellBorder">#E0E0E0</color>
 
+    <color name="cellHighlightedGreen">#E9FFE9</color>
+    <color name="cellBorderHighlightedGreen">#D2E6D2</color>
+
+    <color name="cellHighlightedRed">#F9EAEA</color>
+    <color name="cellBorderHighlightedRed">#E1D3D3</color>
+
+    <color name="cellHighlightedYellow">#FFFCE3</color>
+    <color name="cellBorderHighlightedYellow">#E6E3CD</color>
 
     <!-- OTHER -->
     <color name="colorPrimary">#008577</color>

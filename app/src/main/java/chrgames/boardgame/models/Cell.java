@@ -1,5 +1,7 @@
 package chrgames.boardgame.models;
 
+import java.util.ArrayList;
+
 public class Cell {
 
     /**
@@ -20,12 +22,12 @@ public class Cell {
     /**
      * Shows if this cell checked and available to move.
      */
-    private boolean isAvailableToMove;
+    private boolean highlighted;
 
 
     Cell (int id) {
         this.id = id;
-        isAvailableToMove = false;
+        highlighted = false;
     }
 
     /**
@@ -54,8 +56,13 @@ public class Cell {
         return owner == null;
     }
 
-    public void getAvailableCellsToMove() {
-        // occupation.getAvailableCellsToMoveFrom(id);
+    public ArrayList<Integer> getAvailableCellsToMove() {
+
+        if (occupation != null) {
+            return occupation.getAvailableCellsToMoveFrom(id);
+        }
+
+        return new ArrayList<>();
     }
 
     public String getView() {
@@ -69,4 +76,19 @@ public class Cell {
 
         return "";
     }
+
+    public void setHighlighted(boolean highlighted) {
+        this.highlighted = highlighted;
+    }
+
+    public boolean isHighlighted() {
+        return highlighted;
+    }
+
+    public Game.PlayerState getOwner() {
+        return owner;
+    }
+
+
+
 }
