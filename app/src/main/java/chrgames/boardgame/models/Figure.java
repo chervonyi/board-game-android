@@ -5,6 +5,14 @@ import java.util.ArrayList;
 
 public abstract class Figure {
 
+    enum Kind {
+        Master,
+        Predator,
+        Soldier,
+        Source,
+        Stone
+    }
+
     /**
      * Figure level affects the appearance time. This attribute answers on questions: <br>
      * "How quickly some figure will be available in a shop?" <br>

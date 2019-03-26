@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import chrgames.boardgame.R;
+import chrgames.boardgame.models.Cell;
 import chrgames.boardgame.models.Game;
 
 public class BoardActivity extends AppCompatActivity {
@@ -56,8 +57,32 @@ public class BoardActivity extends AppCompatActivity {
         // Start a new game
         game = new Game();
 
-        // TODO - Update view of a board
+        updateBoard();
     }
+
+    /**
+     * Set view of board according to data from 'game'. <br>
+     * Go through all cells and check if cell's view must be changed.
+     */
+    private void updateBoard() {
+
+        ArrayList<Cell> board = game.getBoard();
+
+        for (int i = 0; i < COUNT_OF_SELLS; i++) {
+            if (!board.get(i).isEmpty()) {
+                String imageName = board.get(i).getView();
+
+                if (!imageName.equals("")) {
+                    int imageId = this.getResources().getIdentifier(board.get(i).getView(),
+                            "drawable", this.getPackageName());
+
+                    cells.get(i).setImageResource(imageId);
+                }
+
+            }
+        }
+    }
+
 
     public void onClickCell(View view) {
         String fullName = view.getResources().getResourceName(view.getId());
@@ -65,8 +90,6 @@ public class BoardActivity extends AppCompatActivity {
         int cellId = Integer.parseInt(name);
 
         Log.d("CHR_GAMES_TEST", "Pressed on: cell_" + cellId);
-
-        //cells.get(cellId).setImageResource(R.drawable.stone);
 
         // ...
     }

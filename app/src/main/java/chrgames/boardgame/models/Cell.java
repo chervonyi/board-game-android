@@ -1,6 +1,6 @@
 package chrgames.boardgame.models;
 
-class Cell {
+public class Cell {
 
     /**
      * ID of cell. E-g. - cell_0, cell_5, cell_49
@@ -15,7 +15,7 @@ class Cell {
     /**
      * Explains which one of player is owner of current cell. (Enemy or Alliance)
      */
-    private Game.PlayersState owner;
+    private Game.PlayerState owner;
 
     /**
      * Shows if this cell checked and available to move.
@@ -33,7 +33,7 @@ class Cell {
      * @param figure - appropriate figure (like Stone, Soldier, Master etc).
      * @param playerId - owner of this figure (Alliance or Enemy)
      */
-    public void setFigure(Figure figure, Game.PlayersState playerId) {
+    public void setFigure(Figure figure, Game.PlayerState playerId) {
         occupation = figure;
         owner = playerId;
     }
@@ -56,5 +56,17 @@ class Cell {
 
     public void getAvailableCellsToMove() {
         // occupation.getAvailableCellsToMoveFrom(id);
+    }
+
+    public String getView() {
+        if (occupation != null) {
+            if (owner == Game.PlayerState.ENEMY) {
+                return occupation.getNameOfRedFigure();
+            } else if (owner == Game.PlayerState.ALLIANCE) {
+                return occupation.getNameOfBlackFigure();
+            }
+        }
+
+        return "";
     }
 }

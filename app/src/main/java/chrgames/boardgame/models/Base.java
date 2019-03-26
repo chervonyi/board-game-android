@@ -2,6 +2,7 @@ package chrgames.boardgame.models;
 
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Base {
 
@@ -19,8 +20,8 @@ public class Base {
             maxRange = Game.COLUMNS * baseSize - 1;
 
         } else if (owner == Game.PlayerState.ALLIANCE) {
-            minRange = Game.CELLS - Game.COLUMNS * baseSize + 1;
-            maxRange = Game.CELLS;
+            minRange = Game.CELLS - Game.COLUMNS * baseSize;
+            maxRange = Game.CELLS - 1;
         }
     }
 
@@ -46,5 +47,21 @@ public class Base {
         }
 
         return vault;
+    }
+
+    /**
+     * @return a random cell which belongs to current base.
+     */
+    public int getRandomYourCell() {
+        Random random = new Random();
+        return random.nextInt(maxRange - minRange + 1) + minRange;
+    }
+
+    /**
+     * Returns a owner of current base.
+     * @return state of owner.
+     */
+    public Game.PlayerState getOwner() {
+        return this.owner;
     }
 }
