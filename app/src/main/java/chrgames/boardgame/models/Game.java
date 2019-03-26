@@ -64,6 +64,8 @@ public class Game {
     private void locateSet(Kind[] set, Base base) {
 
         Figure figure;
+        ArrayList<Integer> freeCells;
+        int randomFreePosition;
 
         for (Kind kind : set) {
 
@@ -91,7 +93,11 @@ public class Game {
                 default: figure = new Stone();
             }
 
-            setFigureAt(figure, base.getRandomYourCell(), base.getOwner());
+            freeCells = base.getFreeCells(board);
+
+            randomFreePosition = base.getRandomFreeCell(freeCells);
+
+            setFigureAt(figure, randomFreePosition, base.getOwner());
         }
     }
 

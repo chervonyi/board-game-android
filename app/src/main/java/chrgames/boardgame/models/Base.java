@@ -6,10 +6,20 @@ import java.util.Random;
 
 public class Base {
 
+    /**
+     * Instruction about owner of current base.
+     * (Enemy or Alliance)
+     */
     private Game.PlayerState owner;
 
+    /**
+     * Lower number in sequence of all cells
+     */
     private int minRange;
 
+    /**
+     * Bigger number in sequence of all cells
+     */
     private int maxRange;
 
     Base(int baseSize, Game.PlayerState owner) {
@@ -38,7 +48,7 @@ public class Base {
      * Composes a list of cells that belong to current base.
      * @return a list of cells from 'minRange' to 'maxRange'
      */
-    public ArrayList<Integer> getListOfCells() {
+    public ArrayList<Integer> getCells() {
 
         ArrayList<Integer> vault = new ArrayList<>();
 
@@ -50,11 +60,34 @@ public class Base {
     }
 
     /**
-     * @return a random cell which belongs to current base.
+     * Composes a list of <b>free</b> cells that belong to current base.
+     * @param board - list of cells
+     * @return list of free cells (that are not occupied)
      */
-    public int getRandomYourCell() {
+    public ArrayList<Integer> getFreeCells(ArrayList<Cell> board) {
+
+        ArrayList<Integer> vault = new ArrayList<>();
+
+        for (int i = minRange; i < maxRange; i++) {
+            if (board.get(i).isEmpty()) {
+                vault.add(i);
+            }
+        }
+
+        return vault;
+    }
+
+    /**
+     * Looks for a random cell which are not occupied at this time.
+     * @param freeCells - list of free cells.
+     * @return position of random, free cell which belongs to current base.
+     */
+    public int getRandomFreeCell(ArrayList<Integer> freeCells) {
         Random random = new Random();
-        return random.nextInt(maxRange - minRange + 1) + minRange;
+
+        int randPosition = random.nextInt(freeCells.size());
+
+        return freeCells.get(randPosition);
     }
 
     /**

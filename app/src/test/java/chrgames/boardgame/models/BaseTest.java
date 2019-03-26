@@ -17,23 +17,15 @@ public class BaseTest {
         ArrayList<Integer> output;
         ArrayList<Integer> expected = new ArrayList<>();
 
-        output = enemyBase.getListOfCells();
-        //output = allianceBase.getListOfCells();
+        output = enemyBase.getCells();
+        //output = allianceBase.getCells();
 
         assertEquals(expected, output);
     }
 
     @Test
-    public void getRandomYourCell() {
+    public void getRandomFreeCell() {
 
-        ArrayList<Integer> vault = new ArrayList<>();
-        ArrayList<Integer> expected = new ArrayList<>();
 
-        for (int i = 0; i < 50; i++) {
-            //vault.add(enemyBase.getRandomYourCell());
-            vault.add(allianceBase.getRandomYourCell());
-        }
-
-        assertEquals(expected, vault);
     }
 }
