@@ -99,4 +99,13 @@ public class Cell {
         return occupation.isFighting();
     }
 
+    /**
+     * On death of figure of Source class game ends.<br>
+     * So this method helps to keep track of the game status.
+     * @return true if figure at current cell is instance of Source class; false if it is not.
+     */
+    public boolean isEndingFigure() {
+        return occupation instanceof Source;
+    }
+
 }

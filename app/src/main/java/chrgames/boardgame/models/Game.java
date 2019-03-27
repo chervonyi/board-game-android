@@ -1,6 +1,5 @@
 package chrgames.boardgame.models;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -13,7 +12,15 @@ public class Game {
         ALLIANCE
     }
 
+    // General vars
     private ArrayList<Cell> board;
+
+    /**
+     * A special flag to keep track the game status.<br>
+     * When it's true - game is running and player can go on.<br>
+     * If it's false - game is over and player cannot do anything (e-g. moves figures, take cards etc).
+     */
+    private boolean isRunning;
 
     // Constants
     public static final int ROWS = 10;
@@ -23,6 +30,7 @@ public class Game {
     public static final int CELLS = ROWS * COLUMNS;
 
     public static final int BASE_SIZE = 3;
+
 
     // Bases
     private Base enemyBase;
@@ -37,6 +45,8 @@ public class Game {
 
     public Game() {
         board = new ArrayList<>();
+
+        isRunning = true;
 
         for (int i = 0; i < CELLS; i++) {
             board.add(new Cell(i));
@@ -188,7 +198,14 @@ public class Game {
         Cell cellTo = board.get(to);
 
         if (!cellTo.isEmpty() && cellFrom.getOwner() != cellTo.getOwner()) {
-            // TODO: Get reward for a murder
+
+
+            if (cellTo.isEndingFigure()) {
+                isRunning = false;
+            } else {
+                // TODO: Get reward for a kill
+            }
+
         }
 
         cellTo.setFigure(cellFrom);
@@ -228,5 +245,13 @@ public class Game {
      */
     public int getSelectedCell() {
         return selectedCell;
+    }
+
+    /**
+     * Check if game is running at this time.
+     * @return true if game is over; false if it is running right now.
+     */
+    public boolean isOver() {
+        return !isRunning;
     }
 }

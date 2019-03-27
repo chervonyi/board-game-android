@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -91,14 +92,23 @@ public class BoardActivity extends AppCompatActivity {
 
         Log.d("CHR_GAMES_TEST", "Pressed on: cell_" + cellId);
 
-        game.selectCell(cellId);
+        if (!game.isOver()) {
+            game.selectCell(cellId);
 
-        locateFiguresOnBoard();
+            locateFiguresOnBoard();
 
-        updateBoard(cellId);
+            updateCellsView(cellId);
+
+            if (game.isOver()) {
+                // TODO: Go to the next activity
+                Toast.makeText(this, "YOU WIN", Toast.LENGTH_LONG).show();
+            }
+        }
+
+
     }
 
-    private void updateBoard(int cellId) {
+    private void updateCellsView(int cellId) {
         ArrayList<Cell> board = game.getBoard();
         Cell cell;
         ImageView cellView;
