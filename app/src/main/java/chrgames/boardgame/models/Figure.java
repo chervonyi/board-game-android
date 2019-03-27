@@ -151,5 +151,5 @@ public abstract class Figure {
      */
     public boolean isMoving() { return ableToMove; }
 
-    public boolean isFighting() { return ableToMove; }
+    public boolean isFighting() { return ableToFight; }
 }

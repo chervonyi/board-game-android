@@ -131,29 +131,26 @@ public class Game {
         return random.nextInt(CELLS - 1);
     }
 
-    /**
-     * Removes all figures from the board.
-     */
-    private void clearBoard() {
-        for (Cell cell : board) {
-            cell.resetFigure();
-        }
-    }
 
     /**
-     * Getter of board.
-     * @return array of cells
+     * Listener for every click on cells.
+     * There are two different types of clicks:
+     *      1. Player has not selected any alliance figure before.
+     *         So, player does not have any selected cells and
+     *         this click means make a field of selected cells.
+     *      2. Player has a field of selected cells and this click was done on one of this.
+     *         So, this click means to make a move from one cell into another one.
+     *         ('pressOnHighlightedCells' method)
+     * @param position
      */
-    public ArrayList<Cell> getBoard() {
-        return board;
-    }
-
     public void selectCell(int position) {
 
+        // Preconditions to make a move
         if (board.get(position).isHighlighted()) {
 
             if (board.get(position).isEmpty() ||
-                    board.get(position).getOwner() == PlayerState.ENEMY) {
+                    (board.get(position).getOwner() == PlayerState.ENEMY
+                    && board.get(selectedCell).isAbleToFight())) {
                 move(selectedCell, position);
 
                 selectedCell = -1;
@@ -161,7 +158,6 @@ public class Game {
                 return;
             }
         }
-
 
         // Remove previous selection
         if (previousSelectedCells.size() > 0) {
@@ -182,27 +178,55 @@ public class Game {
         }
     }
 
-    public int getSelectedCell() {
-        return selectedCell;
-    }
-
+    /**
+     * Make move from one cell into another.
+     * @param from - departure.
+     * @param to - destination.
+     */
     private void move(int from, int to) {
-
         Cell cellFrom = board.get(from);
         Cell cellTo = board.get(to);
 
         if (!cellTo.isEmpty() && cellFrom.getOwner() != cellTo.getOwner()) {
-            // get reward for kill
+            // TODO: Get reward for a murder
         }
 
         cellTo.setFigure(cellFrom);
         cellFrom.resetFigure();
     }
 
-
+    /**
+     * Make identical highlight status for given set of cells.
+     * @param set - a set of sequence numbers to change their highlight-status
+     * @param highlighted - desired status
+     */
     private void setHighlightForSet(ArrayList<Integer> set, boolean highlighted) {
         for (int i = 0; i < set.size(); i++) {
             board.get(set.get(i)).setHighlighted(highlighted);
         }
+    }
+
+    /**
+     * Removes all figures from the board.
+     */
+    private void clearBoard() {
+        for (Cell cell : board) {
+            cell.resetFigure();
+        }
+    }
+
+    /**
+     * Getter of board.
+     * @return array of cells
+     */
+    public ArrayList<Cell> getBoard() {
+        return board;
+    }
+
+    /**
+     * @return a sequence number of a cell which has been selected before
+     */
+    public int getSelectedCell() {
+        return selectedCell;
     }
 }

@@ -91,8 +91,6 @@ public class BoardActivity extends AppCompatActivity {
 
         Log.d("CHR_GAMES_TEST", "Pressed on: cell_" + cellId);
 
-
-
         game.selectCell(cellId);
 
         locateFiguresOnBoard();
@@ -115,12 +113,13 @@ public class BoardActivity extends AppCompatActivity {
                     cellView.setBackground(ContextCompat.getDrawable(this,
                             R.drawable.cell_highlighted_green));
 
-                } else if (cell.getOwner() == Game.PlayerState.ENEMY) {
+                } else if (cell.getOwner() == Game.PlayerState.ENEMY && board.get(game.getSelectedCell()).isAbleToFight()) {
+
                     // Highlight cells that occupied with enemy (Red)
                     cellView.setBackground(ContextCompat.getDrawable(this,
                             R.drawable.cell_highlighted_red));
 
-                } else if (cell.getOwner() == Game.PlayerState.ALLIANCE) {
+                } else {
                     // Highlight cells that occupied with alliance (Usual)
                     cellView.setBackground(ContextCompat.getDrawable(this,
                             R.drawable.cell));
