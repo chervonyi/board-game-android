@@ -95,6 +95,8 @@ public class Cell {
     }
 
 
+    public boolean isAbleToMove() { return occupation.isMoving(); }
+
     public boolean isAbleToFight() {
         return occupation.isFighting();
     }
@@ -108,4 +110,8 @@ public class Cell {
         return occupation instanceof Source;
     }
 
+
+    public int getId() {
+        return id;
+    }
 }

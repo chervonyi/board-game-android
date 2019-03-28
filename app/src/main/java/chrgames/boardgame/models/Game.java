@@ -1,7 +1,11 @@
 package chrgames.boardgame.models;
 
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Random;
+
+import chrgames.boardgame.activities.BoardActivity;
 
 import static chrgames.boardgame.models.Figure.*;
 
@@ -15,12 +19,18 @@ public class Game {
     // General vars
     private ArrayList<Cell> board;
 
+    private BoardActivity activity;
+
     /**
      * A special flag to keep track the game status.<br>
      * When it's true - game is running and player can go on.<br>
      * If it's false - game is over and player cannot do anything (e-g. moves figures, take cards etc).
      */
     private boolean isRunning;
+
+    private Bot bot;
+
+    private PlayerState turn;
 
     // Constants
     public static final int ROWS = 10;
@@ -43,8 +53,15 @@ public class Game {
 
     private int selectedCell;
 
-    public Game() {
+    public Game(BoardActivity activity) {
+
+        this.activity = activity;
+
         board = new ArrayList<>();
+
+        bot = new Bot(Bot.Level.EASY);
+
+        turn = getPlayerWithFirstTurn();
 
         isRunning = true;
 
@@ -58,6 +75,98 @@ public class Game {
 
         locateFirstFigures();
     }
+
+
+    /**
+     * Listener for every click on cells.
+     * There are two different types of clicks:
+     *      1. Player has not selected any alliance figure before.
+     *         So, player does not have any selected cells and
+     *         this click means make a field of selected cells.
+     *      2. Player has a field of selected cells and this click was done on one of this.
+     *         So, this click means to make a move from one cell into another one.
+     *         ('pressOnHighlightedCells' method)
+     * @param position
+     */
+    public void selectCell(int position) {
+
+        // Preconditions to make a move
+        if (board.get(position).isHighlighted()) {
+
+            if (board.get(position).isEmpty() ||
+                    (board.get(position).getOwner() == PlayerState.ENEMY
+                    && board.get(selectedCell).isAbleToFight())) {
+                move(selectedCell, position);
+
+                selectedCell = -1;
+                setHighlightForSet(previousSelectedCells, false);
+                return;
+            }
+        }
+
+        // Remove previous selection
+        if (previousSelectedCells.size() > 0) {
+            setHighlightForSet(previousSelectedCells, false);
+            selectedCell = -1;
+        }
+
+        // Make selection if was pressed on alliance figure
+        if (board.get(position).getOwner() == PlayerState.ALLIANCE) {
+            ArrayList<Integer> availableCellsToMove = board.get(position).getAvailableCellsToMove();
+
+            previousSelectedCells = availableCellsToMove;
+
+            if (availableCellsToMove.size() > 0) {
+                setHighlightForSet(availableCellsToMove, true);
+                selectedCell = position;
+            }
+        }
+    }
+
+    /**
+     * Make move from one cell into another.
+     * @param from - departure.
+     * @param to - destination.
+     */
+    private void move(int from, int to) {
+        Cell cellFrom = board.get(from);
+        Cell cellTo = board.get(to);
+
+        if (!cellTo.isEmpty() && cellFrom.getOwner() != cellTo.getOwner()) {
+
+
+            if (cellTo.isEndingFigure()) {
+                isRunning = false;
+                // Get cellFrom.owner and make appropriate information about WIN or LOSE
+            } else {
+                // TODO: Get reward for a kill
+            }
+
+        }
+
+        cellTo.setFigure(cellFrom);
+        cellFrom.resetFigure();
+
+        endTurn();
+    }
+
+    private void makeBotMove() {
+
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+
+                        int[] move = bot.getMove(board);
+                        int cellFrom = move[0];
+                        int cellTo = move[1];
+                        move(cellFrom, cellTo);
+                    }
+                },
+                Bot.DELAY
+        );
+    }
+
 
     /**
      * Locate an identical, fixed set of figures to each sides.
@@ -141,77 +250,6 @@ public class Game {
         return random.nextInt(CELLS - 1);
     }
 
-
-    /**
-     * Listener for every click on cells.
-     * There are two different types of clicks:
-     *      1. Player has not selected any alliance figure before.
-     *         So, player does not have any selected cells and
-     *         this click means make a field of selected cells.
-     *      2. Player has a field of selected cells and this click was done on one of this.
-     *         So, this click means to make a move from one cell into another one.
-     *         ('pressOnHighlightedCells' method)
-     * @param position
-     */
-    public void selectCell(int position) {
-
-        // Preconditions to make a move
-        if (board.get(position).isHighlighted()) {
-
-            if (board.get(position).isEmpty() ||
-                    (board.get(position).getOwner() == PlayerState.ENEMY
-                    && board.get(selectedCell).isAbleToFight())) {
-                move(selectedCell, position);
-
-                selectedCell = -1;
-                setHighlightForSet(previousSelectedCells, false);
-                return;
-            }
-        }
-
-        // Remove previous selection
-        if (previousSelectedCells.size() > 0) {
-            setHighlightForSet(previousSelectedCells, false);
-            selectedCell = -1;
-        }
-
-        // Make selection if was pressed on alliance figure
-        if (board.get(position).getOwner() == PlayerState.ALLIANCE) {
-            ArrayList<Integer> availableCellsToMove = board.get(position).getAvailableCellsToMove();
-
-            previousSelectedCells = availableCellsToMove;
-
-            if (availableCellsToMove.size() > 0) {
-                setHighlightForSet(availableCellsToMove, true);
-                selectedCell = position;
-            }
-        }
-    }
-
-    /**
-     * Make move from one cell into another.
-     * @param from - departure.
-     * @param to - destination.
-     */
-    private void move(int from, int to) {
-        Cell cellFrom = board.get(from);
-        Cell cellTo = board.get(to);
-
-        if (!cellTo.isEmpty() && cellFrom.getOwner() != cellTo.getOwner()) {
-
-
-            if (cellTo.isEndingFigure()) {
-                isRunning = false;
-            } else {
-                // TODO: Get reward for a kill
-            }
-
-        }
-
-        cellTo.setFigure(cellFrom);
-        cellFrom.resetFigure();
-    }
-
     /**
      * Make identical highlight status for given set of cells.
      * @param set - a set of sequence numbers to change their highlight-status
@@ -253,5 +291,28 @@ public class Game {
      */
     public boolean isOver() {
         return !isRunning;
+    }
+
+    private PlayerState getPlayerWithFirstTurn() {
+        // TODO: Change on random selection
+        return PlayerState.ALLIANCE;
+    }
+
+    public boolean isPlayerTurn() {
+        return turn == PlayerState.ALLIANCE;
+    }
+
+    private void endTurn() {
+
+        if (turn == PlayerState.ENEMY) {
+            turn = PlayerState.ALLIANCE;
+
+            // Update board view
+            activity.locateFiguresOnBoard();
+        } else {
+            turn = PlayerState.ENEMY;
+
+            makeBotMove();
+        }
     }
 }

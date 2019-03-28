@@ -1,5 +1,6 @@
 package chrgames.boardgame.activities;
 
+import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +29,8 @@ public class BoardActivity extends AppCompatActivity {
     // Vars
     private Game game;
 
+    private Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +38,8 @@ public class BoardActivity extends AppCompatActivity {
 
         incomeView = findViewById(R.id.textViewIncome);
         amountView = findViewById(R.id.textViewAmount);
+
+        context = this;
 
         String pattern = "cell_";
 
@@ -58,7 +63,7 @@ public class BoardActivity extends AppCompatActivity {
         });
 
         // Start a new game
-        game = new Game();
+        game = new Game(BoardActivity.this);
 
         locateFiguresOnBoard();
     }
@@ -67,21 +72,28 @@ public class BoardActivity extends AppCompatActivity {
      * Set view of board according to data from 'game'. <br>
      * Go through all cells and check if cell's view must be changed.
      */
-    private void locateFiguresOnBoard() {
+    public void locateFiguresOnBoard() {
 
-        ArrayList<Cell> board = game.getBoard();
+        runOnUiThread(new Runnable() {
 
-        for (int i = 0; i < COUNT_OF_SELLS; i++) {
+            @Override
+            public void run() {
 
-            String imageName = board.get(i).getView();
+                ArrayList<Cell> board = game.getBoard();
 
-            if (imageName.equals("")) {
-                cells.get(i).setImageDrawable(null);
-            } else {
-                int imageId = this.getResources().getIdentifier(imageName,"drawable", this.getPackageName());
-                cells.get(i).setImageResource(imageId);
+                for (int i = 0; i < COUNT_OF_SELLS; i++) {
+
+                    String imageName = board.get(i).getView();
+
+                    if (imageName.equals("")) {
+                        cells.get(i).setImageDrawable(null);
+                    } else {
+                        int imageId = context.getResources().getIdentifier(imageName,"drawable", context.getPackageName());
+                        cells.get(i).setImageResource(imageId);
+                    }
+                }
             }
-        }
+        });
     }
 
 
@@ -92,7 +104,7 @@ public class BoardActivity extends AppCompatActivity {
 
         Log.d("CHR_GAMES_TEST", "Pressed on: cell_" + cellId);
 
-        if (!game.isOver()) {
+        if (!game.isOver() && game.isPlayerTurn()) {
             game.selectCell(cellId);
 
             locateFiguresOnBoard();
@@ -107,6 +119,8 @@ public class BoardActivity extends AppCompatActivity {
 
 
     }
+
+
 
     private void updateCellsView(int cellId) {
         ArrayList<Cell> board = game.getBoard();
