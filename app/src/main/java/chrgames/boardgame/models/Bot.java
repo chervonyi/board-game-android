@@ -9,6 +9,12 @@ import java.util.Random;
 
 public class Bot {
 
+    /**
+     * All available Bot levels.
+     * The selected level directly affects the quality of the selected move.
+     * E-g. 'Elementary' level selects random cells to move.
+     *      'Hard' level analyzes the board for the best move.
+     */
     enum Level {
         ELEMENTARY,
         EASY,
@@ -17,12 +23,20 @@ public class Bot {
         EXPERT
     }
 
+    /**
+     * Artificial time for bot thinking.
+     */
     public static final int DELAY = 1000;
 
     private int income;
 
     private int amount;
 
+    /**
+     * Actual level of bot.
+     * The selected level directly affects the quality of the selected move.
+     * Sets on instance creation.
+     */
     private Level selectedLevel;
 
     Bot(Level level) {
@@ -33,21 +47,34 @@ public class Bot {
         amount = 0;
     }
 
-
+    /**
+     * Calculates the possible move of the bot
+     * @param board - actual board (list of cells)
+     * @return array with two numbers which contains information about selected move.
+     *      array[0] = cellFrom (id)
+     *      array[1] = cellTo (id)
+     */
     public int[] getMove(ArrayList<Cell> board) {
 
         HashMap<Integer, Integer> availableMoves = getMapOfAvailableMoves(board);
-        List<Integer> keysAsArray = new ArrayList<Integer>(availableMoves.keySet());
+        List<Integer> keysAsArray = new ArrayList<>(availableMoves.keySet());
 
         Random random = new Random();
 
         int cellTo = keysAsArray.get(random.nextInt(keysAsArray.size()));
         int cellFrom = availableMoves.get(cellTo);
 
-
         return new int[] {cellFrom, cellTo};
     }
 
+    /**
+     * Compose a special map.<br>
+     * In this map <b>keys</b> will be available cells to move,
+     * and <b>variables</b> will be cells with figures that could make this move.
+     * So each pair represents possible moves for Bot side.
+     * @param board - actual board (list of cells)
+     * @return composed map of available moves.
+     */
     private HashMap<Integer, Integer> getMapOfAvailableMoves(ArrayList<Cell> board) {
         @SuppressLint("UseSparseArrays")
         HashMap<Integer, Integer> availableMoves = new HashMap<>();
@@ -64,7 +91,8 @@ public class Bot {
 
                 for (Integer cellId : availableMovesForCell) {
                     if (board.get(cellId).isEmpty() ||
-                            board.get(cellId).getOwner() == Game.PlayerState.ALLIANCE) {
+                            (board.get(cellId).getOwner() == Game.PlayerState.ALLIANCE &&
+                                    cell.isAbleToFight())) {
                         availableMoves.put(cellId, i);
                     }
                 }

@@ -1,7 +1,5 @@
 package chrgames.boardgame.models;
 
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -28,8 +26,16 @@ public class Game {
      */
     private boolean isRunning;
 
+    /**
+     * Instance responsible for artificial moves.
+     */
     private Bot bot;
 
+    /**
+     * Divides the game into moves on both sides.
+     * If turn is PlayerState.ENEMY - bot will make a next move.
+     * Else if turn is PlayerState.ALLIANCE - real player will make a next move.
+     */
     private PlayerState turn;
 
     // Constants
@@ -293,15 +299,30 @@ public class Game {
         return !isRunning;
     }
 
+    /**
+     * Chose one of players who will make a first turn.
+     * @return PlayerState of selected player.
+     */
     private PlayerState getPlayerWithFirstTurn() {
         // TODO: Change on random selection
         return PlayerState.ALLIANCE;
     }
 
+    /**
+     * Check if current turn is real Player's one.
+     * @return true if it is a Player's turn; false if it is not.
+     */
     public boolean isPlayerTurn() {
         return turn == PlayerState.ALLIANCE;
     }
 
+    /**
+     * Change turn.<br>
+     * If it's going to be a Enemy's turn, method calls 'makeBotMove' function
+     * to execute enemy's move.
+     * When it's changed on Alliance's turn, method calls some Activity's method to
+     * update a board view according to changes that contributed Bot move.
+     */
     private void endTurn() {
 
         if (turn == PlayerState.ENEMY) {
