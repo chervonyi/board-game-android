@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,8 @@ public class BoardActivity extends AppCompatActivity {
     private TextView incomeView;
     private TextView amountView;
     private ArrayList<ImageView> cells = new ArrayList<>();
+    private LinearLayout shopLayout;
+    private LinearLayout enemyTurnLayout;
 
     // Constants
     private final int COUNT_OF_SELLS = 50;
@@ -38,6 +41,8 @@ public class BoardActivity extends AppCompatActivity {
 
         incomeView = findViewById(R.id.textViewIncome);
         amountView = findViewById(R.id.textViewAmount);
+        shopLayout = findViewById(R.id.layout_shop);
+        enemyTurnLayout = findViewById(R.id.layout_enemy_turn);
 
         context = this;
 
@@ -92,8 +97,20 @@ public class BoardActivity extends AppCompatActivity {
                         cells.get(i).setImageResource(imageId);
                     }
                 }
+
+                changeBottomPanel();
             }
         });
+    }
+
+    private void changeBottomPanel() {
+        if (game.isPlayerTurn()) {
+            shopLayout.setVisibility(View.VISIBLE);
+            enemyTurnLayout.setVisibility(View.GONE);
+        } else {
+            shopLayout.setVisibility(View.GONE);
+            enemyTurnLayout.setVisibility(View.VISIBLE);
+        }
     }
 
 

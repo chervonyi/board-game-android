@@ -604,10 +604,33 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout_enemy_turn"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:background="@color/backgroundOfBoard">
+            android:background="@color/backgroundOfBoard"
+            android:gravity="center"
+            android:visibility="visible"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/fontDark"
+                android:textAlignment="center"
+                android:text="@string/enemy_turn"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/layout_shop"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:background="@color/backgroundOfBoard"
+            android:visibility="gone"
+            android:orientation="horizontal">
         </LinearLayout>
 
     </LinearLayout>
