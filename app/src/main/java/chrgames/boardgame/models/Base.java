@@ -68,7 +68,7 @@ public class Base {
 
         ArrayList<Integer> vault = new ArrayList<>();
 
-        for (int i = minRange; i < maxRange; i++) {
+        for (int i = minRange; i <= maxRange; i++) {
             if (board.get(i).isEmpty()) {
                 vault.add(i);
             }

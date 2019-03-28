@@ -15,7 +15,9 @@ import java.util.ArrayList;
 
 import chrgames.boardgame.R;
 import chrgames.boardgame.models.Cell;
+import chrgames.boardgame.models.Figure;
 import chrgames.boardgame.models.Game;
+import chrgames.boardgame.models.Shop;
 
 public class BoardActivity extends AppCompatActivity {
 
@@ -25,6 +27,7 @@ public class BoardActivity extends AppCompatActivity {
     private ArrayList<ImageView> cells = new ArrayList<>();
     private LinearLayout shopLayout;
     private LinearLayout enemyTurnLayout;
+    private ArrayList<ImageView> products = new ArrayList<>();
 
     // Constants
     private final int COUNT_OF_SELLS = 50;
@@ -53,6 +56,13 @@ public class BoardActivity extends AppCompatActivity {
                     "id", getPackageName())));
         }
 
+        pattern = "shop_";
+
+        for (int i = 0; i < Shop.PRODUCT_COUNT; i++) {
+            products.add((ImageView)findViewById(getResources().getIdentifier(pattern + i,
+                    "id", getPackageName())));
+        }
+
         // Some magic to get actual size of height with value of MATCH_PARENT
         final ImageView sample = findViewById(R.id.cell_0);
         sample.post(new Runnable() {
@@ -71,6 +81,8 @@ public class BoardActivity extends AppCompatActivity {
         game = new Game(BoardActivity.this);
 
         locateFiguresOnBoard();
+
+        updateShopContent();
     }
 
     /**
@@ -103,18 +115,24 @@ public class BoardActivity extends AppCompatActivity {
         });
     }
 
-    private void changeBottomPanel() {
-        if (game.isPlayerTurn()) {
-            shopLayout.setVisibility(View.VISIBLE);
-            enemyTurnLayout.setVisibility(View.GONE);
-        } else {
-            shopLayout.setVisibility(View.GONE);
-            enemyTurnLayout.setVisibility(View.VISIBLE);
+    public void updateShopContent() {
+        ArrayList<Figure> shop = game.getShop();
+
+        for (int i = 0; i < shop.size(); i++) {
+            String imageName = shop.get(i).getNameOfBlackFigure();
+
+            int imageId = context.getResources().getIdentifier(imageName,"drawable", context.getPackageName());
+            products.get(i).setImageResource(imageId);
         }
     }
 
-
+    /**
+     * Listener for all cells.
+     * Resend if of selected cell into appropriate game method to simulate a click.
+     * @param view - selected cell
+     */
     public void onClickCell(View view) {
+
         String fullName = view.getResources().getResourceName(view.getId());
         String name = fullName.substring(fullName.lastIndexOf("/cell_") + 6);
         int cellId = Integer.parseInt(name);
@@ -126,20 +144,57 @@ public class BoardActivity extends AppCompatActivity {
 
             locateFiguresOnBoard();
 
-            updateCellsView(cellId);
+            updateCellsView();
+            updateShopView();
+            updateShopContent();
 
             if (game.isOver()) {
                 // TODO: Go to the next activity
                 Toast.makeText(this, "YOU WIN", Toast.LENGTH_LONG).show();
             }
         }
-
-
     }
 
+    public void onClickProduct(View view) {
+        // Reset selection of cell
+        game.removeSelectionCells();
 
+        String fullName = view.getResources().getResourceName(view.getId());
+        String name = fullName.substring(fullName.lastIndexOf("/shop_") + 6);
+        int position = Integer.parseInt(name);
 
-    private void updateCellsView(int cellId) {
+        if (game.getSelectedProduct() == -1 || game.getSelectedProduct() != position) {
+            updateShopView();
+
+            if (game.canBuy(position)) {
+                game.selectProduct(position);
+            } else {
+                Toast.makeText(context, "YOU CANNOT BUY", Toast.LENGTH_SHORT).show();
+            }
+        }
+        updateCellsView();
+        updateShopView();
+        updateShopContent();
+    }
+
+    /**
+     * Removes any selection of any products in shop
+     */
+    private void updateShopView() {
+        for (int i = 0; i < products.size(); i++) {
+
+            if (game.getSelectedProduct() == i) {
+                products.get(i).setBackground(ContextCompat.getDrawable(context, R.drawable.product_selected));
+            } else {
+                products.get(i).setBackground(null);
+            }
+        }
+    }
+
+    /**
+     * Set appropriate view for each cell according to occupation of it.
+     */
+    private void updateCellsView() {
         ArrayList<Cell> board = game.getBoard();
         Cell cell;
         ImageView cellView;
@@ -176,6 +231,19 @@ public class BoardActivity extends AppCompatActivity {
                 cellView.setBackground(ContextCompat.getDrawable(this,
                         R.drawable.cell));
             }
+        }
+    }
+
+    /**
+     * Replace two panel with same size on each other according to current turn.
+     */
+    private void changeBottomPanel() {
+        if (game.isPlayerTurn()) {
+            shopLayout.setVisibility(View.VISIBLE);
+            enemyTurnLayout.setVisibility(View.GONE);
+        } else {
+            shopLayout.setVisibility(View.GONE);
+            enemyTurnLayout.setVisibility(View.VISIBLE);
         }
     }
 }

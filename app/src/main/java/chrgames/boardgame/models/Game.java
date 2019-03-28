@@ -1,7 +1,6 @@
 package chrgames.boardgame.models;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import chrgames.boardgame.activities.BoardActivity;
 
@@ -18,6 +17,8 @@ public class Game {
     private ArrayList<Cell> board;
 
     private BoardActivity activity;
+
+    private Shop shop;
 
     /**
      * A special flag to keep track the game status.<br>
@@ -54,34 +55,61 @@ public class Game {
     private Base allianceBase;
 
 
+    // Player's info
+    private int amount;
+
+    private int income;
+
     // Vars to work with selection and moves
-    private ArrayList<Integer> previousSelectedCells = new ArrayList<>();
 
     private int selectedCell;
+    private int selectedProduct = -1;
 
+
+    // Constructor
     public Game(BoardActivity activity) {
 
+        // Set all required fields
         this.activity = activity;
-
         board = new ArrayList<>();
-
         bot = new Bot(Bot.Level.EASY);
-
+        shop = new Shop();
         turn = getPlayerWithFirstTurn();
-
         isRunning = true;
+        amount = 100;
 
+        // Fill up a board with cells
         for (int i = 0; i < CELLS; i++) {
             board.add(new Cell(i));
         }
 
+        // Connect bases
         enemyBase = new Base(BASE_SIZE, PlayerState.ENEMY);
-
         allianceBase = new Base(BASE_SIZE, PlayerState.ALLIANCE);
 
+        // Locate a fixed set with figures on the board
         locateFirstFigures();
     }
 
+    public boolean canBuy(int position) {
+        boolean tmp = shop.canBuy(position, amount);
+
+        if (tmp) {
+            selectedProduct = position;
+        } else {
+            selectedProduct = -1;
+        }
+
+        return tmp;
+    }
+
+    public Figure buyFigure(int pos) {
+
+        Figure boughtFigure = shop.buy(pos);
+        amount -= boughtFigure.getCost();
+        selectedProduct = -1;
+        return boughtFigure;
+    }
 
     /**
      * Listener for every click on cells.
@@ -96,37 +124,56 @@ public class Game {
      */
     public void selectCell(int position) {
 
-        // Preconditions to make a move
-        if (board.get(position).isHighlighted()) {
+        Cell cell = board.get(position);
 
-            if (board.get(position).isEmpty() ||
-                    (board.get(position).getOwner() == PlayerState.ENEMY
+        // Preconditions to make a move
+        if (cell.isHighlighted()) {
+
+            if (selectedProduct != -1 && cell.isEmpty()) {
+                Figure boughtFigure = buyFigure(selectedProduct);
+                setFigureAt(boughtFigure, position, PlayerState.ALLIANCE);
+
+                selectedProduct = -1;
+                removeSelectionCells();
+                endTurn();
+                return;
+            }
+
+            if (cell.isEmpty() ||
+                    (cell.getOwner() == PlayerState.ENEMY
                     && board.get(selectedCell).isAbleToFight())) {
                 move(selectedCell, position);
 
-                selectedCell = -1;
-                setHighlightForSet(previousSelectedCells, false);
+                removeSelectionCells();
                 return;
             }
         }
 
-        // Remove previous selection
-        if (previousSelectedCells.size() > 0) {
-            setHighlightForSet(previousSelectedCells, false);
-            selectedCell = -1;
-        }
+        removeSelectionCells();
 
         // Make selection if was pressed on alliance figure
-        if (board.get(position).getOwner() == PlayerState.ALLIANCE) {
-            ArrayList<Integer> availableCellsToMove = board.get(position).getAvailableCellsToMove();
-
-            previousSelectedCells = availableCellsToMove;
+        if (cell.getOwner() == PlayerState.ALLIANCE) {
+            ArrayList<Integer> availableCellsToMove = cell.getAvailableCellsToMove();
 
             if (availableCellsToMove.size() > 0) {
                 setHighlightForSet(availableCellsToMove, true);
                 selectedCell = position;
             }
         }
+    }
+
+
+    public void selectProduct(int position) {
+        selectedProduct = position;
+
+        highlightAllianceBase();
+    }
+
+    public void removeSelectionCells() {
+        for (int i = 0; i < board.size(); i++) {
+            board.get(i).setHighlighted(false);
+        }
+        selectedCell = -1;
     }
 
     /**
@@ -147,7 +194,6 @@ public class Game {
             } else {
                 // TODO: Get reward for a kill
             }
-
         }
 
         cellTo.setFigure(cellFrom);
@@ -156,13 +202,18 @@ public class Game {
         endTurn();
     }
 
-    private void makeBotMove() {
+    public void highlightAllianceBase() {
+        setHighlightForSet(allianceBase.getFreeCells(board), true);
+    }
 
+    /**
+     * Execute move created by Bot according to selected level. {@link Bot.Level}
+     */
+    private void makeBotMove() {
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-
                         int[] move = bot.getMove(board);
                         int cellFrom = move[0];
                         int cellTo = move[1];
@@ -172,7 +223,6 @@ public class Game {
                 bot.getDelay()
         );
     }
-
 
     /**
      * Locate an identical, fixed set of figures to each sides.
@@ -249,14 +299,6 @@ public class Game {
     }
 
     /**
-     * @return a random integer according to size of the board
-     */
-    private int getRandomPosition() {
-        Random random = new Random();
-        return random.nextInt(CELLS - 1);
-    }
-
-    /**
      * Make identical highlight status for given set of cells.
      * @param set - a set of sequence numbers to change their highlight-status
      * @param highlighted - desired status
@@ -264,15 +306,6 @@ public class Game {
     private void setHighlightForSet(ArrayList<Integer> set, boolean highlighted) {
         for (int i = 0; i < set.size(); i++) {
             board.get(set.get(i)).setHighlighted(highlighted);
-        }
-    }
-
-    /**
-     * Removes all figures from the board.
-     */
-    private void clearBoard() {
-        for (Cell cell : board) {
-            cell.resetFigure();
         }
     }
 
@@ -335,5 +368,19 @@ public class Game {
 
             makeBotMove();
         }
+    }
+
+    public ArrayList<Figure> getShop() {
+        return shop.getProducts();
+    }
+
+    public int getSelectedProduct() { return selectedProduct; }
+
+    public void removeSelectionProduct() {
+        selectedProduct = -1;
+    }
+
+    public boolean isHighlighted(int position) {
+        return board.get(position).isHighlighted();
     }
 }
