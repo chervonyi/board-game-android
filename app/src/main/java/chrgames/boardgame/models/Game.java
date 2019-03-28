@@ -169,7 +169,7 @@ public class Game {
                         move(cellFrom, cellTo);
                     }
                 },
-                Bot.DELAY
+                bot.getDelay()
         );
     }
 

@@ -24,9 +24,9 @@ public class Bot {
     }
 
     /**
-     * Artificial time for bot thinking.
+     * Sets of artificial times for bot thinking.
      */
-    public static final int DELAY = 1000;
+    private final int[] delaySamples = new int[]{500, 1000, 1500, 2000, 2500, 3000};
 
     private int income;
 
@@ -100,5 +100,14 @@ public class Bot {
         }
 
         return availableMoves;
+    }
+
+    /**
+     * Get a random delay time from prepared array.
+     * @return artificial time of bot thinking
+     */
+    public int getDelay() {
+        Random random = new Random();
+        return delaySamples[random.nextInt(delaySamples.length)];
     }
 }
