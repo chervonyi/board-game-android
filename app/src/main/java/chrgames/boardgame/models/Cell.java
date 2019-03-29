@@ -111,7 +111,7 @@ public class Cell {
     }
 
 
-    public int getId() {
-        return id;
+    public int getRewardForDestroy() {
+        return occupation.getReward();
     }
 }

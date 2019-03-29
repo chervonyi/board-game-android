@@ -28,10 +28,6 @@ public class Bot {
      */
     private final int[] delaySamples = new int[]{500, 1000, 1500, 2000, 2500, 3000};
 
-    private int income;
-
-    private int amount;
-
     /**
      * Actual level of bot.
      * The selected level directly affects the quality of the selected move.
@@ -41,10 +37,6 @@ public class Bot {
 
     Bot(Level level) {
         this.selectedLevel = level;
-
-        income = 0;
-
-        amount = 0;
     }
 
     /**

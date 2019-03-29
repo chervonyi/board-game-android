@@ -54,11 +54,9 @@ public class Game {
 
     private Base allianceBase;
 
+    private Player alliance;
 
-    // Player's info
-    private int amount;
-
-    private int income;
+    private Player enemy;
 
     // Vars to work with selection and moves
 
@@ -67,7 +65,7 @@ public class Game {
 
 
     // Constructor
-    public Game(BoardActivity activity) {
+    public Game(BoardActivity activity, int amount, int income) {
 
         // Set all required fields
         this.activity = activity;
@@ -76,7 +74,10 @@ public class Game {
         shop = new Shop();
         turn = getPlayerWithFirstTurn();
         isRunning = true;
-        amount = 100;
+
+        // Set Player's start economy
+        alliance = new Player(amount, income);
+        enemy = new Player(amount, income);
 
         // Fill up a board with cells
         for (int i = 0; i < CELLS; i++) {
@@ -92,7 +93,7 @@ public class Game {
     }
 
     public boolean canBuy(int position) {
-        boolean tmp = shop.canBuy(position, amount);
+        boolean tmp = shop.canBuy(position, alliance.getAmount());
 
         if (tmp) {
             selectedProduct = position;
@@ -104,9 +105,8 @@ public class Game {
     }
 
     public Figure buyFigure(int pos) {
-
         Figure boughtFigure = shop.buy(pos);
-        amount -= boughtFigure.getCost();
+        alliance.setAmount(alliance.getAmount() - boughtFigure.getCost());
         selectedProduct = -1;
         return boughtFigure;
     }
@@ -133,7 +133,6 @@ public class Game {
                 Figure boughtFigure = buyFigure(selectedProduct);
                 setFigureAt(boughtFigure, position, PlayerState.ALLIANCE);
 
-                selectedProduct = -1;
                 removeSelectionCells();
                 endTurn();
                 return;
@@ -174,6 +173,7 @@ public class Game {
             board.get(i).setHighlighted(false);
         }
         selectedCell = -1;
+        selectedProduct = -1;
     }
 
     /**
@@ -192,7 +192,11 @@ public class Game {
                 isRunning = false;
                 // Get cellFrom.owner and make appropriate information about WIN or LOSE
             } else {
-                // TODO: Get reward for a kill
+                if (cellFrom.getOwner() == PlayerState.ALLIANCE) {
+                    alliance.reward(cellTo.getRewardForDestroy());
+                } else {
+                    enemy.reward(cellTo.getRewardForDestroy());
+                }
             }
         }
 
@@ -359,11 +363,14 @@ public class Game {
     private void endTurn() {
 
         if (turn == PlayerState.ENEMY) {
+            enemy.round();
+
             turn = PlayerState.ALLIANCE;
 
             // Update board view
             activity.locateFiguresOnBoard();
         } else {
+            alliance.round();
             turn = PlayerState.ENEMY;
 
             makeBotMove();
@@ -376,11 +383,11 @@ public class Game {
 
     public int getSelectedProduct() { return selectedProduct; }
 
-    public void removeSelectionProduct() {
-        selectedProduct = -1;
+    public int getAmount() {
+        return alliance.getAmount();
     }
 
-    public boolean isHighlighted(int position) {
-        return board.get(position).isHighlighted();
+    public int getIncome() {
+        return alliance.getIncome();
     }
 }

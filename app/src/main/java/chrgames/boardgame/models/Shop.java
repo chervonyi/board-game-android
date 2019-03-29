@@ -1,6 +1,8 @@
 package chrgames.boardgame.models;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -39,11 +41,9 @@ public class Shop {
      * @return true if player can buy this product; false if
      */
     public boolean canBuy(int positionOfProduct, int amountOfPlayer) {
-        return amountOfPlayer >= vault.get(positionOfProduct).getCost() ;
-    }
-
-    public Figure getSelectedFigure(int position) {
-        return vault.get(position);
+        Log.d("CHR_GAMES_TEST", "amountOfPlayer: " + amountOfPlayer);
+        Log.d("CHR_GAMES_TEST", "getCost: " + vault.get(positionOfProduct).getCost());
+        return amountOfPlayer >= vault.get(positionOfProduct).getCost();
     }
 
     public Figure buy(int position) {

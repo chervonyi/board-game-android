@@ -78,11 +78,14 @@ public class BoardActivity extends AppCompatActivity {
         });
 
         // Start a new game
-        game = new Game(BoardActivity.this);
+        game = new Game(BoardActivity.this, 0, 1);
 
         locateFiguresOnBoard();
 
         updateShopContent();
+
+        setAmount(game.getAmount());
+        setIncome(game.getIncome());
     }
 
     /**
@@ -143,10 +146,12 @@ public class BoardActivity extends AppCompatActivity {
             game.selectCell(cellId);
 
             locateFiguresOnBoard();
-
             updateCellsView();
             updateShopView();
             updateShopContent();
+
+            setAmount(game.getAmount());
+            setIncome(game.getIncome());
 
             if (game.isOver()) {
                 // TODO: Go to the next activity
@@ -163,7 +168,7 @@ public class BoardActivity extends AppCompatActivity {
         String name = fullName.substring(fullName.lastIndexOf("/shop_") + 6);
         int position = Integer.parseInt(name);
 
-        if (game.getSelectedProduct() == -1 || game.getSelectedProduct() != position) {
+        if (game.getSelectedProduct() == -1) {
             updateShopView();
 
             if (game.canBuy(position)) {
@@ -245,5 +250,13 @@ public class BoardActivity extends AppCompatActivity {
             shopLayout.setVisibility(View.GONE);
             enemyTurnLayout.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void setAmount(int newAmount) {
+        amountView.setText("$" + newAmount);
+    }
+
+    public void setIncome(int newIncome) {
+        incomeView.setText("+$" + newIncome);
     }
 }
