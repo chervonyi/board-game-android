@@ -659,7 +659,7 @@
                     android:layout_weight="1"
                     android:background="@color/backgroundOfBoard"
                     android:onClick="onClickProduct"
-                    android:src="@drawable/soldier_b" />
+                    android:src="@drawable/master_shop" />
 
                 <ImageView
                     android:id="@+id/shop_2"
