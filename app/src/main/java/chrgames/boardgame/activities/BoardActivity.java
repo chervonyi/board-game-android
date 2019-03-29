@@ -28,6 +28,8 @@ public class BoardActivity extends AppCompatActivity {
     private LinearLayout shopLayout;
     private LinearLayout enemyTurnLayout;
     private ArrayList<ImageView> products = new ArrayList<>();
+    private ArrayList<TextView> productsPrice = new ArrayList<>();
+
 
     // Constants
     private final int COUNT_OF_SELLS = 50;
@@ -60,6 +62,13 @@ public class BoardActivity extends AppCompatActivity {
 
         for (int i = 0; i < Shop.PRODUCT_COUNT; i++) {
             products.add((ImageView)findViewById(getResources().getIdentifier(pattern + i,
+                    "id", getPackageName())));
+        }
+
+        pattern = "price_";
+
+        for (int i = 0; i < Shop.PRODUCT_COUNT; i++) {
+            productsPrice.add((TextView)findViewById(getResources().getIdentifier(pattern + i,
                     "id", getPackageName())));
         }
 
@@ -193,7 +202,10 @@ public class BoardActivity extends AppCompatActivity {
             String imageName = shop.get(i).getNameOfBlackFigure();
 
             int imageId = context.getResources().getIdentifier(imageName,"drawable", context.getPackageName());
+
             products.get(i).setImageResource(imageId);
+
+            productsPrice.get(i).setText("$" + shop.get(i).getCost());
         }
     }
 
