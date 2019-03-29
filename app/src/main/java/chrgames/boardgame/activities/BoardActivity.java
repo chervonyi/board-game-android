@@ -88,6 +88,60 @@ public class BoardActivity extends AppCompatActivity {
         setIncome(game.getIncome());
     }
 
+
+
+    /**
+     * Listener for all cells.
+     * Resend if of selected cell into appropriate game method to simulate a click.
+     * @param view - selected cell
+     */
+    public void onClickCell(View view) {
+
+        String fullName = view.getResources().getResourceName(view.getId());
+        String name = fullName.substring(fullName.lastIndexOf("/cell_") + 6);
+        int cellId = Integer.parseInt(name);
+
+        Log.d("CHR_GAMES_TEST", "Pressed on: cell_" + cellId);
+
+        if (!game.isOver() && game.isPlayerTurn()) {
+            game.selectCell(cellId);
+
+            // Update board and shop
+            locateFiguresOnBoard();
+            updateCellsView();
+            updateShopView();
+            updateShopContent();
+
+            // Update labels
+            setAmount(game.getAmount());
+            setIncome(game.getIncome());
+
+            if (game.isOver()) {
+                // TODO: Go to the next activity
+                Toast.makeText(this, "YOU WIN", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    public void onClickProduct(View view) {
+        // Reset selection of cell
+        game.removeSelectionCells();
+
+        String fullName = view.getResources().getResourceName(view.getId());
+        String name = fullName.substring(fullName.lastIndexOf("/shop_") + 6);
+        int position = Integer.parseInt(name);
+
+        if (!game.selectProduct(position)) {
+            // Not enough money to buy selected product
+            Toast.makeText(context, "YOU CANNOT BUY", Toast.LENGTH_SHORT).show();
+        }
+
+        // Update board and shop
+        updateCellsView();
+        updateShopView();
+        updateShopContent();
+    }
+
     /**
      * Set view of board according to data from 'game'. <br>
      * Go through all cells and check if cell's view must be changed.
@@ -118,70 +172,6 @@ public class BoardActivity extends AppCompatActivity {
         });
     }
 
-    public void updateShopContent() {
-        ArrayList<Figure> shop = game.getShop();
-
-        for (int i = 0; i < shop.size(); i++) {
-            String imageName = shop.get(i).getNameOfBlackFigure();
-
-            int imageId = context.getResources().getIdentifier(imageName,"drawable", context.getPackageName());
-            products.get(i).setImageResource(imageId);
-        }
-    }
-
-    /**
-     * Listener for all cells.
-     * Resend if of selected cell into appropriate game method to simulate a click.
-     * @param view - selected cell
-     */
-    public void onClickCell(View view) {
-
-        String fullName = view.getResources().getResourceName(view.getId());
-        String name = fullName.substring(fullName.lastIndexOf("/cell_") + 6);
-        int cellId = Integer.parseInt(name);
-
-        Log.d("CHR_GAMES_TEST", "Pressed on: cell_" + cellId);
-
-        if (!game.isOver() && game.isPlayerTurn()) {
-            game.selectCell(cellId);
-
-            locateFiguresOnBoard();
-            updateCellsView();
-            updateShopView();
-            updateShopContent();
-
-            setAmount(game.getAmount());
-            setIncome(game.getIncome());
-
-            if (game.isOver()) {
-                // TODO: Go to the next activity
-                Toast.makeText(this, "YOU WIN", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-    public void onClickProduct(View view) {
-        // Reset selection of cell
-        game.removeSelectionCells();
-
-        String fullName = view.getResources().getResourceName(view.getId());
-        String name = fullName.substring(fullName.lastIndexOf("/shop_") + 6);
-        int position = Integer.parseInt(name);
-
-        if (game.getSelectedProduct() == -1) {
-            updateShopView();
-
-            if (game.canBuy(position)) {
-                game.selectProduct(position);
-            } else {
-                Toast.makeText(context, "YOU CANNOT BUY", Toast.LENGTH_SHORT).show();
-            }
-        }
-        updateCellsView();
-        updateShopView();
-        updateShopContent();
-    }
-
     /**
      * Removes any selection of any products in shop
      */
@@ -193,6 +183,17 @@ public class BoardActivity extends AppCompatActivity {
             } else {
                 products.get(i).setBackground(null);
             }
+        }
+    }
+
+    public void updateShopContent() {
+        ArrayList<Figure> shop = game.getShop();
+
+        for (int i = 0; i < shop.size(); i++) {
+            String imageName = shop.get(i).getNameOfBlackFigure();
+
+            int imageId = context.getResources().getIdentifier(imageName,"drawable", context.getPackageName());
+            products.get(i).setImageResource(imageId);
         }
     }
 

@@ -59,8 +59,8 @@ public class Game {
     private Player enemy;
 
     // Vars to work with selection and moves
-
     private int selectedCell;
+
     private int selectedProduct = -1;
 
 
@@ -162,10 +162,16 @@ public class Game {
     }
 
 
-    public void selectProduct(int position) {
-        selectedProduct = position;
+    public boolean selectProduct(int position) {
 
-        highlightAllianceBase();
+        if (canBuy(position)) {
+            selectedProduct = position;
+
+            highlightAllianceBase();
+
+            return true;
+        }
+        return false;
     }
 
     public void removeSelectionCells() {
