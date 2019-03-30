@@ -14,7 +14,7 @@
 * Add bot (Elementary level)
 * Change hierarchy of figures, cards 
 
-<img src="https://i.imgur.com/AxXRvKH.jpg" width="300">
+<img src="https://i.imgur.com/6p4oGdb.jpg" width="300">
 
 ### v.0.0.2:
 * Add figures at a start of the game
