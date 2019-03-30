@@ -1,6 +1,7 @@
 package chrgames.boardgame.models.products.cards;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import chrgames.boardgame.models.Cell;
 import chrgames.boardgame.models.Game;
@@ -28,9 +29,34 @@ public class KillRandomEnemy extends Card {
     }
 
     @Override
-    public void use(Game game) {
+    public boolean use(Game.PlayerState user, Game game) {
         ArrayList<Cell> board = game.getBoard();
 
-        
+        ArrayList<Cell> enemyFigures = new ArrayList<>();
+
+        Game.PlayerState enemyState = user == Game.PlayerState.ALLIANCE
+                ? Game.PlayerState.ENEMY
+                : Game.PlayerState.ALLIANCE;
+
+        for (Cell cell : board) {
+            if (cell.getOwner() == enemyState) {
+                enemyFigures.add(cell);
+            }
+        }
+
+        if (enemyFigures.size() == 0) {
+            return false;
+        }
+
+        Collections.shuffle(enemyFigures);
+
+        for (Cell cell: enemyFigures) {
+            if (!cell.isEndingFigure()) {
+                cell.resetFigure();
+                return true;
+            }
+        }
+
+        return false;
     }
 }

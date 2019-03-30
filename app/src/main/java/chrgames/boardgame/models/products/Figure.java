@@ -7,13 +7,6 @@ import chrgames.boardgame.models.Game;
 
 public abstract class Figure extends Product {
 
-    public enum Kind {
-        Master,
-        Predator,
-        Soldier,
-        Source,
-        Stone
-    }
 
     /**
      * Name of image with black (own) appropriate figure

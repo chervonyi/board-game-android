@@ -4,10 +4,15 @@ import chrgames.boardgame.models.Game;
 
 public abstract class Card extends Product {
 
-
     public abstract String getInformation();
 
     public abstract String getSubmitQuestion();
 
-    public abstract void use(Game game);
+    /**
+     * r
+     * @param user
+     * @param game
+     * @return true if card was successful used; false if current card could not be used right now.
+     */
+    public abstract boolean use(Game.PlayerState user, Game game);
 }

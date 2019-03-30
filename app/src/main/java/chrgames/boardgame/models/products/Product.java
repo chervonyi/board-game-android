@@ -2,6 +2,20 @@ package chrgames.boardgame.models.products;
 
 public abstract class Product {
 
+    public enum Kind {
+        // Figures
+        Master,
+        Predator,
+        Soldier,
+        Source,
+        Stone,
+
+        // Cards
+        KillRandomEnemy
+    }
+
+
+
     protected String productView;
 
     /**
@@ -36,8 +50,11 @@ public abstract class Product {
     /**
      * @return assigned cost of figure.
      */
-    protected int getCost() {
+    public int getCost() {
         return cost;
     }
 
+    public static boolean isFigure(Product product) {
+        return product instanceof Figure;
+    }
 }

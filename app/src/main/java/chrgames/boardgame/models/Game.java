@@ -3,6 +3,8 @@ package chrgames.boardgame.models;
 import java.util.ArrayList;
 
 import chrgames.boardgame.activities.BoardActivity;
+import chrgames.boardgame.models.products.Card;
+import chrgames.boardgame.models.products.Product;
 import chrgames.boardgame.models.products.figures.Master;
 import chrgames.boardgame.models.products.figures.Predator;
 import chrgames.boardgame.models.products.figures.Soldier;
@@ -111,10 +113,17 @@ public class Game {
     }
 
     public Figure buyFigure(int pos) {
-        Figure boughtFigure = shop.buy(pos);
+        Figure boughtFigure = (Figure) shop.buy(pos);
         alliance.setAmount(alliance.getAmount() - boughtFigure.getCost());
         selectedProduct = -1;
         return boughtFigure;
+    }
+
+    public Card buyCard(int pos) {
+        Card boughtCard = (Card) shop.buy(pos);
+        alliance.setAmount(alliance.getAmount() - boughtCard.getCost());
+        selectedProduct = -1;
+        return boughtCard;
     }
 
     /**
@@ -171,9 +180,16 @@ public class Game {
     public boolean selectProduct(int position) {
 
         if (canBuy(position)) {
-            selectedProduct = position;
 
-            highlightAllianceBase();
+            if (shop.isFigure(position)) {
+                selectedProduct = position;
+
+                highlightAllianceBase();
+            } else {
+                Card card = buyCard(position);
+                card.use(PlayerState.ALLIANCE, this);
+                endTurn();
+            }
 
             return true;
         }
@@ -389,7 +405,7 @@ public class Game {
         }
     }
 
-    public ArrayList<Figure> getShop() {
+    public ArrayList<Product> getShop() {
         return shop.getProducts();
     }
 

@@ -1,14 +1,13 @@
 package chrgames.boardgame.models;
 
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-import chrgames.boardgame.models.products.Figure;
-import chrgames.boardgame.models.products.Figure.Kind;
+import chrgames.boardgame.models.products.Product.Kind;
+import chrgames.boardgame.models.products.Product;
+import chrgames.boardgame.models.products.cards.KillRandomEnemy;
 import chrgames.boardgame.models.products.figures.Master;
 import chrgames.boardgame.models.products.figures.Predator;
 import chrgames.boardgame.models.products.figures.Soldier;
@@ -26,10 +25,11 @@ public class Shop {
             put(Kind.Predator, 20);
             put(Kind.Source, 30);
             put(Kind.Stone, 50);
+            put(Kind.KillRandomEnemy, 50);
         }
     };
 
-    private ArrayList<Figure> vault;
+    private ArrayList<Product> vault;
 
 
     Shop() {
@@ -47,18 +47,16 @@ public class Shop {
      * @return true if player can buy this product; false if
      */
     public boolean canBuy(int positionOfProduct, int amountOfPlayer) {
-        Log.d("CHR_GAMES_TEST", "amountOfPlayer: " + amountOfPlayer);
-        Log.d("CHR_GAMES_TEST", "getCost: " + vault.get(positionOfProduct).getCost());
         return amountOfPlayer >= vault.get(positionOfProduct).getCost();
     }
 
-    public Figure buy(int position) {
-        Figure tmp = vault.get(position);
+    public Product buy(int position) {
+        Product tmp = vault.get(position);
         vault.set(position, nextProduct());
         return tmp;
     }
 
-    private Figure nextProduct() {
+    private Product nextProduct() {
         ArrayList<Kind> allProducts = new ArrayList<>(availableStuff.keySet());
 
         Random random = new Random();
@@ -68,12 +66,19 @@ public class Shop {
             case Soldier: return new Soldier();
             case Source: return new Source();
             case Stone: return new Stone();
+
+            case KillRandomEnemy: return new KillRandomEnemy();
         }
 
         return new Stone();
     }
 
-    public ArrayList<Figure> getProducts() {
+    public ArrayList<Product> getProducts() {
         return vault;
     }
+
+    public boolean isFigure(int position) {
+        return Product.isFigure(vault.get(position));
+    }
+
 }

@@ -18,6 +18,7 @@ import chrgames.boardgame.models.Cell;
 import chrgames.boardgame.models.products.Figure;
 import chrgames.boardgame.models.Game;
 import chrgames.boardgame.models.Shop;
+import chrgames.boardgame.models.products.Product;
 
 public class BoardActivity extends AppCompatActivity {
 
@@ -140,15 +141,20 @@ public class BoardActivity extends AppCompatActivity {
         String name = fullName.substring(fullName.lastIndexOf("/shop_") + 6);
         int position = Integer.parseInt(name);
 
-        if (!game.selectProduct(position)) {
+        if (game.selectProduct(position)) {
+            // Update board and shop
+            locateFiguresOnBoard();
+            updateCellsView();
+            updateShopView();
+            updateShopContent();
+
+            // Update labels
+            setAmount(game.getAmount());
+            setIncome(game.getIncome());
+        } else {
             // Not enough money to buy selected product
             Toast.makeText(context, "YOU CANNOT BUY", Toast.LENGTH_SHORT).show();
         }
-
-        // Update board and shop
-        updateCellsView();
-        updateShopView();
-        updateShopContent();
     }
 
     /**
@@ -196,7 +202,7 @@ public class BoardActivity extends AppCompatActivity {
     }
 
     public void updateShopContent() {
-        ArrayList<Figure> shop = game.getShop();
+        ArrayList<Product> shop = game.getShop();
 
         for (int i = 0; i < shop.size(); i++) {
             String imageName = shop.get(i).getProductView();
