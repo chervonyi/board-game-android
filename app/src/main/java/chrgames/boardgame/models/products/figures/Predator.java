@@ -1,11 +1,13 @@
-package chrgames.boardgame.models;
+package chrgames.boardgame.models.products.figures;
 
 import java.util.ArrayList;
+
+import chrgames.boardgame.models.products.Figure;
 
 public class Predator extends Figure {
 
 
-    Predator() {
+    public Predator() {
         cost = 12;
 
         level = Level.HARD;
@@ -17,6 +19,8 @@ public class Predator extends Figure {
         blackFigureIcon = "predator_b";
 
         redFigureIcon = "predator_r";
+
+        productView = "predator_shop";
     }
 
     /**
@@ -27,7 +31,7 @@ public class Predator extends Figure {
     @Override
     public ArrayList<Integer> getAvailableCellsToMoveFrom(int position) {
 
-        if (!isRealPosition(position)) {
+        if (isRealPosition(position)) {
             return new ArrayList<>();
         }
 

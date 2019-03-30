@@ -1,10 +1,12 @@
-package chrgames.boardgame.models;
+package chrgames.boardgame.models.products.figures;
 
 import java.util.ArrayList;
 
+import chrgames.boardgame.models.products.Figure;
+
 public class Soldier extends Figure {
 
-    Soldier() {
+    public Soldier() {
         cost = 5;
 
         level = Level.EASY;
@@ -16,6 +18,8 @@ public class Soldier extends Figure {
         blackFigureIcon = "soldier_b";
 
         redFigureIcon = "soldier_r";
+
+        productView = "soldier_shop";
     }
 
     /**
@@ -26,7 +30,7 @@ public class Soldier extends Figure {
     @Override
     public ArrayList<Integer> getAvailableCellsToMoveFrom(int position) {
 
-        if (!isRealPosition(position)) {
+        if (isRealPosition(position)) {
             return new ArrayList<>();
         }
 

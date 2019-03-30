@@ -7,7 +7,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-import chrgames.boardgame.models.Figure.Kind;
+import chrgames.boardgame.models.products.Figure;
+import chrgames.boardgame.models.products.Figure.Kind;
+import chrgames.boardgame.models.products.figures.Master;
+import chrgames.boardgame.models.products.figures.Predator;
+import chrgames.boardgame.models.products.figures.Soldier;
+import chrgames.boardgame.models.products.figures.Source;
+import chrgames.boardgame.models.products.figures.Stone;
 
 public class Shop {
 

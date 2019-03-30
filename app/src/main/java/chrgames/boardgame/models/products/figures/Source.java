@@ -1,10 +1,12 @@
-package chrgames.boardgame.models;
+package chrgames.boardgame.models.products.figures;
 
 import java.util.ArrayList;
 
+import chrgames.boardgame.models.products.Figure;
+
 public class Source extends Figure {
 
-    Source() {
+    public Source() {
         cost = 6;
 
         level = Level.EASY;
@@ -16,6 +18,8 @@ public class Source extends Figure {
         blackFigureIcon = "source_b";
 
         redFigureIcon = "source_r";
+
+        productView = "source_shop";
     }
 
     /**

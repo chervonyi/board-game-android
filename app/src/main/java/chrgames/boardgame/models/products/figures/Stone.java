@@ -1,32 +1,39 @@
-package chrgames.boardgame.models;
+package chrgames.boardgame.models.products.figures;
 
 import java.util.ArrayList;
 
-public class Master extends Figure {
+import chrgames.boardgame.models.products.Figure;
 
-    Master() {
-        cost = 12;
+public class Stone extends Figure {
 
-        level = Level.NORMAL;
+    /**
+     * Sets the basic attributes for current figure - Stone
+     */
+    public Stone() {
+        cost = 2;
+
+        level = Level.EASY;
 
         ableToMove = true;
 
-        ableToFight = true;
+        ableToFight = false;
 
-        blackFigureIcon = "master_b";
+        blackFigureIcon = "stone_b";
 
-        redFigureIcon = "master_r";
+        redFigureIcon = "stone_r";
+
+        productView = "stone_shop";
     }
 
     /**
-     * Explains scheme of moves exactly this figure (Master)
+     * Explains scheme of moves exactly this figure (Stone)
      * @param position - absolute position on board of exactly this figure
      * @return - all possible cells to move
      */
     @Override
     public ArrayList<Integer> getAvailableCellsToMoveFrom(int position) {
 
-        if (!isRealPosition(position)) {
+        if (isRealPosition(position)) {
             return new ArrayList<>();
         }
 
@@ -37,10 +44,10 @@ public class Master extends Figure {
         ArrayList<Integer> availableCells = new ArrayList<>();
 
         // Set search zone borders (adjacent cells)
-        int minY = y - 2;
-        int maxY = y + 2;
-        int minX = x - 2;
-        int maxX = x + 2;
+        int minY = y - 1;
+        int maxY = y + 1;
+        int minX = x - 1;
+        int maxX = x + 1;
 
         for (int i = minY; i <= maxY; i++) {
             for (int j = minX; j <= maxX; j++) {
@@ -52,6 +59,5 @@ public class Master extends Figure {
         }
 
         return availableCells;
-
     }
 }

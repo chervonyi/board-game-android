@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import chrgames.boardgame.R;
 import chrgames.boardgame.models.Cell;
-import chrgames.boardgame.models.Figure;
+import chrgames.boardgame.models.products.Figure;
 import chrgames.boardgame.models.Game;
 import chrgames.boardgame.models.Shop;
 
@@ -199,13 +199,19 @@ public class BoardActivity extends AppCompatActivity {
         ArrayList<Figure> shop = game.getShop();
 
         for (int i = 0; i < shop.size(); i++) {
-            String imageName = shop.get(i).getNameOfBlackFigure();
+            String imageName = shop.get(i).getProductView();
 
             int imageId = context.getResources().getIdentifier(imageName,"drawable", context.getPackageName());
 
             products.get(i).setImageResource(imageId);
 
-            productsPrice.get(i).setText("$" + shop.get(i).getCost());
+            int cost = shop.get(i).getCost();
+
+            if (cost > 0) {
+                productsPrice.get(i).setText("$" + cost);
+            } else {
+                productsPrice.get(i).setText("");
+            }
         }
     }
 

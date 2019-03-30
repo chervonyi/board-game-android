@@ -649,7 +649,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/backgroundOfBoard"
-                    android:src="@drawable/master_b"
+                    android:src="@drawable/soldier_shop"
                     android:onClick="onClickProduct"/>
 
                 <ImageView
@@ -668,7 +668,7 @@
                     android:layout_weight="1"
                     android:background="@color/backgroundOfBoard"
                     android:onClick="onClickProduct"
-                    android:src="@drawable/soldier_b" />
+                    android:src="@drawable/random_kill" />
             </LinearLayout>
 
             <LinearLayout

@@ -8,6 +8,8 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import chrgames.boardgame.models.products.Figure;
+
 public class FigureTest {
 
     private Figure figure = new Figure() {

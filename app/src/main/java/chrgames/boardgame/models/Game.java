@@ -3,8 +3,14 @@ package chrgames.boardgame.models;
 import java.util.ArrayList;
 
 import chrgames.boardgame.activities.BoardActivity;
+import chrgames.boardgame.models.products.figures.Master;
+import chrgames.boardgame.models.products.figures.Predator;
+import chrgames.boardgame.models.products.figures.Soldier;
+import chrgames.boardgame.models.products.figures.Source;
+import chrgames.boardgame.models.products.figures.Stone;
+import chrgames.boardgame.models.products.Figure;
 
-import static chrgames.boardgame.models.Figure.*;
+import static chrgames.boardgame.models.products.Figure.*;
 
 public class Game {
 
@@ -260,7 +266,7 @@ public class Game {
         ArrayList<Integer> freeCells;
         int randomFreePosition;
 
-        for (Kind kind : set) {
+        for (Kind kind: set) {
 
             switch (kind) {
                 case Master:

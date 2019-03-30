@@ -2,6 +2,9 @@ package chrgames.boardgame.models;
 
 import java.util.ArrayList;
 
+import chrgames.boardgame.models.products.figures.Source;
+import chrgames.boardgame.models.products.Figure;
+
 public class Cell {
 
     /**

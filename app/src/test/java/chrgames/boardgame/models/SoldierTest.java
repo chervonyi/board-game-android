@@ -5,6 +5,8 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import chrgames.boardgame.models.products.figures.Soldier;
+
 import static org.junit.Assert.*;
 
 public class SoldierTest {

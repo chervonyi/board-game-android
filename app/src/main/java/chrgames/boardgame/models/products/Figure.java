@@ -1,11 +1,13 @@
-package chrgames.boardgame.models;
+package chrgames.boardgame.models.products;
 
 
 import java.util.ArrayList;
 
-public abstract class Figure {
+import chrgames.boardgame.models.Game;
 
-    enum Kind {
+public abstract class Figure extends Product {
+
+    public enum Kind {
         Master,
         Predator,
         Soldier,
@@ -14,57 +16,25 @@ public abstract class Figure {
     }
 
     /**
-     * Figure level affects the appearance time. This attribute answers on questions: <br>
-     * "How quickly some figure will be available in a shop?" <br>
-     * 'EASY' figures will be available immediately after start. <br>
-     * 'NORMAL' figures will appear in the store later. <br>
-     * And 'HARD' will be opened much more later. <br> <br>
-     *
-     * Also, the amount of remuneration for kill enemy's figure will depend on this level. <br>
-     * You will get $1 for kill 'EASY' figure
-     * You will get $2 for kill 'NORMAL' figure
-     * You will get $3 for kill 'HARD' figure
-     */
-    enum Level {
-        EASY(1), NORMAL(2), HARD(3);
-
-        private int rewardForKill;
-
-        Level(int reward) {
-            this.rewardForKill = reward;
-        }
-    }
-
-    /**
      * Name of image with black (own) appropriate figure
      */
-    String blackFigureIcon;
+    protected  String blackFigureIcon;
 
     /**
      * Name of image with red (enemy's) appropriate figure
      */
-    String redFigureIcon;
-
-    /**
-     * Figure price which will be shown in shop.
-     */
-    int cost;
-
-    /**
-     * Level of every extended figure explains importance on a board.
-     */
-    Level level;
+    protected String redFigureIcon;
 
     /**
      * Shows if current figure is able to move.<br>
      * This state should be always checked before using <b>'getAvailableCellsToMoveFrom'</b> method.
      */
-    boolean ableToMove;
+    protected boolean ableToMove;
 
     /**
      * Shows if current figure is able to fight.<br>
      */
-    boolean ableToFight;
+    protected boolean ableToFight;
 
     /**
      * Explains scheme of moves some figure.
@@ -74,22 +44,12 @@ public abstract class Figure {
     public abstract ArrayList<Integer> getAvailableCellsToMoveFrom(int position);
 
     /**
-     * @return assigned level of figure.
-     */
-    public Level getLevel() { return level; }
-
-    /**
-     * @return assigned cost of figure.
-     */
-    public int getCost() { return cost; }
-
-    /**
      * Converts sequence number of cell to position in coordinate system.
      * @param position - absolute position on board (sequence number of cell).
      * @return array with two numbers - x and y that responsible for cell position in coordinate system.
      */
     public int[] getXY(int position) {
-        if (!isRealPosition(position)) { return new int[]{}; }
+        if (isRealPosition(position)) { return new int[]{}; }
 
         int y = position / Game.COLUMNS;
         int x = position - Game.COLUMNS * y;
@@ -119,14 +79,24 @@ public abstract class Figure {
     }
 
     public boolean isRealPosition(int position) {
-        return position >= 0 && position < Game.CELLS;
+        return position < 0 || position >= Game.CELLS;
     }
 
     /**
      * @return amount of reward which depends on level of selected figure.
      */
     public int getReward() {
-        return this.level.rewardForKill;
+        switch (level) {
+            case EASY:
+                return 1;
+
+            case NORMAL:
+                return 2;
+
+            case HARD:
+                return 3;
+        }
+        return -1;
     }
 
     /**
@@ -153,5 +123,7 @@ public abstract class Figure {
 
     public boolean isFighting() { return ableToFight; }
 
-
+    public int getCost() {
+        return cost;
+    }
 }
