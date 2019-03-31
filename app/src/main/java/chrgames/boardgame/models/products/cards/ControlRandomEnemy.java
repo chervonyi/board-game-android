@@ -7,15 +7,14 @@ import chrgames.boardgame.models.Cell;
 import chrgames.boardgame.models.Game;
 import chrgames.boardgame.models.products.Card;
 
-public class KillRandomEnemy extends Card {
+public class ControlRandomEnemy extends Card {
 
+    public ControlRandomEnemy() {
+        cost = 8;
 
-    public KillRandomEnemy() {
-        level = Level.EASY;
+        level = Level.NORMAL;
 
-        cost = 5;
-
-        productView = "random_kill";
+        productView = "control";
     }
 
     @Override
@@ -39,10 +38,9 @@ public class KillRandomEnemy extends Card {
 
         Collections.shuffle(enemyFigures);
 
-        for (Cell cell: enemyFigures) {
-            if (!cell.isEndingFigure()) {
-                cell.resetFigure();
-                return true;
+        for (int i = 0; i < enemyFigures.size(); i++) {
+            if (!enemyFigures.get(i).isEndingFigure()) {
+                enemyFigures.get(i).setOwner(user);
             }
         }
 

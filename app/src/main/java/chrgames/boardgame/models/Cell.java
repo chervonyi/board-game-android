@@ -56,6 +56,10 @@ public class Cell {
         owner = null;
     }
 
+    public void setOwner(Game.PlayerState newOwner) {
+        this.owner = newOwner;
+    }
+
     /**
      * Check if current cell is empty.
      * @return <b>true</b> if cell is empty; <b>false</b> if is not empty (occupied)
@@ -116,5 +120,9 @@ public class Cell {
 
     public int getRewardForDestroy() {
         return occupation.getReward();
+    }
+
+    public void setId(int newID) {
+        id = newID;
     }
 }

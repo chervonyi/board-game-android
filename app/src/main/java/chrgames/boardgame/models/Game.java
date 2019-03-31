@@ -234,6 +234,25 @@ public class Game {
         endTurn();
     }
 
+    public ArrayList<Cell> getAllFiguresOf(PlayerState owner) {
+        ArrayList<Cell> vault = new ArrayList<>();
+
+        for (int i = 0; i < board.size(); i++) {
+            if (board.get(i).getOwner() == owner) {
+                vault.add(board.get(i));
+            }
+        }
+
+        return vault;
+    }
+
+    public PlayerState getEnemyStateOf(PlayerState alliance) {
+        if (alliance == PlayerState.ALLIANCE) {
+            return PlayerState.ENEMY;
+        }
+        return PlayerState.ALLIANCE;
+    }
+
     public void highlightAllianceBase() {
         setHighlightForSet(allianceBase.getFreeCells(board), true);
     }
