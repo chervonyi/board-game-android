@@ -100,17 +100,7 @@ public class Game {
         locateFirstFigures();
     }
 
-    public boolean canBuy(int position) {
-        boolean tmp = shop.canBuy(position, alliance.getAmount());
 
-        if (tmp) {
-            selectedProduct = position;
-        } else {
-            selectedProduct = -1;
-        }
-
-        return tmp;
-    }
 
     public Figure buyFigure(int pos) {
         Figure boughtFigure = (Figure) shop.buy(pos);
@@ -124,6 +114,18 @@ public class Game {
         alliance.setAmount(alliance.getAmount() - boughtCard.getCost());
         selectedProduct = -1;
         return boughtCard;
+    }
+
+    public boolean canBuy(int position) {
+        boolean tmp = shop.canBuy(position, alliance.getAmount());
+
+        if (tmp) {
+            selectedProduct = position;
+        } else {
+            selectedProduct = -1;
+        }
+
+        return tmp;
     }
 
     /**
@@ -175,7 +177,6 @@ public class Game {
             }
         }
     }
-
 
     public boolean selectProduct(int position) {
 
@@ -436,5 +437,17 @@ public class Game {
 
     public int getIncome() {
         return alliance.getIncome();
+    }
+
+    public void setShop(Shop newSHop) {
+        this.shop = newSHop;
+    }
+
+    public Player getPLayer(PlayerState player) {
+        return player == PlayerState.ALLIANCE ? alliance : enemy;
+    }
+
+    public Base getBase(PlayerState player) {
+        return player == PlayerState.ALLIANCE ? allianceBase : enemyBase;
     }
 }

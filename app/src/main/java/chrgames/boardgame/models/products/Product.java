@@ -1,5 +1,6 @@
 package chrgames.boardgame.models.products;
 
+
 public abstract class Product {
 
     public enum Kind {
@@ -11,7 +12,14 @@ public abstract class Product {
         Stone,
 
         // Cards
-        KillRandomEnemy
+        KillRandomEnemy,
+        Advertisement,
+        BlackDay,
+        Businessman,
+        ControlRandomEnemy,
+        CreateRandomEnemy,
+        NewShop,
+        Reversal
     }
 
 

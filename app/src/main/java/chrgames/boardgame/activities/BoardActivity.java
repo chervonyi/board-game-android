@@ -88,7 +88,7 @@ public class BoardActivity extends AppCompatActivity {
         });
 
         // Start a new game
-        game = new Game(BoardActivity.this, 0, 1);
+        game = new Game(BoardActivity.this, 100, 10);
 
         locateFiguresOnBoard();
 

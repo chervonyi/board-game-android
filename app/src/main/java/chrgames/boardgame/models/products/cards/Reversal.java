@@ -45,8 +45,8 @@ public class Reversal extends Card {
         // Swap cells - [i] and [CELLS - i]
         for (int i = 0; i < Game.CELLS / 2; i++) {
             tmp = board.get(i);
-            board.add(i, board.get(Game.CELLS - i));
-            board.add(Game.CELLS - i, tmp);
+            board.add(i, board.get(Game.CELLS - i - 1));
+            board.add(Game.CELLS - i - 1, tmp);
 
         }
 

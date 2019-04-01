@@ -44,6 +44,6 @@ public class ControlRandomEnemy extends Card {
             }
         }
 
-        return false;
+        return true;
     }
 }
