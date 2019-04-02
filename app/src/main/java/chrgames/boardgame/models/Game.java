@@ -267,9 +267,12 @@ public class Game {
                     @Override
                     public void run() {
                         int[] move = bot.getMove(board);
-                        int cellFrom = move[0];
-                        int cellTo = move[1];
-                        move(cellFrom, cellTo);
+                        if (move != null) {
+                            int cellFrom = move[0];
+                            int cellTo = move[1];
+                            move(cellFrom, cellTo);
+                        }
+
                     }
                 },
                 bot.getDelay()

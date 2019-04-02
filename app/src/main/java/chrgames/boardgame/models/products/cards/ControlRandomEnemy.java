@@ -41,6 +41,7 @@ public class ControlRandomEnemy extends Card {
         for (int i = 0; i < enemyFigures.size(); i++) {
             if (!enemyFigures.get(i).isEndingFigure()) {
                 enemyFigures.get(i).setOwner(user);
+                return true;
             }
         }
 

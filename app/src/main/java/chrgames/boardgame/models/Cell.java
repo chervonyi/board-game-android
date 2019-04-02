@@ -33,6 +33,13 @@ public class Cell {
         highlighted = false;
     }
 
+    public Cell (Cell newCell) {
+       id = newCell.id;
+       occupation = newCell.occupation;
+       owner = newCell.owner;
+       highlighted = false;
+    }
+
     /**
      * Set some figure at this cell
      * @param figure - appropriate figure (like Stone, Soldier, Master etc).
@@ -124,5 +131,9 @@ public class Cell {
 
     public void setId(int newID) {
         id = newID;
+    }
+
+    public Figure getFigure() {
+        return occupation;
     }
 }

@@ -51,6 +51,10 @@ public class Bot {
         HashMap<Integer, Integer> availableMoves = getMapOfAvailableMoves(board);
         List<Integer> keysAsArray = new ArrayList<>(availableMoves.keySet());
 
+        if (availableMoves.size() == 0) {
+            return null;
+        }
+
         Random random = new Random();
 
         int cellTo = keysAsArray.get(random.nextInt(keysAsArray.size()));
