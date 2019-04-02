@@ -20,12 +20,12 @@ public class KillRandomEnemy extends Card {
 
     @Override
     public String getInformation() {
-        return null;
+        return "Kill a random figure for $" + cost;
     }
 
     @Override
     public String getSubmitQuestion() {
-        return null;
+        return "Use";
     }
 
     @Override

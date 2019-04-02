@@ -15,12 +15,12 @@ public class NewShop extends Card {
     }
     @Override
     public String getInformation() {
-        return null;
+        return "Refill the shop with new products for $" + cost;
     }
 
     @Override
     public String getSubmitQuestion() {
-        return null;
+        return "Use";
     }
 
     @Override

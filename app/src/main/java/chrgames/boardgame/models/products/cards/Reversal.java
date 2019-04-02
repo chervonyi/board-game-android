@@ -18,12 +18,12 @@ public class Reversal extends Card {
 
     @Override
     public String getInformation() {
-        return null;
+        return "Swap ALL figures with your opponent";
     }
 
     @Override
     public String getSubmitQuestion() {
-        return null;
+        return "Use";
     }
 
     @Override

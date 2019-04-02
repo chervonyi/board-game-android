@@ -1,5 +1,7 @@
 package chrgames.boardgame.models;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 import chrgames.boardgame.activities.BoardActivity;
@@ -71,6 +73,7 @@ public class Game {
 
     private int selectedProduct = -1;
 
+    private int preparedProductToUse = -1;
 
     // Constructor
     public Game(BoardActivity activity, int amount, int income) {
@@ -117,15 +120,7 @@ public class Game {
     }
 
     public boolean canBuy(int position) {
-        boolean tmp = shop.canBuy(position, alliance.getAmount());
-
-        if (tmp) {
-            selectedProduct = position;
-        } else {
-            selectedProduct = -1;
-        }
-
-        return tmp;
+       return shop.canBuy(position, alliance.getAmount());
     }
 
     /**
@@ -187,9 +182,11 @@ public class Game {
 
                 highlightAllianceBase();
             } else {
-                Card card = buyCard(position);
-                card.use(PlayerState.ALLIANCE, this);
-                endTurn();
+                Card card = (Card) shop.getProductById(position);
+
+                preparedProductToUse = position;
+
+                activity.showDialogConfirm(card.getInformation(), card.getSubmitQuestion(), card.getProductView());
             }
 
             return true;
@@ -426,6 +423,12 @@ public class Game {
 
             makeBotMove();
         }
+    }
+
+    public void confirmToUseCard() {
+        Card card = buyCard(preparedProductToUse);
+        card.use(PlayerState.ALLIANCE, this);
+        endTurn();
     }
 
     public ArrayList<Product> getShop() {

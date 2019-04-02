@@ -103,4 +103,7 @@ public class Shop {
         return Product.isFigure(vault.get(position));
     }
 
+    public Product getProductById(int position) {
+        return vault.get(position);
+    }
 }

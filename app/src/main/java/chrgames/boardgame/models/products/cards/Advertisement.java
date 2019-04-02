@@ -17,12 +17,12 @@ public class Advertisement extends Card {
 
     @Override
     public String getInformation() {
-        return null;
+        return "Watch ads video to get extra $" + REWARD + "!";
     }
 
     @Override
     public String getSubmitQuestion() {
-        return null;
+        return "Watch";
     }
 
     @Override

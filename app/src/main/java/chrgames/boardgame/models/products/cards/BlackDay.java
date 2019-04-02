@@ -18,12 +18,12 @@ public class BlackDay extends Card {
 
     @Override
     public String getInformation() {
-        return null;
+        return "Kill ALL usable figures on the board for $" + cost;
     }
 
     @Override
     public String getSubmitQuestion() {
-        return null;
+        return "Use";
     }
 
     @Override

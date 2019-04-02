@@ -13,9 +13,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import chrgames.boardgame.DialogConfirm;
 import chrgames.boardgame.R;
 import chrgames.boardgame.models.Cell;
-import chrgames.boardgame.models.products.Figure;
 import chrgames.boardgame.models.Game;
 import chrgames.boardgame.models.Shop;
 import chrgames.boardgame.models.products.Product;
@@ -30,7 +30,6 @@ public class BoardActivity extends AppCompatActivity {
     private LinearLayout enemyTurnLayout;
     private ArrayList<ImageView> products = new ArrayList<>();
     private ArrayList<TextView> productsPrice = new ArrayList<>();
-
 
     // Constants
     private final int COUNT_OF_SELLS = 50;
@@ -98,8 +97,6 @@ public class BoardActivity extends AppCompatActivity {
         setIncome(game.getIncome());
     }
 
-
-
     /**
      * Listener for all cells.
      * Resend if of selected cell into appropriate game method to simulate a click.
@@ -131,6 +128,7 @@ public class BoardActivity extends AppCompatActivity {
                 Toast.makeText(this, "YOU WIN", Toast.LENGTH_LONG).show();
             }
         }
+
     }
 
     public void onClickProduct(View view) {
@@ -283,5 +281,22 @@ public class BoardActivity extends AppCompatActivity {
 
     public void setIncome(int newIncome) {
         incomeView.setText("+$" + newIncome);
+    }
+
+    public void onConfirmDialog() {
+        game.confirmToUseCard();
+
+        locateFiguresOnBoard();
+        updateShopContent();
+
+        // Update labels
+        setAmount(game.getAmount());
+        setIncome(game.getIncome());
+    }
+
+    public void showDialogConfirm(String text, String buttonText, String image) {
+        DialogConfirm dialogConfirm = new DialogConfirm(BoardActivity.this, this, text, image, buttonText);
+        dialogConfirm.show();
+
     }
 }

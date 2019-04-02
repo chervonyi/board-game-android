@@ -16,12 +16,12 @@ public class Businessman extends Card {
 
     @Override
     public String getInformation() {
-        return null;
+        return "Add +1$ for every next moves for $" + cost;
     }
 
     @Override
     public String getSubmitQuestion() {
-        return null;
+        return "Use";
     }
 
     @Override
