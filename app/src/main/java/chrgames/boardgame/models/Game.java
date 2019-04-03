@@ -1,7 +1,5 @@
 package chrgames.boardgame.models;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 import chrgames.boardgame.activities.BoardActivity;
@@ -23,7 +21,7 @@ public class Game {
         ALLIANCE
     }
 
-    // General vars
+    // General vars:
     private ArrayList<Cell> board;
 
     private BoardActivity activity;
@@ -49,17 +47,16 @@ public class Game {
      */
     private PlayerState turn;
 
-    // Constants
+    // Constants:
     public static final int ROWS = 10;
 
     public static final int COLUMNS = 5;
 
     public static final int CELLS = ROWS * COLUMNS;
 
-    public static final int BASE_SIZE = 3;
+    static final int BASE_SIZE = 3;
 
-
-    // Bases
+    // Bases:
     private Base enemyBase;
 
     private Base allianceBase;
@@ -68,14 +65,14 @@ public class Game {
 
     private Player enemy;
 
-    // Vars to work with selection and moves
+    // Vars to work with selection and moves:
     private int selectedCell;
 
     private int selectedProduct = -1;
 
     private int preparedProductToUse = -1;
 
-    // Constructor
+    // Constructor:
     public Game(BoardActivity activity, int amount, int income) {
 
         // Set all required fields
@@ -104,25 +101,7 @@ public class Game {
     }
 
 
-
-    public Figure buyFigure(int pos) {
-        Figure boughtFigure = (Figure) shop.buy(pos);
-        alliance.setAmount(alliance.getAmount() - boughtFigure.getCost());
-        selectedProduct = -1;
-        return boughtFigure;
-    }
-
-    public Card buyCard(int pos) {
-        Card boughtCard = (Card) shop.buy(pos);
-        alliance.setAmount(alliance.getAmount() - boughtCard.getCost());
-        selectedProduct = -1;
-        return boughtCard;
-    }
-
-    public boolean canBuy(int position) {
-       return shop.canBuy(position, alliance.getAmount());
-    }
-
+    // Main methods:
     /**
      * Listener for every click on cells.
      * There are two different types of clicks:
@@ -142,7 +121,7 @@ public class Game {
         if (cell.isHighlighted()) {
 
             if (selectedProduct != -1 && cell.isEmpty()) {
-                Figure boughtFigure = buyFigure(selectedProduct);
+                Figure boughtFigure = (Figure) buyProduct(selectedProduct);
                 setFigureAt(boughtFigure, position, PlayerState.ALLIANCE);
 
                 removeSelectionCells();
@@ -186,20 +165,12 @@ public class Game {
 
                 preparedProductToUse = position;
 
-                activity.showDialogConfirm(card.getInformation(), card.getSubmitQuestion(), card.getProductView());
+                activity.showConfirmDialog(card.getInformation(), card.getSubmitQuestion(), card.getProductView());
             }
 
             return true;
         }
         return false;
-    }
-
-    public void removeSelectionCells() {
-        for (int i = 0; i < board.size(); i++) {
-            board.get(i).setHighlighted(false);
-        }
-        selectedCell = -1;
-        selectedProduct = -1;
     }
 
     /**
@@ -232,63 +203,39 @@ public class Game {
         endTurn();
     }
 
-    public ArrayList<Cell> getAllFiguresOf(PlayerState owner) {
-        ArrayList<Cell> vault = new ArrayList<>();
+    /**
+     * Execute buying of selected before necessary product. <br>
+     *
+     * Should be cast into necessary type of product (Figure or Card). <br>
+     *
+     * @param pos - sequence number in shop cart of the necessary product.
+     * @return instance of necessary product.
+     */
+    public Product buyProduct(int pos) {
+        Product boughtProduct = shop.buy(pos);
+        alliance.setAmount(alliance.getAmount() - boughtProduct.getCost());
+        selectedProduct = -1;
+        return boughtProduct;
+    }
 
+
+    // Supporting methods:
+    /**
+     * Check if user has enough money to buy product with appropriate position number
+     * @param position - sequence number
+     * @return <b>true</b> if user has enough money and is able to buy selected product;
+     * <b>false</b> if user has not enough money, so he cannot buy selected product.
+     */
+    public boolean canBuy(int position) {
+        return shop.canBuy(position, alliance.getAmount());
+    }
+
+    public void removeSelectionCells() {
         for (int i = 0; i < board.size(); i++) {
-            if (board.get(i).getOwner() == owner) {
-                vault.add(board.get(i));
-            }
+            board.get(i).setHighlighted(false);
         }
-
-        return vault;
-    }
-
-    public PlayerState getEnemyStateOf(PlayerState alliance) {
-        if (alliance == PlayerState.ALLIANCE) {
-            return PlayerState.ENEMY;
-        }
-        return PlayerState.ALLIANCE;
-    }
-
-    public void highlightAllianceBase() {
-        setHighlightForSet(allianceBase.getFreeCells(board), true);
-    }
-
-    /**
-     * Execute move created by Bot according to selected level. {@link Bot.Level}
-     */
-    private void makeBotMove() {
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-                        int[] move = bot.getMove(board);
-                        if (move != null) {
-                            int cellFrom = move[0];
-                            int cellTo = move[1];
-                            move(cellFrom, cellTo);
-                        }
-
-                    }
-                },
-                bot.getDelay()
-        );
-    }
-
-    /**
-     * Locate an identical, fixed set of figures to each sides.
-     */
-    private void locateFirstFigures() {
-        final Kind startSetOfFigures[] = new Kind[]{
-                Kind.Source,
-                Kind.Stone,
-                Kind.Stone,
-                Kind.Soldier
-        };
-
-        locateSet(startSetOfFigures, enemyBase);
-        locateSet(startSetOfFigures, allianceBase);
+        selectedCell = -1;
+        selectedProduct = -1;
     }
 
     /**
@@ -336,29 +283,112 @@ public class Game {
         }
     }
 
-    /**
-     * Set figure at necessary cell.
-     * @param figure - appropriate figure such as Stone, Soldier etc.
-     * @param position - position on the board.
-     * @param owner - owner of current figure. (Enemy or Alliance)
-     */
-    private void setFigureAt(Figure figure, int position, PlayerState owner) {
-        Cell cell = board.get(position);
+    public void highlightAllianceBase() {
+        setHighlightForSet(allianceBase.getFreeCells(board), true);
+    }
 
-        if (cell.isEmpty()) {
-            cell.setFigure(figure, owner);
+    /**
+     * Execute move created by Bot according to selected level. {@link Bot.Level}
+     */
+    private void makeBotMove() {
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        int[] move = bot.getMove(board);
+                        if (move != null) {
+                            int cellFrom = move[0];
+                            int cellTo = move[1];
+                            move(cellFrom, cellTo);
+                        }
+
+                    }
+                },
+                bot.getDelay()
+        );
+    }
+
+    /**
+     * Locate an identical, fixed set of figures to each sides.
+     */
+    private void locateFirstFigures() {
+        final Kind startSetOfFigures[] = new Kind[]{
+                Kind.Source,
+                Kind.Stone,
+                Kind.Stone,
+                Kind.Soldier
+        };
+
+        locateSet(startSetOfFigures, enemyBase);
+        locateSet(startSetOfFigures, allianceBase);
+    }
+
+    /**
+     * Change turn.<br>
+     * If it's going to be a Enemy's turn, method calls 'makeBotMove' function
+     * to execute enemy's move.
+     * When it's changed on Alliance's turn, method calls some Activity's method to
+     * update a board view according to changes that contributed Bot move.
+     */
+    private void endTurn() {
+
+        if (turn == PlayerState.ENEMY) {
+            enemy.round();
+
+            turn = PlayerState.ALLIANCE;
+
+            // Update board view
+            activity.updateBoardContent();
+        } else {
+            alliance.round();
+            turn = PlayerState.ENEMY;
+
+            makeBotMove();
         }
     }
 
     /**
-     * Make identical highlight status for given set of cells.
-     * @param set - a set of sequence numbers to change their highlight-status
-     * @param highlighted - desired status
+     * This method calls on click of confirm button in ConfirmDialog.
+     * Has the goal to finish the purchase of a new card.
      */
-    private void setHighlightForSet(ArrayList<Integer> set, boolean highlighted) {
-        for (int i = 0; i < set.size(); i++) {
-            board.get(set.get(i)).setHighlighted(highlighted);
+    public void confirmToUseCard() {
+        Card card = (Card) buyProduct(preparedProductToUse);
+        card.use(PlayerState.ALLIANCE, this);
+        endTurn();
+    }
+
+
+    // Getters:
+
+    /**
+     * Return all figures that occupied with certain player.
+     * @param owner - id of player state
+     * @return list of all figures with one owner.
+     */
+    public ArrayList<Cell> getAllFiguresOf(PlayerState owner) {
+        ArrayList<Cell> vault = new ArrayList<>();
+
+        for (int i = 0; i < board.size(); i++) {
+            if (board.get(i).getOwner() == owner) {
+                vault.add(board.get(i));
+            }
         }
+
+        return vault;
+    }
+
+    /**
+     * Return a player state opposite to given state.
+     * @param alliance - given player state
+     * @return player state of enemy. <br>
+     *     (if given player state is Alliance -> returns Enemy state;
+     *     if given state is Enemy -> returns Alliance state)
+     */
+    public PlayerState getEnemyStateOf(PlayerState alliance) {
+        if (alliance == PlayerState.ALLIANCE) {
+            return PlayerState.ENEMY;
+        }
+        return PlayerState.ALLIANCE;
     }
 
     /**
@@ -402,58 +432,81 @@ public class Game {
     }
 
     /**
-     * Change turn.<br>
-     * If it's going to be a Enemy's turn, method calls 'makeBotMove' function
-     * to execute enemy's move.
-     * When it's changed on Alliance's turn, method calls some Activity's method to
-     * update a board view according to changes that contributed Bot move.
+     * @return a list of products that are available to buy in any time.
      */
-    private void endTurn() {
-
-        if (turn == PlayerState.ENEMY) {
-            enemy.round();
-
-            turn = PlayerState.ALLIANCE;
-
-            // Update board view
-            activity.locateFiguresOnBoard();
-        } else {
-            alliance.round();
-            turn = PlayerState.ENEMY;
-
-            makeBotMove();
-        }
-    }
-
-    public void confirmToUseCard() {
-        Card card = buyCard(preparedProductToUse);
-        card.use(PlayerState.ALLIANCE, this);
-        endTurn();
-    }
-
     public ArrayList<Product> getShop() {
         return shop.getProducts();
     }
 
+    /**
+     * @return sequence number (in shop) of selected product
+     */
     public int getSelectedProduct() { return selectedProduct; }
 
+    /**
+     * @return current value of player's amount of money
+     */
     public int getAmount() {
         return alliance.getAmount();
     }
 
+    /**
+     * @return current value of player's income
+     */
     public int getIncome() {
         return alliance.getIncome();
     }
 
-    public void setShop(Shop newSHop) {
-        this.shop = newSHop;
-    }
-
+    /**
+     * Return an instance of Player class according to given player state
+     * @param player - state of necessary player (Alliance or Enemy)
+     * @return required Player instance
+     */
     public Player getPLayer(PlayerState player) {
         return player == PlayerState.ALLIANCE ? alliance : enemy;
     }
 
+    /**
+     * Return an instance of Base class according to given player state
+     * @param player - state of necessary player (Alliance or Enemy)
+     * @return required Base instance
+     */
     public Base getBase(PlayerState player) {
         return player == PlayerState.ALLIANCE ? allianceBase : enemyBase;
+    }
+
+
+    // Setters:
+    /**
+     * Set figure at necessary cell.
+     * @param figure - appropriate figure such as Stone, Soldier etc.
+     * @param position - position on the board.
+     * @param owner - owner of current figure. (Enemy or Alliance)
+     */
+    private void setFigureAt(Figure figure, int position, PlayerState owner) {
+        Cell cell = board.get(position);
+
+        if (cell.isEmpty()) {
+            cell.setFigure(figure, owner);
+        }
+    }
+
+    /**
+     * Make identical highlight status for given set of cells.
+     * @param set - a set of sequence numbers to change their highlight-status
+     * @param highlighted - desired status
+     */
+    private void setHighlightForSet(ArrayList<Integer> set, boolean highlighted) {
+        for (int i = 0; i < set.size(); i++) {
+            board.get(set.get(i)).setHighlighted(highlighted);
+        }
+    }
+
+    /**
+     * Set new instance of Shop class to 'shop' field.
+     * @param newSHop - new instance of Shop class
+     */
+    public void setShop(Shop newSHop) {
+        this.shop = newSHop;
     }
 }

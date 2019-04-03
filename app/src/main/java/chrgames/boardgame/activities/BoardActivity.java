@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import chrgames.boardgame.DialogConfirm;
+import chrgames.boardgame.ConfirmDialog;
 import chrgames.boardgame.R;
 import chrgames.boardgame.models.Cell;
 import chrgames.boardgame.models.Game;
@@ -53,6 +53,7 @@ public class BoardActivity extends AppCompatActivity {
 
         String pattern = "cell_";
 
+        // Connect all views of each cell (50)
         for (int i = 0; i < COUNT_OF_SELLS; i++) {
             cells.add((ImageView) findViewById(getResources().getIdentifier(pattern + i,
                     "id", getPackageName())));
@@ -60,6 +61,7 @@ public class BoardActivity extends AppCompatActivity {
 
         pattern = "shop_";
 
+        // Connect all views of each product (3)
         for (int i = 0; i < Shop.PRODUCT_COUNT; i++) {
             products.add((ImageView)findViewById(getResources().getIdentifier(pattern + i,
                     "id", getPackageName())));
@@ -67,6 +69,7 @@ public class BoardActivity extends AppCompatActivity {
 
         pattern = "price_";
 
+        // Connect all viws of each price label (3)
         for (int i = 0; i < Shop.PRODUCT_COUNT; i++) {
             productsPrice.add((TextView)findViewById(getResources().getIdentifier(pattern + i,
                     "id", getPackageName())));
@@ -89,8 +92,7 @@ public class BoardActivity extends AppCompatActivity {
         // Start a new game
         game = new Game(BoardActivity.this, 100, 10);
 
-        locateFiguresOnBoard();
-
+        updateBoardContent();
         updateShopContent();
 
         setAmount(game.getAmount());
@@ -99,7 +101,7 @@ public class BoardActivity extends AppCompatActivity {
 
     /**
      * Listener for all cells.
-     * Resend if of selected cell into appropriate game method to simulate a click.
+     * Resend id of selected cell into appropriate game method to simulate a click. {@link Game#selectCell(int)}
      * @param view - selected cell
      */
     public void onClickCell(View view) {
@@ -114,8 +116,8 @@ public class BoardActivity extends AppCompatActivity {
             game.selectCell(cellId);
 
             // Update board and shop
-            locateFiguresOnBoard();
-            updateCellsView();
+            updateBoardContent();
+            updateBoardView();
             updateShopView();
             updateShopContent();
 
@@ -131,6 +133,11 @@ public class BoardActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Listener for all products.
+     * Resend id of selected product into appropriate game method. {@link Game#selectCell(int)}
+     * @param view
+     */
     public void onClickProduct(View view) {
         // Reset selection of cell
         game.removeSelectionCells();
@@ -141,8 +148,8 @@ public class BoardActivity extends AppCompatActivity {
 
         if (game.selectProduct(position)) {
             // Update board and shop
-            locateFiguresOnBoard();
-            updateCellsView();
+            updateBoardContent();
+            updateBoardView();
             updateShopView();
             updateShopContent();
 
@@ -156,10 +163,10 @@ public class BoardActivity extends AppCompatActivity {
     }
 
     /**
-     * Set view of board according to data from 'game'. <br>
+     * Update view of board according to data from 'game'. <br>
      * Go through all cells and check if cell's view must be changed.
      */
-    public void locateFiguresOnBoard() {
+    public void updateBoardContent() {
 
         runOnUiThread(new Runnable() {
 
@@ -186,19 +193,8 @@ public class BoardActivity extends AppCompatActivity {
     }
 
     /**
-     * Removes any selection of any products in shop
+     * Update views of each product according to data from 'game'. <br>
      */
-    private void updateShopView() {
-        for (int i = 0; i < products.size(); i++) {
-
-            if (game.getSelectedProduct() == i) {
-                products.get(i).setBackground(ContextCompat.getDrawable(context, R.drawable.product_selected));
-            } else {
-                products.get(i).setBackground(null);
-            }
-        }
-    }
-
     public void updateShopContent() {
         ArrayList<Product> shop = game.getShop();
 
@@ -220,9 +216,23 @@ public class BoardActivity extends AppCompatActivity {
     }
 
     /**
+     * Removes any selection of any products in shop
+     */
+    private void updateShopView() {
+        for (int i = 0; i < products.size(); i++) {
+
+            if (game.getSelectedProduct() == i) {
+                products.get(i).setBackground(ContextCompat.getDrawable(context, R.drawable.product_selected));
+            } else {
+                products.get(i).setBackground(null);
+            }
+        }
+    }
+
+    /**
      * Set appropriate view for each cell according to occupation of it.
      */
-    private void updateCellsView() {
+    private void updateBoardView() {
         ArrayList<Cell> board = game.getBoard();
         Cell cell;
         ImageView cellView;
@@ -275,18 +285,30 @@ public class BoardActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Update label of current amount of money
+     * @param newAmount - new value of amount of money
+     */
     public void setAmount(int newAmount) {
         amountView.setText("$" + newAmount);
     }
 
+    /**
+     * Update label of user income
+     * @param newIncome - new value of income
+     */
     public void setIncome(int newIncome) {
         incomeView.setText("+$" + newIncome);
     }
 
+    /**
+     * Call an appropriate method in 'game' to use prepared card <br>
+     * and then update view of board.
+     */
     public void onConfirmDialog() {
         game.confirmToUseCard();
 
-        locateFiguresOnBoard();
+        updateBoardContent();
         updateShopContent();
 
         // Update labels
@@ -294,9 +316,17 @@ public class BoardActivity extends AppCompatActivity {
         setIncome(game.getIncome());
     }
 
-    public void showDialogConfirm(String text, String buttonText, String image) {
-        DialogConfirm dialogConfirm = new DialogConfirm(BoardActivity.this, this, text, image, buttonText);
-        dialogConfirm.show();
+    /**
+     * Show custom Confirm Dialog with basic information about selected card.
+     * Dialog asks to use selected card. <br>
+     * If confirm button will be pressed, this card will be used immediately.
+     * @param text - main text which explains behaviour of current card
+     * @param buttonText - text of confirm button
+     * @param image - name of image of selected card
+     */
+    public void showConfirmDialog(String text, String buttonText, String image) {
+        ConfirmDialog confirmDialog = new ConfirmDialog(BoardActivity.this, this, text, image, buttonText);
+        confirmDialog.show();
 
     }
 }

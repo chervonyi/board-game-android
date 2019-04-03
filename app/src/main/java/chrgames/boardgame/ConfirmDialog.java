@@ -17,7 +17,7 @@ import java.util.Objects;
 
 import chrgames.boardgame.activities.BoardActivity;
 
-public class DialogConfirm extends Dialog {
+public class ConfirmDialog extends Dialog {
 
     private BoardActivity activity;
     private Context context;
@@ -26,7 +26,7 @@ public class DialogConfirm extends Dialog {
     private String mainImage;
     private String buttonText;
 
-    public DialogConfirm(BoardActivity activity, @NonNull Context context, String text, String img, String buttonText) {
+    public ConfirmDialog(BoardActivity activity, @NonNull Context context, String text, String img, String buttonText) {
         super(context);
 
         this.activity = activity;

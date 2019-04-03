@@ -27,12 +27,13 @@ public class Cell {
      */
     private boolean highlighted;
 
-
+    // Constructor
     Cell (int id) {
         this.id = id;
         highlighted = false;
     }
 
+    // Constructor of copy
     public Cell (Cell newCell) {
        id = newCell.id;
        occupation = newCell.occupation;
@@ -50,6 +51,10 @@ public class Cell {
         owner = playerId;
     }
 
+    /**
+     * Set figure from given cell to current one.
+     * @param cell - given instance to copy properties
+     */
     public void setFigure(Cell cell) {
         this.occupation = cell.occupation;
         this.owner = cell.owner;
@@ -63,6 +68,10 @@ public class Cell {
         owner = null;
     }
 
+    /**
+     * Set new owner at current cell.
+     * @param newOwner - state of necessary player
+     */
     public void setOwner(Game.PlayerState newOwner) {
         this.owner = newOwner;
     }
@@ -75,6 +84,10 @@ public class Cell {
         return owner == null;
     }
 
+    /**
+     * Main method to get all available cells for this cell with the current figure at a present position.
+     * @return list of sequence numbers of available cells to move
+     */
     public ArrayList<Integer> getAvailableCellsToMove() {
 
         if (occupation != null) {
@@ -84,6 +97,9 @@ public class Cell {
         return new ArrayList<>();
     }
 
+    /**
+     * @return name of image for according to present figure.
+     */
     public String getView() {
         if (occupation != null) {
             if (owner == Game.PlayerState.ENEMY) {
@@ -96,21 +112,34 @@ public class Cell {
         return "";
     }
 
+    /**
+     * Set special flag at given state (true or false).
+     * @param highlighted - required state of this flag.
+     */
     public void setHighlighted(boolean highlighted) {
         this.highlighted = highlighted;
     }
 
+    /**
+     * @return a current state of special flag which shows if
+     * this cell is able to be moved right now.
+     */
     public boolean isHighlighted() {
         return highlighted;
     }
 
+    /**
+     * @return state of current owner (Alliance or Enemy)
+     */
     public Game.PlayerState getOwner() {
         return owner;
     }
 
-
-    public boolean isAbleToMove() { return occupation.isMoving(); }
-
+    /**
+     * Check if occupied figure is able to fight.
+     * @return <b>true</b> if this figure can fight;
+     * <b>false</b> if current figure is not able to fight.
+     */
     public boolean isAbleToFight() {
         return occupation.isFighting();
     }
@@ -124,15 +153,16 @@ public class Cell {
         return occupation instanceof Source;
     }
 
-
+    /**
+     * @return amount of reward for destroy occupied figure.
+     */
     public int getRewardForDestroy() {
         return occupation.getReward();
     }
 
-    public void setId(int newID) {
-        id = newID;
-    }
-
+    /**
+     * @return instance of occupied figure.
+     */
     public Figure getFigure() {
         return occupation;
     }
