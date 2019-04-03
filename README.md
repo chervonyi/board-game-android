@@ -7,6 +7,11 @@
 
 ## Changelog:
 
+### v.0.0.6:
+* Introduce cards into game
+* Fix bugs
+
+<img src="https://i.imgur.com/BaRnAqK.jpg" width="300">
 
 ### v.0.0.5:
 * Add economy
