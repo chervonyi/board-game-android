@@ -1,19 +1,24 @@
+### A new board game with figures, cards and economy.
 
-### In development...
-
-</br>
-</br>
-
+<br>
+<br>
 
 ## Changelog:
 
-### v.0.0.6:
+### v.0.7.0:
+* Add a custom ConfirmDialog
+* Refactor some code
+* Add comments
+
+<img src="https://i.imgur.com/DwsifX7.jpg" width="300">
+
+### v.0.6.0:
 * Introduce cards into game
 * Fix bugs
 
 <img src="https://i.imgur.com/BaRnAqK.jpg" width="300">
 
-### v.0.0.5:
+### v.0.5.0:
 * Add economy
 * Add shop
 * Add bot (Elementary level)
@@ -21,7 +26,7 @@
 
 <img src="https://i.imgur.com/6p4oGdb.jpg" width="300">
 
-### v.0.0.2:
+### v.0.2.0:
 * Add figures at a start of the game
 * Enable to move figures
 * Enable to destory enemy's figures
