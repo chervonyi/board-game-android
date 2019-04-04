@@ -9,6 +9,8 @@ public class Master extends Figure {
     public Master() {
         cost = 12;
 
+        priority = 15;
+
         level = Level.NORMAL;
 
         ableToMove = true;

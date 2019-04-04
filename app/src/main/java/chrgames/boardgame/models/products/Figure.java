@@ -7,6 +7,7 @@ import chrgames.boardgame.models.Game;
 
 public abstract class Figure extends Product {
 
+    protected int priority;
 
     /**
      * Name of image with black (own) appropriate figure
@@ -118,5 +119,9 @@ public abstract class Figure extends Product {
 
     public int getCost() {
         return cost;
+    }
+
+    public int getPriority() {
+        return priority;
     }
 }

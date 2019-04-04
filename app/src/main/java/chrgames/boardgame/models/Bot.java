@@ -23,6 +23,7 @@ public class Bot {
         EXPERT
     }
 
+
     /**
      * Sets of artificial times for bot thinking.
      */
@@ -35,8 +36,43 @@ public class Bot {
      */
     private Level selectedLevel;
 
+    private final int[] boardPositionPriority;
+
     Bot(Level level) {
         this.selectedLevel = level;
+
+        boardPositionPriority = new int[Game.CELLS];
+
+        int x = 0;
+        int priority = 0;
+
+        for (int i = 0; i < boardPositionPriority.length; i++) {
+            priority += i / 10;
+
+            switch (x) {
+                case 0:
+                case 4: priority += 0; break;
+
+                case 1:
+                case 3: priority += 1; break;
+
+                case 2: priority += 2; break;
+            }
+
+            x++;
+
+            boardPositionPriority[i] = priority;
+
+            if (x % 5 == 0) {
+                x = 0;
+            }
+            priority = 0;
+        }
+    }
+
+
+    public int getPriority(int pos) {
+        return boardPositionPriority[pos];
     }
 
     /**
@@ -46,21 +82,24 @@ public class Bot {
      *      array[0] = cellFrom (id)
      *      array[1] = cellTo (id)
      */
-    public int[] getMove(ArrayList<Cell> board) {
+    public Move getMove(ArrayList<Cell> board) {
 
-        HashMap<Integer, Integer> availableMoves = getMapOfAvailableMoves(board);
-        List<Integer> keysAsArray = new ArrayList<>(availableMoves.keySet());
+        HashMap<Integer, Move> availableMoves = getMapOfAvailableMoves(board);
 
-        if (availableMoves.size() == 0) {
-            return null;
+        if (availableMoves.size() == 0) { return new Move(-1, -1); }
+
+        List<Integer> priorityList = new ArrayList<>(availableMoves.keySet());
+
+        int maxPriority = 0;
+
+        for (Integer priority : priorityList) {
+            if (priority > maxPriority) {
+                maxPriority = priority;
+            }
         }
 
-        Random random = new Random();
-
-        int cellTo = keysAsArray.get(random.nextInt(keysAsArray.size()));
-        int cellFrom = availableMoves.get(cellTo);
-
-        return new int[] {cellFrom, cellTo};
+        // Get Move with maximum calculated priority
+        return availableMoves.get(maxPriority);
     }
 
     /**
@@ -71,11 +110,14 @@ public class Bot {
      * @param board - actual board (list of cells)
      * @return composed map of available moves.
      */
-    private HashMap<Integer, Integer> getMapOfAvailableMoves(ArrayList<Cell> board) {
+    private HashMap<Integer, Move> getMapOfAvailableMoves(ArrayList<Cell> board) {
+
         @SuppressLint("UseSparseArrays")
-        HashMap<Integer, Integer> availableMoves = new HashMap<>();
+        HashMap<Integer, Move> availableMoves = new HashMap<>();
 
         ArrayList<Integer> availableMovesForCell;
+
+        int priority;
 
         for (int i = 0; i < board.size(); i++) {
 
@@ -89,13 +131,30 @@ public class Bot {
                     if (board.get(cellId).isEmpty() ||
                             (board.get(cellId).getOwner() == Game.PlayerState.ALLIANCE &&
                                     cell.isAbleToFight())) {
-                        availableMoves.put(cellId, i);
+                        // For free or cells with bot enemy's figure:
+
+                        priority = calculatePriority(board.get(cellId));
+                        availableMoves.put(priority, new Move(i, cellId));
                     }
                 }
             }
         }
 
         return availableMoves;
+    }
+
+    private int calculatePriority(Cell cell) {
+        int priority = 0;
+
+        int pos = cell.getId();
+
+        priority += boardPositionPriority[pos];
+
+        if (!cell.isEmpty()) {
+            priority += cell.getFigure().getPriority();
+        }
+
+        return priority;
     }
 
     /**

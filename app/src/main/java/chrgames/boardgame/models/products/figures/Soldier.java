@@ -9,6 +9,8 @@ public class Soldier extends Figure {
     public Soldier() {
         cost = 5;
 
+        priority = 6;
+
         level = Level.EASY;
 
         ableToMove = true;

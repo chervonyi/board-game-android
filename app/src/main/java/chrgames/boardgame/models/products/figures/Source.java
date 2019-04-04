@@ -9,6 +9,8 @@ public class Source extends Figure {
     public Source() {
         cost = 6;
 
+        priority = 1000;
+
         level = Level.EASY;
 
         ableToMove = false;

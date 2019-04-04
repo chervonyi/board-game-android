@@ -166,4 +166,8 @@ public class Cell {
     public Figure getFigure() {
         return occupation;
     }
+
+    public int getId() {
+        return id;
+    }
 }

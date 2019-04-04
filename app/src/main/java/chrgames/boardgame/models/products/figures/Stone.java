@@ -12,6 +12,8 @@ public class Stone extends Figure {
     public Stone() {
         cost = 2;
 
+        priority = 3;
+
         level = Level.EASY;
 
         ableToMove = true;

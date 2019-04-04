@@ -295,13 +295,10 @@ public class Game {
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-                        int[] move = bot.getMove(board);
-                        if (move != null) {
-                            int cellFrom = move[0];
-                            int cellTo = move[1];
-                            move(cellFrom, cellTo);
+                        Move move = bot.getMove(board);
+                        if (move.to != -1) {
+                            move(move.from, move.to);
                         }
-
                     }
                 },
                 bot.getDelay()
