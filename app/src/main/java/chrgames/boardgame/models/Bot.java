@@ -3,6 +3,7 @@ package chrgames.boardgame.models;
 import android.annotation.SuppressLint;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -91,8 +92,12 @@ public class Bot {
         List<Integer> priorityList = new ArrayList<>(availableMoves.keySet());
 
         int maxPriority = 0;
+        int sum = 0;
 
         for (Integer priority : priorityList) {
+
+            sum += priority;
+
             if (priority > maxPriority) {
                 maxPriority = priority;
             }
@@ -133,7 +138,7 @@ public class Bot {
                                     cell.isAbleToFight())) {
                         // For free or cells with bot enemy's figure:
 
-                        priority = calculatePriority(board.get(i), board.get(cellId));
+                        priority = calculatePriority(board, board.get(i), board.get(cellId));
                         availableMoves.put(priority, new Move(i, cellId));
                     }
                 }
@@ -143,7 +148,7 @@ public class Bot {
         return availableMoves;
     }
 
-    private int calculatePriority(Cell cellFrom, Cell cellTo) {
+    private int calculatePriority(ArrayList<Cell> board, Cell cellFrom, Cell cellTo) {
         int priority = 0;
 
         int pos = cellTo.getId();
@@ -156,7 +161,51 @@ public class Bot {
 
         priority += cellFrom.getFigure().getPriority();
 
+        if (cellFrom.isAbleToFight()) {
+            int nearestFinalFigureLength = getLengthToFinalFigure(board, cellTo);
+
+            if (nearestFinalFigureLength > 10) {
+                priority += 5;
+            } else {
+                priority += 100 - nearestFinalFigureLength * 10;
+            }
+        }
+
+
         return priority;
+    }
+
+    private int getLengthToFinalFigure(ArrayList<Cell> board, Cell forCell) {
+        ArrayList<Cell> finalFigures = new ArrayList<>();
+
+        for (Cell cell:
+             board) {
+            if (cell.getOwner() == Game.PlayerState.ALLIANCE && cell.isEndingFigure()) {
+                finalFigures.add(cell);
+            }
+        }
+
+        int minLength = 0;
+        int length = 0;
+        int[] xyFinalFigure, xyCell;
+
+        // Looking for nearest final figure
+        for (Cell finalFigure : finalFigures) {
+            xyFinalFigure = Cell.getXY(finalFigure.getId());
+            xyCell = Cell.getXY(forCell.getId());
+
+            length = getLength(xyFinalFigure, xyCell);
+
+            if (length < minLength || minLength == 0) {
+                minLength = length;
+            }
+        }
+
+        return minLength;
+    }
+
+    private int getLength(int[] a, int[] b) {
+        return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]);
     }
 
     /**

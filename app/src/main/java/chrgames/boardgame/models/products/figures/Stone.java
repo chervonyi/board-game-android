@@ -2,6 +2,7 @@ package chrgames.boardgame.models.products.figures;
 
 import java.util.ArrayList;
 
+import chrgames.boardgame.models.Cell;
 import chrgames.boardgame.models.products.Figure;
 
 public class Stone extends Figure {
@@ -12,7 +13,7 @@ public class Stone extends Figure {
     public Stone() {
         cost = 2;
 
-        priority = 3;
+        priority = 5;
 
         level = Level.EASY;
 
@@ -35,11 +36,11 @@ public class Stone extends Figure {
     @Override
     public ArrayList<Integer> getAvailableCellsToMoveFrom(int position) {
 
-        if (isRealPosition(position)) {
+        if (Cell.isRealPosition(position)) {
             return new ArrayList<>();
         }
 
-        int xy[] = getXY(position);
+        int xy[] = Cell.getXY(position);
         int x = xy[0];
         int y = xy[1];
 
@@ -54,8 +55,8 @@ public class Stone extends Figure {
         for (int i = minY; i <= maxY; i++) {
             for (int j = minX; j <= maxX; j++) {
 
-                if (isExist(j, i) && !(x == j && y == i)) {
-                    availableCells.add(getPosition(j, i));
+                if (Cell.isExist(j, i) && !(x == j && y == i)) {
+                    availableCells.add(Cell.getPosition(j, i));
                 }
             }
         }

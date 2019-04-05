@@ -170,4 +170,46 @@ public class Cell {
     public int getId() {
         return id;
     }
+
+    /**
+     * Converts sequence number of cell to position in coordinate system.
+     * @param position - absolute position on board (sequence number of cell).
+     * @return array with two numbers - x and y that responsible for cell position in coordinate system.
+     */
+    public static int[] getXY(int position) {
+        if (isRealPosition(position)) { return new int[]{}; }
+
+        int y = position / Game.COLUMNS;
+        int x = position - Game.COLUMNS * y;
+        return new int[]{x, y};
+    }
+
+
+    /**
+     * Checks if transmitted coordinates of cell are real.
+     * @param x - X coordinate.
+     * @param y - Y coordinate.
+     * @return true if cell position is real; false if position is unreal.
+     */
+    public static boolean isExist(int x, int y) {
+        return x >= 0 && y >= 0 && x <= Game.COLUMNS - 1 && y <= Game.ROWS - 1;
+    }
+
+    public static boolean isRealPosition(int position) {
+        return position < 0 || position >= Game.CELLS;
+    }
+
+
+    /**
+     * Converts cell position in coordinate system to sequence number.
+     * @param x - X coordinate.
+     * @param y - Y coordinate.
+     * @return absolute position on board (sequence number of cell).
+     */
+    public static int getPosition(int x, int y) {
+        if (!isExist(x, y)) { return -1; }
+
+        return y * Game.COLUMNS + x;
+    }
+
 }

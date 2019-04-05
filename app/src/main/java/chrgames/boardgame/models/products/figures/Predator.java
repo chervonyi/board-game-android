@@ -2,6 +2,7 @@ package chrgames.boardgame.models.products.figures;
 
 import java.util.ArrayList;
 
+import chrgames.boardgame.models.Cell;
 import chrgames.boardgame.models.products.Figure;
 
 public class Predator extends Figure {
@@ -10,7 +11,7 @@ public class Predator extends Figure {
     public Predator() {
         cost = 12;
 
-        priority = 10;
+        priority = 20;
 
         level = Level.HARD;
 
@@ -33,11 +34,11 @@ public class Predator extends Figure {
     @Override
     public ArrayList<Integer> getAvailableCellsToMoveFrom(int position) {
 
-        if (isRealPosition(position)) {
+        if (Cell.isRealPosition(position)) {
             return new ArrayList<>();
         }
 
-        int xy[] = getXY(position);
+        int xy[] = Cell.getXY(position);
         int x = xy[0];
         int y = xy[1];
 
@@ -50,8 +51,8 @@ public class Predator extends Figure {
             int tmpX = arrayX[i];
             int tmpY = arrayY[i];
 
-            if (isExist(tmpX, tmpY)) {
-                availableCells.add(getPosition(tmpX, tmpY));
+            if (Cell.isExist(tmpX, tmpY)) {
+                availableCells.add(Cell.getPosition(tmpX, tmpY));
             }
         }
 

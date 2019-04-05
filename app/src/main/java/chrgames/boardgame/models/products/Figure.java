@@ -38,45 +38,6 @@ public abstract class Figure extends Product {
     public abstract ArrayList<Integer> getAvailableCellsToMoveFrom(int position);
 
     /**
-     * Converts sequence number of cell to position in coordinate system.
-     * @param position - absolute position on board (sequence number of cell).
-     * @return array with two numbers - x and y that responsible for cell position in coordinate system.
-     */
-    public int[] getXY(int position) {
-        if (isRealPosition(position)) { return new int[]{}; }
-
-        int y = position / Game.COLUMNS;
-        int x = position - Game.COLUMNS * y;
-        return new int[]{x, y};
-    }
-
-    /**
-     * Converts cell position in coordinate system to sequence number.
-     * @param x - X coordinate.
-     * @param y - Y coordinate.
-     * @return absolute position on board (sequence number of cell).
-     */
-    public int getPosition(int x, int y) {
-        if (!isExist(x, y)) { return -1; }
-
-        return y * Game.COLUMNS + x;
-    }
-
-    /**
-     * Checks if transmitted coordinates of cell are real.
-     * @param x - X coordinate.
-     * @param y - Y coordinate.
-     * @return true if cell position is real; false if position is unreal.
-     */
-    public boolean isExist(int x, int y) {
-        return x >= 0 && y >= 0 && x <= Game.COLUMNS - 1 && y <= Game.ROWS - 1;
-    }
-
-    public boolean isRealPosition(int position) {
-        return position < 0 || position >= Game.CELLS;
-    }
-
-    /**
      * @return amount of reward which depends on level of selected figure.
      */
     public int getReward() {
