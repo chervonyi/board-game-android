@@ -133,7 +133,7 @@ public class Bot {
                                     cell.isAbleToFight())) {
                         // For free or cells with bot enemy's figure:
 
-                        priority = calculatePriority(board.get(cellId));
+                        priority = calculatePriority(board.get(i), board.get(cellId));
                         availableMoves.put(priority, new Move(i, cellId));
                     }
                 }
@@ -143,16 +143,18 @@ public class Bot {
         return availableMoves;
     }
 
-    private int calculatePriority(Cell cell) {
+    private int calculatePriority(Cell cellFrom, Cell cellTo) {
         int priority = 0;
 
-        int pos = cell.getId();
+        int pos = cellTo.getId();
 
         priority += boardPositionPriority[pos];
 
-        if (!cell.isEmpty()) {
-            priority += cell.getFigure().getPriority();
+        if (!cellTo.isEmpty()) {
+            priority += cellTo.getFigure().getPriority();
         }
+
+        priority += cellFrom.getFigure().getPriority();
 
         return priority;
     }
