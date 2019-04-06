@@ -36,8 +36,8 @@ public class Shop {
         {
             put(Kind.Soldier, new Range(0, 20)); // 20
             put(Kind.Master, new Range(21, 32)); // 11
-            put(Kind.Predator, new Range(33, 45)); // 12
-            put(Kind.Source, new Range(46, 59)); // 13
+            put(Kind.Predator, new Range(33, 39)); // 12
+            put(Kind.Source, new Range(40, 59)); // 13
             put(Kind.Stone, new Range(60, 70)); // 10
 
             put(Kind.KillRandomEnemy, new Range(71, 86)); // 15
@@ -54,8 +54,8 @@ public class Shop {
         {
             put(Kind.Soldier, new Range(0, 20)); // 20
             put(Kind.Master, new Range(21, 32)); // 11
-            put(Kind.Predator, new Range(33, 45)); // 12
-            put(Kind.Source, new Range(46, 59)); // 13
+            put(Kind.Predator, new Range(33, 39)); // 12
+            put(Kind.Source, new Range(40, 59)); // 13
             put(Kind.Stone, new Range(60, 70)); // 10
 
             put(Kind.KillRandomEnemy, new Range(71, 86)); // 15

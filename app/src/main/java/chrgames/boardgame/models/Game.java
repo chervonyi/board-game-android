@@ -123,6 +123,10 @@ public class Game {
                 Figure boughtFigure = (Figure) buyProduct(selectedProduct);
                 setFigureAt(boughtFigure, position, PlayerState.ALLIANCE);
 
+                if (board.get(position).isEndingFigure()) {
+                    setNewIncome(PlayerState.ALLIANCE, Source.INCOME_FOR_EACH_FIGURE);
+                }
+
                 removeSelectionCells();
                 endTurn();
                 return;
@@ -237,11 +241,11 @@ public class Game {
         selectedProduct = -1;
     }
 
-    public void setNewIncome(PlayerState player, int step) {
+    public void setNewIncome(PlayerState player, int newValue) {
         if (player == PlayerState.ALLIANCE) {
-            alliance.setIncome(alliance.getIncome() + step);
+            alliance.setIncome(newValue);
         } else {
-            bot.updateIncome(step);
+            bot.getBotAccount().setIncome(newValue);
         }
     }
 
@@ -465,6 +469,10 @@ public class Game {
      */
     public Base getBase(PlayerState player) {
         return player == PlayerState.ALLIANCE ? allianceBase : enemyBase;
+    }
+
+    public int getPlayerIncome(PlayerState playerState) {
+        return playerState == PlayerState.ALLIANCE ? alliance.getIncome() : bot.getBotAccount().getIncome();
     }
 
 

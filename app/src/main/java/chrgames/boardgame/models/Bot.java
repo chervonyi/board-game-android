@@ -11,6 +11,7 @@ import java.util.Random;
 import chrgames.boardgame.models.products.Card;
 import chrgames.boardgame.models.products.Figure;
 import chrgames.boardgame.models.products.Product;
+import chrgames.boardgame.models.products.figures.Source;
 
 public class Bot {
 
@@ -68,6 +69,11 @@ public class Bot {
             int randPos = game.getBase(Game.PlayerState.ENEMY).getRandomFreeCell(game.getBoard());
 
             game.getBoard().get(randPos).setFigure(figure, Game.PlayerState.ENEMY);
+
+            if (game.getBoard().get(randPos).isEndingFigure()) {
+                game.setNewIncome(Game.PlayerState.ENEMY, botAccount.getIncome() +
+                        Source.INCOME_FOR_EACH_FIGURE);
+            }
 
         } else {
             Card card = (Card) shop.buy(position);
@@ -223,7 +229,7 @@ public class Bot {
         botAccount.round();
     }
 
-    public void updateIncome(int step) {
-        botAccount.setIncome(botAccount.getIncome() + step);
+    public Player getBotAccount() {
+        return botAccount;
     }
 }

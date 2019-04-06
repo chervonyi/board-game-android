@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import chrgames.boardgame.models.Cell;
 import chrgames.boardgame.models.Game;
 import chrgames.boardgame.models.products.Card;
+import chrgames.boardgame.models.products.figures.Source;
 
 public class Reversal extends Card {
 
@@ -47,14 +48,31 @@ public class Reversal extends Card {
         ArrayList<Cell> allianceFigures = game.getAllFiguresOf(Game.PlayerState.ALLIANCE);
         ArrayList<Cell> enemyFigures = game.getAllFiguresOf(Game.PlayerState.ENEMY);
 
+        int countFinalFigures = 0;
+
         for (Cell alliance : allianceFigures) {
+
+            if (alliance.isEndingFigure()) {
+                countFinalFigures++;
+            }
+
             alliance.setOwner(Game.PlayerState.ENEMY);
         }
 
+        game.setNewIncome(Game.PlayerState.ENEMY, countFinalFigures * Source.INCOME_FOR_EACH_FIGURE);
+
         // All enemy's figures set as alliance's
         for (Cell enemy : enemyFigures) {
+
+            if (enemy.isEndingFigure()) {
+                countFinalFigures++;
+            }
+
             enemy.setOwner(Game.PlayerState.ALLIANCE);
         }
+
+        game.setNewIncome(Game.PlayerState.ALLIANCE, countFinalFigures * Source.INCOME_FOR_EACH_FIGURE);
+
 
         return true;
     }

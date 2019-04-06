@@ -90,7 +90,7 @@ public class BoardActivity extends AppCompatActivity {
         });
 
         // Start a new game
-        game = new Game(BoardActivity.this, 100, 10);
+        game = new Game(BoardActivity.this, 0, 2);
 
         updateBoardContent();
         updateShopContent();

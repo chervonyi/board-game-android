@@ -6,6 +6,8 @@ import chrgames.boardgame.models.products.Figure;
 
 public class Source extends Figure {
 
+    public static final int INCOME_FOR_EACH_FIGURE = 2;
+
     public Source() {
         cost = 6;
 
