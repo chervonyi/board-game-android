@@ -19,7 +19,7 @@ public class Stone extends Figure {
 
         ableToMove = true;
 
-        ableToFight = false;
+        ableToFight = true;
 
         blackFigureIcon = "stone_b";
 
@@ -46,18 +46,15 @@ public class Stone extends Figure {
 
         ArrayList<Integer> availableCells = new ArrayList<>();
 
-        // Set search zone borders (adjacent cells)
-        int minY = y - 1;
-        int maxY = y + 1;
-        int minX = x - 1;
-        int maxX = x + 1;
+        int[] arrayX = new int[]{x, x, x - 1, x + 1};
+        int[] arrayY = new int[]{y - 1, y + 1, y, y};
 
-        for (int i = minY; i <= maxY; i++) {
-            for (int j = minX; j <= maxX; j++) {
+        for (int i = 0; i < arrayX.length; i++) {
+            int tmpX = arrayX[i];
+            int tmpY = arrayY[i];
 
-                if (Cell.isExist(j, i) && !(x == j && y == i)) {
-                    availableCells.add(Cell.getPosition(j, i));
-                }
+            if (Cell.isExist(tmpX, tmpY)) {
+                availableCells.add(Cell.getPosition(tmpX, tmpY));
             }
         }
 
