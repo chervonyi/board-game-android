@@ -21,31 +21,13 @@ public class Bot {
 
     private Shop shop;
 
-    private final int[] boardPositionPriority;
-
     private Player botAccount;
 
     Bot(int amount, int income) {
-        boardPositionPriority = new int[Game.CELLS];
 
         botAccount = new Player(amount, income);
 
         shop = new Shop(false);
-
-        int priority = 0;
-
-        for (int i = 0; i < boardPositionPriority.length; i++) {
-            priority += i / 10;
-
-            boardPositionPriority[i] = priority;
-
-            priority = 0;
-        }
-    }
-
-
-    public int getPriority(int pos) {
-        return boardPositionPriority[pos];
     }
 
     public Move getMove(Game game, ArrayList<Cell> board) {
@@ -171,26 +153,22 @@ public class Bot {
     private int calculatePriority(ArrayList<Cell> board, Cell cellFrom, Cell cellTo) {
         int priority = 0;
 
-        int pos = cellTo.getId();
-
-        priority += boardPositionPriority[pos];
-
+        // Add priority for user's figure
         if (!cellTo.isEmpty()) {
             priority += cellTo.getFigure().getPriority();
         }
 
+        // Add priority for bot's figure which is able to move on current cell.
         priority += cellFrom.getFigure().getPriority();
 
-        if (cellFrom.isAbleToFight()) {
-            int nearestFinalFigureLength = getLengthToFinalFigure(board, cellTo);
 
-            if (nearestFinalFigureLength > 10) {
-                priority += 5;
-            } else {
-                priority += 100 - nearestFinalFigureLength * 10;
-            }
+        int nearestFinalFigureLength = getLengthToFinalFigure(board, cellTo);
+
+        if (nearestFinalFigureLength > 10) {
+            priority += 5;
+        } else {
+            priority += 100 - nearestFinalFigureLength * 10;
         }
-
 
         return priority;
     }
@@ -206,7 +184,7 @@ public class Bot {
         }
 
         int minLength = 0;
-        int length = 0;
+        int length;
         int[] xyFinalFigure, xyCell;
 
         // Looking for nearest final figure

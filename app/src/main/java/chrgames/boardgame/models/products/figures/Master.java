@@ -10,7 +10,7 @@ public class Master extends Figure {
     public Master() {
         cost = 12;
 
-        priority = 50;
+        priority = 70;
 
         level = Level.NORMAL;
 

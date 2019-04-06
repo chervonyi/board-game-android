@@ -10,7 +10,7 @@ public class Soldier extends Figure {
     public Soldier() {
         cost = 10;
 
-        priority = 15;
+        priority = 50;
 
         level = Level.EASY;
 

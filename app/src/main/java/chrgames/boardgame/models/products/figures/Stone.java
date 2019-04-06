@@ -11,9 +11,9 @@ public class Stone extends Figure {
      * Sets the basic attributes for current figure - Stone
      */
     public Stone() {
-        cost = 2;
+        cost = 4;
 
-        priority = 5;
+        priority = 30;
 
         level = Level.EASY;
 
