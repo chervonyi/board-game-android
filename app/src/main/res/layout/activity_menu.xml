@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundOfBoard"
+    tools:context=".activities.MenuActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button_continue"
+            android:layout_width="130dp"
+            android:layout_height="35dp"
+            android:background="@drawable/menu_button"
+            android:padding="0dp"
+            android:layout_marginBottom="20dp"
+            android:text="continue"
+            android:textAllCaps="false"
+            android:textSize="17sp"
+            android:textColor="@color/backgroundOfBoard"/>
+
+        <Button
+            android:id="@+id/button_start"
+            android:layout_width="130dp"
+            android:layout_height="35dp"
+            android:background="@drawable/menu_button"
+            android:padding="0dp"
+            android:layout_marginBottom="20dp"
+            android:text="start"
+            android:textAllCaps="false"
+            android:textSize="17sp"
+            android:textColor="@color/backgroundOfBoard" />
+
+        <Button
+            android:layout_width="130dp"
+            android:layout_height="35dp"
+            android:background="@drawable/menu_button"
+            android:padding="0dp"
+            android:text="multiplayer"
+            android:textAllCaps="false"
+            android:textSize="17sp"
+            android:enabled="false"
+            android:textColor="@color/backgroundOfBoard" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
