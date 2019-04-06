@@ -30,7 +30,7 @@ public class Bot {
 
         botAccount = new Player(amount, income);
 
-        shop = new Shop();
+        shop = new Shop(false);
 
         int priority = 0;
 

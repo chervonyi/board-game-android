@@ -79,7 +79,7 @@ public class Game {
         this.activity = activity;
         board = new ArrayList<>();
         bot = new Bot(amount, income);
-        shop = new Shop();
+        shop = new Shop(true);
         turn = getPlayerWithFirstTurn();
         isRunning = true;
 

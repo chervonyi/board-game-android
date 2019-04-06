@@ -31,7 +31,7 @@ public class Shop {
     /**
      * Vault of all product kinds that may be used to fill up a cart.
      */
-    private HashMap<Kind, Integer> availableStuff = new HashMap<Kind, Integer>() {
+    private HashMap<Kind, Integer> fullList = new HashMap<Kind, Integer>() {
         {
             put(Kind.Soldier, 50);
             put(Kind.Master, 20);
@@ -41,7 +41,6 @@ public class Shop {
 
             put(Kind.KillRandomEnemy, 50);
             put(Kind.Advertisement, 50);
-            put(Kind.BlackDay, 50);
             put(Kind.Businessman, 50);
             put(Kind.ControlRandomEnemy, 50);
             put(Kind.CreateRandomEnemy, 50);
@@ -50,13 +49,31 @@ public class Shop {
         }
     };
 
+    private HashMap<Kind, Integer> shortList = new HashMap<Kind, Integer>() {
+        {
+            put(Kind.Soldier, 50);
+            put(Kind.Master, 20);
+            put(Kind.Predator, 20);
+            put(Kind.Source, 30);
+            put(Kind.Stone, 50);
+
+            put(Kind.KillRandomEnemy, 50);
+            put(Kind.ControlRandomEnemy, 50);
+            put(Kind.CreateRandomEnemy, 50);
+        }
+    };
+
+    private final boolean isUserShop;
+
     /**
      * Cart with PRODUCT_COUNT spots for product instance.
      */
     private ArrayList<Product> vault;
 
     // Constructor
-    public Shop() {
+    public Shop(boolean userShop) {
+        isUserShop = userShop;
+
         vault = new ArrayList<>();
 
         // Fill up a vault with new products
@@ -92,7 +109,13 @@ public class Shop {
      * prepared map with list of available products to sell.
      */
     private Product nextProduct() {
-        ArrayList<Kind> allProducts = new ArrayList<>(availableStuff.keySet());
+        ArrayList<Kind> allProducts;
+
+        if (isUserShop) {
+            allProducts = new ArrayList<>(fullList.keySet());
+        } else {
+            allProducts = new ArrayList<>(shortList.keySet());
+        }
 
         Random random = new Random();
         switch (allProducts.get(random.nextInt(allProducts.size()))) {
