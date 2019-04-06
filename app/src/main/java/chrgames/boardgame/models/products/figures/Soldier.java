@@ -33,7 +33,7 @@ public class Soldier extends Figure {
     @Override
     public ArrayList<Integer> getAvailableCellsToMoveFrom(int position) {
 
-        if (Cell.isRealPosition(position)) {
+        if (Cell.isBadPosition(position)) {
             return new ArrayList<>();
         }
 

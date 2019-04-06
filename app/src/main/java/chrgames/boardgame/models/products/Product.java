@@ -17,7 +17,7 @@ public abstract class Product {
         BlackDay,
         Businessman,
         ControlRandomEnemy,
-        CreateRandomEnemy,
+        CreateRandom,
         NewShop,
         Reversal
     }

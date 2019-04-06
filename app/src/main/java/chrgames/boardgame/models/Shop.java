@@ -3,6 +3,7 @@ package chrgames.boardgame.models;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import chrgames.boardgame.models.products.Product.Kind;
@@ -31,37 +32,40 @@ public class Shop {
     /**
      * Vault of all product kinds that may be used to fill up a cart.
      */
-    private HashMap<Kind, Integer> fullList = new HashMap<Kind, Integer>() {
+    private HashMap<Kind, Range> fullList = new HashMap<Kind, Range>() {
         {
-            put(Kind.Soldier, 50);
-            put(Kind.Master, 20);
-            put(Kind.Predator, 20);
-            put(Kind.Source, 30);
-            put(Kind.Stone, 50);
+            put(Kind.Soldier, new Range(0, 20)); // 20
+            put(Kind.Master, new Range(21, 32)); // 11
+            put(Kind.Predator, new Range(33, 45)); // 12
+            put(Kind.Source, new Range(46, 59)); // 13
+            put(Kind.Stone, new Range(60, 70)); // 10
 
-            put(Kind.KillRandomEnemy, 50);
-            put(Kind.Advertisement, 50);
-            put(Kind.Businessman, 50);
-            put(Kind.ControlRandomEnemy, 50);
-            put(Kind.CreateRandomEnemy, 50);
-            put(Kind.NewShop, 50);
-            put(Kind.Reversal, 50);
+            put(Kind.KillRandomEnemy, new Range(71, 86)); // 15
+            put(Kind.Advertisement, new Range(87, 97)); // 10
+            put(Kind.Businessman, new Range(98, 105)); // 7
+            put(Kind.ControlRandomEnemy, new Range(106, 116)); // 10
+            put(Kind.CreateRandom, new Range(117, 125)); // 7
+            put(Kind.NewShop, new Range(126, 133)); // 7
+            put(Kind.Reversal, new Range(134, 140)); // 6
         }
     };
 
-    private HashMap<Kind, Integer> shortList = new HashMap<Kind, Integer>() {
+    private HashMap<Kind, Range> shortList = new HashMap<Kind, Range>() {
         {
-            put(Kind.Soldier, 50);
-            put(Kind.Master, 20);
-            put(Kind.Predator, 20);
-            put(Kind.Source, 30);
-            put(Kind.Stone, 50);
+            put(Kind.Soldier, new Range(0, 20)); // 20
+            put(Kind.Master, new Range(21, 32)); // 11
+            put(Kind.Predator, new Range(33, 45)); // 12
+            put(Kind.Source, new Range(46, 59)); // 13
+            put(Kind.Stone, new Range(60, 70)); // 10
 
-            put(Kind.KillRandomEnemy, 50);
-            put(Kind.ControlRandomEnemy, 50);
-            put(Kind.CreateRandomEnemy, 50);
+            put(Kind.KillRandomEnemy, new Range(71, 86)); // 15
+            put(Kind.ControlRandomEnemy, new Range(87, 100)); // 10
+            put(Kind.CreateRandom, new Range(101, 110)); // 7
         }
     };
+
+    private final int MAX_RANGE_USER_SHOP = 140;
+    private final int MAX_RANGE_BOT_SHOP = 110;
 
     private final boolean isUserShop;
 
@@ -109,16 +113,32 @@ public class Shop {
      * prepared map with list of available products to sell.
      */
     private Product nextProduct() {
-        ArrayList<Kind> allProducts;
+        Random random = new Random();
+        HashMap<Kind, Range> currentHeap;
+
+
+        int num;
 
         if (isUserShop) {
-            allProducts = new ArrayList<>(fullList.keySet());
+            currentHeap = fullList;
+            num = random.nextInt(MAX_RANGE_USER_SHOP);
         } else {
-            allProducts = new ArrayList<>(shortList.keySet());
+            currentHeap = shortList;
+            num = random.nextInt(MAX_RANGE_BOT_SHOP);
         }
 
-        Random random = new Random();
-        switch (allProducts.get(random.nextInt(allProducts.size()))) {
+        Kind kind = Kind.Stone;
+
+        // Find required Kind with appropriate range
+        for (Map.Entry<Kind, Range> entry : currentHeap.entrySet()) {
+            if (entry.getValue().isInRanbe(num)) {
+                kind = entry.getKey();
+                break;
+            }
+        }
+
+        // Return appropriate class of found kind
+        switch (kind) {
             case Master: return new Master();
             case Predator: return new Predator();
             case Soldier: return new Soldier();
@@ -130,7 +150,7 @@ public class Shop {
             case BlackDay: return new BlackDay();
             case Businessman: return new Businessman();
             case ControlRandomEnemy: return new ControlRandomEnemy();
-            case CreateRandomEnemy: return new CreateRandomFigure();
+            case CreateRandom: return new CreateRandomFigure();
             case NewShop: return new NewShop();
             case Reversal: return new Reversal();
         }

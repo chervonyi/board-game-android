@@ -177,7 +177,7 @@ public class Cell {
      * @return array with two numbers - x and y that responsible for cell position in coordinate system.
      */
     public static int[] getXY(int position) {
-        if (isRealPosition(position)) { return new int[]{}; }
+        if (isBadPosition(position)) { return new int[]{}; }
 
         int y = position / Game.COLUMNS;
         int x = position - Game.COLUMNS * y;
@@ -195,7 +195,7 @@ public class Cell {
         return x >= 0 && y >= 0 && x <= Game.COLUMNS - 1 && y <= Game.ROWS - 1;
     }
 
-    public static boolean isRealPosition(int position) {
+    public static boolean isBadPosition(int position) {
         return position < 0 || position >= Game.CELLS;
     }
 

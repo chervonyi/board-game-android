@@ -54,9 +54,9 @@ public class Bot {
 
         int hazard = random.nextInt(100);
 
-        if (hazard > 50) {
+        if (hazard > 40) {
             return getBestMove(board);
-        } else if (hazard > 40) {
+        } else if (hazard > 20) {
             return getRandomMove(board);
         } else if (buyRandomProduct(game)) {
             return new Move(-1, -1);

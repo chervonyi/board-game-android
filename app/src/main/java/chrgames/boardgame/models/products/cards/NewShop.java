@@ -26,7 +26,7 @@ public class NewShop extends Card {
     @Override
     public boolean use(Game.PlayerState user, Game game) {
 
-        game.setShop(new Shop());
+        game.setShop(new Shop(true));
 
         return true;
     }
