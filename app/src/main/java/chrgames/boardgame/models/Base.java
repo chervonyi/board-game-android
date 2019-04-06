@@ -79,16 +79,19 @@ public class Base {
 
     /**
      * Looks for a random cell which are not occupied at this time.
-     * @param freeCells - list of free cells.
      * @return position of random, free cell which belongs to current base.
      */
-    public int getRandomFreeCell(ArrayList<Integer> freeCells) {
+    public int getRandomFreeCell(ArrayList<Cell> board) {
         Random random = new Random();
+
+        ArrayList<Integer> freeCells = getFreeCells(board);
 
         int randPosition = random.nextInt(freeCells.size());
 
         return freeCells.get(randPosition);
     }
+
+
 
     /**
      * Returns a owner of current base.

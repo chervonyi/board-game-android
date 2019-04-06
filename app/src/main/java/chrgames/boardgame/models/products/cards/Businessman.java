@@ -27,9 +27,7 @@ public class Businessman extends Card {
     @Override
     public boolean use(Game.PlayerState user, Game game) {
 
-        Player player = game.getPLayer(user);
-
-        player.setIncome(player.getIncome() + 1);
+        game.setNewIncome(user, 1);
 
         return true;
     }

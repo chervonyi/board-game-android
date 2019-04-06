@@ -63,7 +63,7 @@ public class Game {
 
     private Player alliance;
 
-    private Player enemy;
+    //private Player enemy;
 
     // Vars to work with selection and moves:
     private int selectedCell;
@@ -78,14 +78,13 @@ public class Game {
         // Set all required fields
         this.activity = activity;
         board = new ArrayList<>();
-        bot = new Bot(Bot.Level.EASY);
+        bot = new Bot(amount, income);
         shop = new Shop();
         turn = getPlayerWithFirstTurn();
         isRunning = true;
 
         // Set Player's start economy
         alliance = new Player(amount, income);
-        enemy = new Player(amount, income);
 
         // Fill up a board with cells
         for (int i = 0; i < CELLS; i++) {
@@ -192,7 +191,7 @@ public class Game {
                 if (cellFrom.getOwner() == PlayerState.ALLIANCE) {
                     alliance.reward(cellTo.getRewardForDestroy());
                 } else {
-                    enemy.reward(cellTo.getRewardForDestroy());
+                    bot.reward(cellTo.getRewardForDestroy());
                 }
             }
         }
@@ -238,6 +237,14 @@ public class Game {
         selectedProduct = -1;
     }
 
+    public void setNewIncome(PlayerState player, int step) {
+        if (player == PlayerState.ALLIANCE) {
+            alliance.setIncome(alliance.getIncome() + step);
+        } else {
+            bot.updateIncome(step);
+        }
+    }
+
     /**
      * Place figures at random positions in according to bases.
      * @param set - list of necessary figures
@@ -246,7 +253,6 @@ public class Game {
     private void locateSet(Kind[] set, Base base) {
 
         Figure figure;
-        ArrayList<Integer> freeCells;
         int randomFreePosition;
 
         for (Kind kind: set) {
@@ -275,9 +281,7 @@ public class Game {
                 default: figure = new Stone();
             }
 
-            freeCells = base.getFreeCells(board);
-
-            randomFreePosition = base.getRandomFreeCell(freeCells);
+            randomFreePosition = base.getRandomFreeCell(board);
 
             setFigureAt(figure, randomFreePosition, base.getOwner());
         }
@@ -287,17 +291,17 @@ public class Game {
         setHighlightForSet(allianceBase.getFreeCells(board), true);
     }
 
-    /**
-     * Execute move created by Bot according to selected level. {@link Bot.Level}
-     */
     private void makeBotMove() {
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-                        Move move = bot.getMove(board);
+                        Move move = bot.getMove(Game.this, board);
                         if (move.to != -1) {
                             move(move.from, move.to);
+                        } else {
+                            // Was bought a random product from shop
+                            endTurn();
                         }
                     }
                 },
@@ -330,7 +334,7 @@ public class Game {
     private void endTurn() {
 
         if (turn == PlayerState.ENEMY) {
-            enemy.round();
+            bot.round();
 
             turn = PlayerState.ALLIANCE;
 
@@ -452,15 +456,6 @@ public class Game {
      */
     public int getIncome() {
         return alliance.getIncome();
-    }
-
-    /**
-     * Return an instance of Player class according to given player state
-     * @param player - state of necessary player (Alliance or Enemy)
-     * @return required Player instance
-     */
-    public Player getPLayer(PlayerState player) {
-        return player == PlayerState.ALLIANCE ? alliance : enemy;
     }
 
     /**

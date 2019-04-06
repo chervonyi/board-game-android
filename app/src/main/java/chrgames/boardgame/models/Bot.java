@@ -8,65 +8,37 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import chrgames.boardgame.models.products.Card;
+import chrgames.boardgame.models.products.Figure;
+import chrgames.boardgame.models.products.Product;
+
 public class Bot {
-
-    /**
-     * All available Bot levels.
-     * The selected level directly affects the quality of the selected move.
-     * E-g. 'Elementary' level selects random cells to move.
-     *      'Hard' level analyzes the board for the best move.
-     */
-    enum Level {
-        ELEMENTARY,
-        EASY,
-        NORMAL,
-        HARD,
-        EXPERT
-    }
-
 
     /**
      * Sets of artificial times for bot thinking.
      */
     private final int[] delaySamples = new int[]{500, 1000, 1500, 2000, 2500, 3000};
 
-    /**
-     * Actual level of bot.
-     * The selected level directly affects the quality of the selected move.
-     * Sets on instance creation.
-     */
-    private Level selectedLevel;
+    private Shop shop;
 
     private final int[] boardPositionPriority;
 
-    Bot(Level level) {
-        this.selectedLevel = level;
+    private Player botAccount;
 
+    Bot(int amount, int income) {
         boardPositionPriority = new int[Game.CELLS];
 
-        int x = 0;
+        botAccount = new Player(amount, income);
+
+        shop = new Shop();
+
         int priority = 0;
 
         for (int i = 0; i < boardPositionPriority.length; i++) {
             priority += i / 10;
 
-            switch (x) {
-                case 0:
-                case 4: priority += 0; break;
-
-                case 1:
-                case 3: priority += 1; break;
-
-                case 2: priority += 2; break;
-            }
-
-            x++;
-
             boardPositionPriority[i] = priority;
 
-            if (x % 5 == 0) {
-                x = 0;
-            }
             priority = 0;
         }
     }
@@ -76,15 +48,66 @@ public class Bot {
         return boardPositionPriority[pos];
     }
 
-    /**
-     * Calculates the possible move of the bot
-     * @param board - actual board (list of cells)
-     * @return array with two numbers which contains information about selected move.
-     *      array[0] = cellFrom (id)
-     *      array[1] = cellTo (id)
-     */
-    public Move getMove(ArrayList<Cell> board) {
+    public Move getMove(Game game, ArrayList<Cell> board) {
 
+        Random random = new Random();
+
+        int hazard = random.nextInt(100);
+
+        if (hazard > 50) {
+            return getBestMove(board);
+        } else if (hazard > 40) {
+            return getRandomMove(board);
+        } else if (buyRandomProduct(game)) {
+            return new Move(-1, -1);
+        }
+
+        return getBestMove(board);
+    }
+
+    private boolean buyRandomProduct(Game game) {
+
+        ArrayList<Integer> availableProducts = new ArrayList<>();
+
+        for (int i = 0; i < Shop.PRODUCT_COUNT; i++) {
+            if (shop.canBuy(i, botAccount.getAmount())) {
+                availableProducts.add(i);
+            }
+        }
+
+        if (availableProducts.size() == 0) { return false; }
+
+        int position = new Random().nextInt(availableProducts.size());
+
+        if (Product.isFigure(shop.getProductById(position))) {
+            Figure figure = (Figure) shop.buy(position);
+            botAccount.setAmount(botAccount.getAmount() - figure.getCost());
+
+            int randPos = game.getBase(Game.PlayerState.ENEMY).getRandomFreeCell(game.getBoard());
+
+            game.getBoard().get(randPos).setFigure(figure, Game.PlayerState.ENEMY);
+
+        } else {
+            Card card = (Card) shop.buy(position);
+            botAccount.setAmount(botAccount.getAmount() - card.getCost());
+            card.use(Game.PlayerState.ENEMY, game);
+        }
+        return true;
+    }
+
+    private Move getRandomMove(ArrayList<Cell> board) {
+        HashMap<Integer, Move> availableMoves = getMapOfAvailableMoves(board);
+
+        if (availableMoves.size() == 0) { return new Move(-1, -1); }
+
+        List<Integer> priorityList = new ArrayList<>(availableMoves.keySet());
+
+        Random random = new Random();
+
+        return availableMoves.get(priorityList.get(random.nextInt(priorityList.size())));
+    }
+
+    private Move getBestMove(ArrayList<Cell> board) {
         HashMap<Integer, Move> availableMoves = getMapOfAvailableMoves(board);
 
         if (availableMoves.size() == 0) { return new Move(-1, -1); }
@@ -92,11 +115,8 @@ public class Bot {
         List<Integer> priorityList = new ArrayList<>(availableMoves.keySet());
 
         int maxPriority = 0;
-        int sum = 0;
 
         for (Integer priority : priorityList) {
-
-            sum += priority;
 
             if (priority > maxPriority) {
                 maxPriority = priority;
@@ -215,5 +235,17 @@ public class Bot {
     public int getDelay() {
         Random random = new Random();
         return delaySamples[random.nextInt(delaySamples.length)];
+    }
+
+    public void reward(int value) {
+        botAccount.reward(value);
+    }
+
+    public void round() {
+        botAccount.round();
+    }
+
+    public void updateIncome(int step) {
+        botAccount.setIncome(botAccount.getIncome() + step);
     }
 }

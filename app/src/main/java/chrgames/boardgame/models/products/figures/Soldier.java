@@ -8,9 +8,9 @@ import chrgames.boardgame.models.products.Figure;
 public class Soldier extends Figure {
 
     public Soldier() {
-        cost = 5;
+        cost = 10;
 
-        priority = 10;
+        priority = 15;
 
         level = Level.EASY;
 
