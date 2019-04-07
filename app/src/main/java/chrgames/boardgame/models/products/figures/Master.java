@@ -8,6 +8,7 @@ import chrgames.boardgame.models.products.Figure;
 public class Master extends Figure {
 
     public Master() {
+
         cost = 12;
 
         priority = 70;

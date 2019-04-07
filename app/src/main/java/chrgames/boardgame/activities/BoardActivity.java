@@ -15,6 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import chrgames.boardgame.ConfirmDialog;
+import chrgames.boardgame.JSONAssistant;
 import chrgames.boardgame.R;
 import chrgames.boardgame.models.Cell;
 import chrgames.boardgame.models.Game;
@@ -94,14 +95,27 @@ public class BoardActivity extends AppCompatActivity {
             }
         });
 
-        // Start a new game
-        game = new Game(BoardActivity.this, 100, 10);
+
+        Intent intent = getIntent();
+        if (intent.getBooleanExtra("board_is_active", false)) {
+            // Load game from storage
+            JSONAssistant jsonAssistant = new JSONAssistant();
+            game = jsonAssistant.readJSON(this);
+            Log.d("CHR_GAMES_TEST", "Load game from storage");
+        } else {
+            // Start a new game
+            game = new Game(BoardActivity.this, 100, 10);
+            Log.d("CHR_GAMES_TEST", "Start a new game");
+        }
+
 
         updateBoardContent();
         updateShopContent();
 
         setAmount(game.getAmount());
         setIncome(game.getIncome());
+
+
     }
 
     /**
@@ -335,5 +349,17 @@ public class BoardActivity extends AppCompatActivity {
         ConfirmDialog confirmDialog = new ConfirmDialog(BoardActivity.this, this, text, image, buttonText);
         confirmDialog.show();
 
+    }
+
+    @Override
+    protected void onPause() {
+
+        super.onPause();
+
+        Log.d("CHR_GAMES_TEST", "onPause: saving..");
+        JSONAssistant jsonAssistant = new JSONAssistant();
+        jsonAssistant.writeJSON(game, this);
+
+        Log.d("CHR_GAMES_TEST", "onPause: saved!");
     }
 }

@@ -24,7 +24,7 @@ public class Game {
     // General vars:
     private ArrayList<Cell> board;
 
-    private BoardActivity activity;
+    private transient BoardActivity activity;
 
     private Shop shop;
 
@@ -73,6 +73,8 @@ public class Game {
     private int selectedProduct = -1;
 
     private int preparedProductToUse = -1;
+
+    public Game() { }
 
     // Constructor:
     public Game(BoardActivity activity, int amount, int income) {

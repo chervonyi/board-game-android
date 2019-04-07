@@ -1,11 +1,15 @@
 package chrgames.boardgame.models.products;
 
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 import chrgames.boardgame.models.Game;
 
-public abstract class Figure extends Product {
+public class Figure extends Product {
+
+    public Figure() { }
 
     protected int priority;
 
@@ -35,7 +39,9 @@ public abstract class Figure extends Product {
      * @param position - absolute position on board of exactly this figure
      * @return - all possible cells to move
      */
-    public abstract ArrayList<Integer> getAvailableCellsToMoveFrom(int position);
+    public ArrayList<Integer> getAvailableCellsToMoveFrom(int position) {
+        return null;
+    }
 
     /**
      * @return amount of reward which depends on level of selected figure.
@@ -85,4 +91,5 @@ public abstract class Figure extends Product {
     public int getPriority() {
         return priority;
     }
+
 }

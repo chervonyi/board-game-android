@@ -2,11 +2,15 @@ package chrgames.boardgame.models.products;
 
 import chrgames.boardgame.models.Game;
 
-public abstract class Card extends Product {
+public class Card extends Product {
 
-    public abstract String getInformation();
+    public String getInformation() {
+        return null;
+    }
 
-    public abstract String getSubmitQuestion();
+    public String getSubmitQuestion() {
+        return null;
+    }
 
     /**
      * r
@@ -14,5 +18,5 @@ public abstract class Card extends Product {
      * @param game
      * @return true if card was successful used; false if current card could not be used right now.
      */
-    public abstract boolean use(Game.PlayerState user, Game game);
+    public boolean use(Game.PlayerState user, Game game) { return false; }
 }

@@ -1,7 +1,7 @@
 package chrgames.boardgame.models.products;
 
 
-public abstract class Product {
+public class Product {
 
     public enum Kind {
         // Figures
@@ -22,6 +22,7 @@ public abstract class Product {
         Reversal
     }
 
+    public Product() {}
 
 
     protected String productView;
