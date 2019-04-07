@@ -19,11 +19,11 @@ public class Source extends Figure {
 
         ableToFight = false;
 
-        blackFigureIcon = "source_b";
+        blackFigureIcon = "sorket_b";
 
-        redFigureIcon = "source_r";
+        redFigureIcon = "sorket_r";
 
-        productView = "source_shop";
+        productView = "sorket_shop";
     }
 
     /**
