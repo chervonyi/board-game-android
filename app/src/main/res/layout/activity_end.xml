@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundOfBoard"
+    tools:context=".activities.EndActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/mainText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="#242424"
+            android:textSize="40sp"
+            android:text="YOU WON!"/>
+
+        <Button
+            android:id="@+id/button_restart"
+            android:layout_width="130dp"
+            android:layout_height="35dp"
+            android:background="@drawable/menu_button"
+            android:padding="0dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginBottom="20dp"
+            android:text="restart"
+            android:textAllCaps="false"
+            android:textSize="17sp"
+            android:textColor="@color/backgroundOfBoard"/>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

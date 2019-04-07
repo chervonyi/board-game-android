@@ -35,6 +35,8 @@ public class Game {
      */
     private boolean isRunning;
 
+    private PlayerState win;
+
     /**
      * Instance responsible for artificial moves.
      */
@@ -190,6 +192,7 @@ public class Game {
 
             if (cellTo.isEndingFigure()) {
                 isRunning = false;
+                win = cellFrom.getOwner();
                 // Get cellFrom.owner and make appropriate information about WIN or LOSE
             } else {
                 if (cellFrom.getOwner() == PlayerState.ALLIANCE) {
@@ -343,7 +346,7 @@ public class Game {
             turn = PlayerState.ALLIANCE;
 
             // Update board view
-            activity.updateBoardContent();
+            activity.endTurn();
         } else {
             alliance.round();
             turn = PlayerState.ENEMY;
@@ -364,6 +367,10 @@ public class Game {
 
 
     // Getters:
+
+    public boolean isUserWin() {
+        return win == PlayerState.ALLIANCE;
+    }
 
     /**
      * Return all figures that occupied with certain player.

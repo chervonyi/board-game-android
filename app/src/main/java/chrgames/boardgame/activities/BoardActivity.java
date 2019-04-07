@@ -1,6 +1,7 @@
 package chrgames.boardgame.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -92,7 +93,7 @@ public class BoardActivity extends AppCompatActivity {
         // Start a new game
         game = new Game(BoardActivity.this, 0, 2);
 
-        updateBoardContent();
+        endTurn();
         updateShopContent();
 
         setAmount(game.getAmount());
@@ -116,7 +117,7 @@ public class BoardActivity extends AppCompatActivity {
             game.selectCell(cellId);
 
             // Update board and shop
-            updateBoardContent();
+            endTurn();
             updateBoardView();
             updateShopView();
             updateShopContent();
@@ -125,10 +126,7 @@ public class BoardActivity extends AppCompatActivity {
             setAmount(game.getAmount());
             setIncome(game.getIncome());
 
-            if (game.isOver()) {
-                // TODO: Go to the next activity
-                Toast.makeText(this, "YOU WIN", Toast.LENGTH_LONG).show();
-            }
+
         }
 
     }
@@ -148,7 +146,7 @@ public class BoardActivity extends AppCompatActivity {
 
         if (game.selectProduct(position)) {
             // Update board and shop
-            updateBoardContent();
+            endTurn();
             updateBoardView();
             updateShopView();
             updateShopContent();
@@ -166,12 +164,19 @@ public class BoardActivity extends AppCompatActivity {
      * Update view of board according to data from 'game'. <br>
      * Go through all cells and check if cell's view must be changed.
      */
-    public void updateBoardContent() {
+    public void endTurn() {
 
         runOnUiThread(new Runnable() {
 
             @Override
             public void run() {
+
+                if (game.isOver()) {
+                    Intent intent = new Intent(context, EndActivity.class);
+                    intent.putExtra("user_win", game.isUserWin());
+                    startActivity(intent);
+                    finish();
+                }
 
                 ArrayList<Cell> board = game.getBoard();
 
@@ -308,7 +313,7 @@ public class BoardActivity extends AppCompatActivity {
     public void onConfirmDialog() {
         game.confirmToUseCard();
 
-        updateBoardContent();
+        endTurn();
         updateShopContent();
 
         // Update labels
