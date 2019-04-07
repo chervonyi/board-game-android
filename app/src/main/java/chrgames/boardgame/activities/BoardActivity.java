@@ -91,7 +91,7 @@ public class BoardActivity extends AppCompatActivity {
         });
 
         // Start a new game
-        game = new Game(BoardActivity.this, 0, 2);
+        game = new Game(BoardActivity.this, 100, 10);
 
         endTurn();
         updateShopContent();
@@ -215,7 +215,7 @@ public class BoardActivity extends AppCompatActivity {
             if (cost > 0) {
                 productsPrice.get(i).setText("$" + cost);
             } else {
-                productsPrice.get(i).setText("");
+                productsPrice.get(i).setText(" ");
             }
         }
     }
