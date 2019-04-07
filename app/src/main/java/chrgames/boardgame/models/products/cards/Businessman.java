@@ -1,7 +1,6 @@
 package chrgames.boardgame.models.products.cards;
 
 import chrgames.boardgame.models.Game;
-import chrgames.boardgame.models.Player;
 import chrgames.boardgame.models.products.Card;
 
 public class Businessman extends Card {
@@ -26,9 +25,7 @@ public class Businessman extends Card {
 
     @Override
     public boolean use(Game.PlayerState user, Game game) {
-
         game.setNewIncome(user, game.getPlayerIncome(user) + 1);
-
         return true;
     }
 }

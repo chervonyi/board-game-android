@@ -126,7 +126,7 @@ public class Game {
                 setFigureAt(boughtFigure, position, PlayerState.ALLIANCE);
 
                 if (board.get(position).isEndingFigure()) {
-                    setNewIncome(PlayerState.ALLIANCE, Source.INCOME_FOR_EACH_FIGURE);
+                    setNewIncome(PlayerState.ALLIANCE, alliance.getIncome() + Source.INCOME_FOR_EACH_FIGURE);
                 }
 
                 removeSelectionCells();
@@ -346,7 +346,7 @@ public class Game {
             turn = PlayerState.ALLIANCE;
 
             // Update board view
-            activity.endTurn();
+            activity.updateBoardContent();
         } else {
             alliance.round();
             turn = PlayerState.ENEMY;
@@ -515,5 +515,9 @@ public class Game {
      */
     public void setShop(Shop newSHop) {
         this.shop = newSHop;
+    }
+
+    public void setGameStatus(boolean isRunning) {
+        this.isRunning = isRunning;
     }
 }

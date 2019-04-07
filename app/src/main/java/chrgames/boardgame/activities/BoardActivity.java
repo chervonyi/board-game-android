@@ -26,11 +26,11 @@ public class BoardActivity extends AppCompatActivity {
     // UI
     private TextView incomeView;
     private TextView amountView;
-    private ArrayList<ImageView> cells = new ArrayList<>();
+    private ArrayList<ImageView> cells;
     private LinearLayout shopLayout;
     private LinearLayout enemyTurnLayout;
-    private ArrayList<ImageView> products = new ArrayList<>();
-    private ArrayList<TextView> productsPrice = new ArrayList<>();
+    private ArrayList<ImageView> products;
+    private ArrayList<TextView> productsPrice;
 
     // Constants
     private final int COUNT_OF_SELLS = 50;
@@ -44,6 +44,10 @@ public class BoardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
+
+        cells = new ArrayList<>();
+        products = new ArrayList<>();
+        productsPrice = new ArrayList<>();
 
         incomeView = findViewById(R.id.textViewIncome);
         amountView = findViewById(R.id.textViewAmount);
@@ -93,7 +97,7 @@ public class BoardActivity extends AppCompatActivity {
         // Start a new game
         game = new Game(BoardActivity.this, 100, 10);
 
-        endTurn();
+        updateBoardContent();
         updateShopContent();
 
         setAmount(game.getAmount());
@@ -117,7 +121,7 @@ public class BoardActivity extends AppCompatActivity {
             game.selectCell(cellId);
 
             // Update board and shop
-            endTurn();
+            updateBoardContent();
             updateBoardView();
             updateShopView();
             updateShopContent();
@@ -125,10 +129,7 @@ public class BoardActivity extends AppCompatActivity {
             // Update labels
             setAmount(game.getAmount());
             setIncome(game.getIncome());
-
-
         }
-
     }
 
     /**
@@ -146,7 +147,7 @@ public class BoardActivity extends AppCompatActivity {
 
         if (game.selectProduct(position)) {
             // Update board and shop
-            endTurn();
+            updateBoardContent();
             updateBoardView();
             updateShopView();
             updateShopContent();
@@ -164,7 +165,7 @@ public class BoardActivity extends AppCompatActivity {
      * Update view of board according to data from 'game'. <br>
      * Go through all cells and check if cell's view must be changed.
      */
-    public void endTurn() {
+    public void updateBoardContent() {
 
         runOnUiThread(new Runnable() {
 
@@ -172,6 +173,7 @@ public class BoardActivity extends AppCompatActivity {
             public void run() {
 
                 if (game.isOver()) {
+                    game.setGameStatus(true);
                     Intent intent = new Intent(context, EndActivity.class);
                     intent.putExtra("user_win", game.isUserWin());
                     startActivity(intent);
@@ -215,7 +217,7 @@ public class BoardActivity extends AppCompatActivity {
             if (cost > 0) {
                 productsPrice.get(i).setText("$" + cost);
             } else {
-                productsPrice.get(i).setText(" ");
+                productsPrice.get(i).setText("");
             }
         }
     }
@@ -313,7 +315,7 @@ public class BoardActivity extends AppCompatActivity {
     public void onConfirmDialog() {
         game.confirmToUseCard();
 
-        endTurn();
+        updateBoardContent();
         updateShopContent();
 
         // Update labels
