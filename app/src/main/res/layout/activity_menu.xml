@@ -13,18 +13,13 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/button_continue"
-            android:layout_width="130dp"
-            android:layout_height="35dp"
-            android:background="@drawable/menu_button"
-            android:padding="0dp"
-            android:layout_marginBottom="20dp"
-            android:text="continue"
-            android:textAllCaps="false"
-            android:textSize="17sp"
-            android:visibility="gone"
-            android:textColor="@color/backgroundOfBoard"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/logo" />
 
         <Button
             android:id="@+id/button_start"
@@ -36,17 +31,28 @@
             android:text="start"
             android:textAllCaps="false"
             android:textSize="17sp"
-            android:textColor="@color/backgroundOfBoard" />
+            android:textColor="@color/backgroundOfBoard"/>
 
         <Button
             android:layout_width="130dp"
             android:layout_height="35dp"
             android:background="@drawable/menu_button"
             android:padding="0dp"
+            android:layout_marginBottom="20dp"
             android:text="multiplayer"
             android:textAllCaps="false"
             android:textSize="17sp"
-            android:enabled="false"
+            android:textColor="@color/backgroundOfBoard" />
+
+        <Button
+            android:id="@+id/button_tutorial"
+            android:layout_width="130dp"
+            android:layout_height="35dp"
+            android:background="@drawable/menu_button"
+            android:padding="0dp"
+            android:text="tutorial"
+            android:textAllCaps="false"
+            android:textSize="17sp"
             android:textColor="@color/backgroundOfBoard" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
