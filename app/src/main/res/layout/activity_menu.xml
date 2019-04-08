@@ -23,6 +23,7 @@
             android:text="continue"
             android:textAllCaps="false"
             android:textSize="17sp"
+            android:visibility="gone"
             android:textColor="@color/backgroundOfBoard"/>
 
         <Button

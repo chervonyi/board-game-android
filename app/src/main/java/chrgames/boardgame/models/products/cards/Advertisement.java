@@ -27,7 +27,9 @@ public class Advertisement extends Card {
 
     @Override
     public boolean use(Game.PlayerState user, Game game) {
-        // TODO: Register app and add reward video
+
+        game.showRewardedVideo(REWARD);
+
         return false;
     }
 }

@@ -2,6 +2,7 @@ package chrgames.boardgame.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.rewarded.RewardItem;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdCallback;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
 import java.util.ArrayList;
 
@@ -39,11 +46,17 @@ public class BoardActivity extends AppCompatActivity {
     private Game game;
 
     private Context context;
+    private RewardedAd rewardedAd;
+    private RewardedAdLoadCallback adLoadCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
+
+        // Advertisement:
+        rewardedAd = createAndLoadRewardedAd();
+        
 
         cells = new ArrayList<>();
         products = new ArrayList<>();
@@ -334,6 +347,43 @@ public class BoardActivity extends AppCompatActivity {
     public void showConfirmDialog(String text, String buttonText, String image) {
         ConfirmDialog confirmDialog = new ConfirmDialog(BoardActivity.this, this, text, image, buttonText);
         confirmDialog.show();
+    }
 
+    public void showRewardedVideo(final int reward) {
+        if (rewardedAd.isLoaded()) {
+
+            RewardedAdCallback adCallback = new RewardedAdCallback() {
+
+                public void onRewardedAdClosed() {
+                    // Load the next adv video
+                    rewardedAd = createAndLoadRewardedAd();
+                }
+
+                @Override
+                public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+                    super.onUserEarnedReward(rewardItem);
+
+                    game.rewardUser(reward);
+
+                    setAmount(game.getAmount());
+                    Log.d("CHR_GAMES_TEST", "User was rewarded");
+                }
+            };
+            rewardedAd.show(this, adCallback);
+        } else {
+            Log.d("CHR_GAMES_TEST", "The rewarded ad wasn't loaded yet.");
+        }
+    }
+
+
+    // Load ad
+    public RewardedAd createAndLoadRewardedAd() {
+        // TODO: Change sample id
+        RewardedAd rewardedAd = new RewardedAd(this, "ca-app-pub-3940256099942544/5224354917");
+
+        RewardedAdLoadCallback adLoadCallback = new RewardedAdLoadCallback();
+
+        rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
+        return rewardedAd;
     }
 }

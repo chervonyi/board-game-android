@@ -225,7 +225,7 @@ public class Game {
     }
 
 
-    // Supporting methods:
+    // ------------------------ Supporting methods ---------------------------
     /**
      * Check if user has enough money to buy product with appropriate position number
      * @param position - sequence number
@@ -361,12 +361,20 @@ public class Game {
      */
     public void confirmToUseCard() {
         Card card = (Card) buyProduct(preparedProductToUse);
-        card.use(PlayerState.ALLIANCE, this);
-        endTurn();
+        if (card.use(PlayerState.ALLIANCE, this)) {
+            endTurn();
+        }
     }
 
+    public void showRewardedVideo(int amountOfReward) {
+        activity.showRewardedVideo(amountOfReward);
+    }
 
-    // Getters:
+    public void rewardUser(int amountOfReward) {
+        alliance.setAmount(alliance.getAmount() + amountOfReward);
+    }
+
+    // ------------------- GETTERS -------------------------:
 
     public boolean isUserWin() {
         return win == PlayerState.ALLIANCE;
