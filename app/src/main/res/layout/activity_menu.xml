@@ -18,6 +18,7 @@
             android:layout_height="200dp"
             android:paddingLeft="50dp"
             android:paddingRight="50dp"
+            android:layout_marginBottom="30dp"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/logo" />
 
@@ -27,23 +28,49 @@
             android:layout_height="35dp"
             android:background="@drawable/menu_button"
             android:padding="0dp"
-            android:layout_marginBottom="20dp"
             android:text="start"
             android:textAllCaps="false"
             android:textSize="17sp"
             android:textColor="@color/backgroundOfBoard"/>
 
-        <Button
-            android:layout_width="130dp"
-            android:layout_height="35dp"
-            android:background="@drawable/menu_button"
-            android:padding="0dp"
-            android:layout_marginBottom="20dp"
-            android:text="multiplayer"
-            android:textAllCaps="false"
-            android:textSize="17sp"
-            android:textColor="@color/backgroundOfBoard" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
 
+            <Button
+                android:id="@+id/button_multiplayer"
+                android:layout_width="130dp"
+                android:layout_height="35dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/menu_button"
+                android:padding="0dp"
+                android:enabled="false"
+                android:text="multiplayer"
+                android:textAllCaps="false"
+                android:textSize="17sp"
+                android:textColor="@color/backgroundOfBoard" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:translationZ="2dp"
+                android:layout_alignEnd="@id/button_multiplayer"
+                android:layout_alignTop="@id/button_multiplayer"
+                android:layout_marginEnd="-10dp"
+                android:layout_marginTop="-5dp"
+
+                android:rotation="20"
+                android:paddingLeft="7dp"
+                android:paddingRight="5dp"
+                android:background="@drawable/label_red"
+                android:textColor="@color/backgroundOfBoard"
+                android:textSize="12sp"
+                android:textAllCaps="false"
+                android:text="soon! "
+                tools:ignore="UnusedAttribute" />
+
+        </RelativeLayout>
         <Button
             android:id="@+id/button_tutorial"
             android:layout_width="130dp"
