@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">BoardGame</string>
+    <string name="app_name">Sortek</string>
     <string name="enemy_turn">Enemy\'s turn...</string>
 </resources>
