@@ -5,7 +5,7 @@ import chrgames.boardgame.models.products.Card;
 
 public class Advertisement extends Card {
 
-    private final int REWARD = 15;
+    private final int REWARD = 30;
 
     public Advertisement() {
         cost = 0;

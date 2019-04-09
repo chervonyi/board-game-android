@@ -7,7 +7,7 @@ import chrgames.boardgame.models.products.Card;
 public class NewShop extends Card {
 
     public NewShop() {
-        cost = 5;
+        cost = 6;
 
         level = Level.NORMAL;
 

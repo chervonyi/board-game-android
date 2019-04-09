@@ -38,10 +38,14 @@ public class Bot {
         int hazard = random.nextInt(100);
 
         if (hazard > 40) {
+            // 60% to make the best move
             return getBestMove(board);
-        } else if (hazard > 20) {
+        } else if (hazard > 30) {
+            // 10% to make random move
             return getRandomMove(board);
         } else if (buyRandomProduct(game)) {
+            // 30% to check if bot can make a random product.
+            // If not could buy - do the best move
             return new Move(-1, -1);
         }
 

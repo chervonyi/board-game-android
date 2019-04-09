@@ -10,7 +10,7 @@ import chrgames.boardgame.models.products.Card;
 public class ControlRandomEnemy extends Card {
 
     public ControlRandomEnemy() {
-        cost = 8;
+        cost = 10;
 
         level = Level.NORMAL;
 

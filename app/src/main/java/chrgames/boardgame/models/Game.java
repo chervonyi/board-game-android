@@ -80,7 +80,7 @@ public class Game {
         // Set all required fields
         this.activity = activity;
         board = new ArrayList<>();
-        bot = new Bot(amount, income);
+        bot = new Bot(amount + 10, income + 3);
         shop = new Shop(true);
         turn = getPlayerWithFirstTurn();
         isRunning = true;

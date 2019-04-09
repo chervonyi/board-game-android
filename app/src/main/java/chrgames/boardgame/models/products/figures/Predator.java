@@ -9,9 +9,9 @@ public class Predator extends Figure {
 
 
     public Predator() {
-        cost = 6;
+        cost = 4;
 
-        priority = 30;
+        priority = 40;
 
         level = Level.HARD;
 

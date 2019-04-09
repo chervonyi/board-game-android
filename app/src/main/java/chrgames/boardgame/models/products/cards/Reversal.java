@@ -10,7 +10,7 @@ import chrgames.boardgame.models.products.figures.Source;
 public class Reversal extends Card {
 
     public Reversal() {
-        cost = 20;
+        cost = 50;
 
         level = Level.HARD;
 
