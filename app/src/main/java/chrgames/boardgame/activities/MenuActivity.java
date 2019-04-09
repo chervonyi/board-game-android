@@ -34,5 +34,13 @@ public class MenuActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        findViewById(R.id.button_tutorial).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, TutorialActivity.class));
+                finish();
+            }
+        });
     }
 }

@@ -386,4 +386,6 @@ public class BoardActivity extends AppCompatActivity {
         rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
         return rewardedAd;
     }
+
+
 }

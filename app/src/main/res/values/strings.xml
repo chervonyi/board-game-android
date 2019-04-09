@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Sortek</string>
     <string name="enemy_turn">Enemy\'s turn...</string>
+    <string name="tutorial_1_1">The main rule is that to defeat, you must destroy at least one main figure which calls - Sortek:</string>
+    <string name="tutorial_1_2">As you can see, you have exactly the same figure. This figure can not moving, and, each Sortek, will bring its owner some income per move.</string>
+    <string name="tutorial_2_1">Now, let’s try to destroy the enemy figure using your Soldier figure:</string>
+    <string name="tutorial_2_2">Click at this figure and then select a desired cell.</string>
+    <string name="tutorial_3_1">Destroy the enemy’s Sortek figure to win and continue.</string>
+    <string name="tutorial_4_1">Now, let’s try your forces in a real battle!</string>
 </resources>

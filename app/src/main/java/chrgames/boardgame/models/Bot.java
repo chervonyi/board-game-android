@@ -232,4 +232,32 @@ public class Bot {
     public Player getBotAccount() {
         return botAccount;
     }
+
+    public Move getFriendlyMove(ArrayList<Cell> board) {
+        ArrayList<Move> moves = new ArrayList<>();
+
+        ArrayList<Integer> availableMovesForCell;
+
+        for (int i = 0; i < board.size(); i++) {
+
+            Cell cell = board.get(i);
+
+            if (cell.getOwner() == Game.PlayerState.ENEMY) {
+
+                availableMovesForCell = cell.getAvailableCellsToMove();
+
+                for (Integer cellId : availableMovesForCell) {
+                    if (board.get(cellId).isEmpty()) {
+                        moves.add(new Move(i, cellId));
+                    }
+                }
+            }
+        }
+
+        if (moves.size() == 0) {
+            return new Move(-1, -1);
+        }
+
+        return moves.get(new Random().nextInt(moves.size()));
+    }
 }

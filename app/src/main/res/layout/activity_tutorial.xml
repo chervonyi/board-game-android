@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundOfBoard"
+    tools:context=".activities.TutorialActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:layout_marginTop="0dp"
+                android:paddingBottom="5dp"
+                android:orientation="vertical"
+                android:background="@color/backgroundOfBoard">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:paddingTop="3dp"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    tools:ignore="NestedWeights">
+
+                    <ImageView
+                        android:id="@+id/cell_0"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/cell"
+                        android:scaleType="fitXY"
+                        android:padding="8dp"
+                        android:onClick="onClickCell" />
+
+                    <ImageView
+                        android:id="@+id/cell_1"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/cell"
+                        android:padding="8dp"
+                        android:onClick="onClickCell"
+                        />
+
+                    <ImageView
+                        android:id="@+id/cell_2"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/cell"
+                        android:padding="8dp"
+                        android:onClick="onClickCell"/>
+
+                    <ImageView
+                        android:id="@+id/cell_3"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/cell"
+                        android:padding="8dp"
+                        android:onClick="onClickCell"/>
+
+                    <ImageView
+                        android:id="@+id/cell_4"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell"
+                        android:padding="8dp"
+                        android:onClick="onClickCell"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:paddingTop="3dp"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp">
+
+                    <ImageView
+                        android:id="@+id/cell_5"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/cell"
+                        android:padding="8dp"
+                        android:onClick="onClickCell"/>
+
+                    <ImageView
+                        android:id="@+id/cell_6"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/cell"
+                        android:padding="8dp"
+                        android:onClick="onClickCell"/>
+
+                    <ImageView
+                        android:id="@+id/cell_7"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/cell"
+                        android:padding="8dp"
+                        android:onClick="onClickCell"/>
+
+                    <ImageView
+                        android:id="@+id/cell_8"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/cell"
+                        android:padding="8dp"
+                        android:onClick="onClickCell"/>
+
+                    <ImageView
+                        android:id="@+id/cell_9"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell"
+                        android:padding="8dp"
+                        android:onClick="onClickCell"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:paddingTop="3dp"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp">
+
+                    <ImageView
+                        android:id="@+id/cell_10"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/cell"
+                        android:padding="8dp"
+                        android:onClick="onClickCell"/>
+
+                    <ImageView
+                        android:id="@+id/cell_11"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/cell"
+                        android:padding="8dp"
+                        android:onClick="onClickCell"/>
+
+                    <ImageView
+                        android:id="@+id/cell_12"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/cell"
+                        android:padding="8dp"
+                        android:onClick="onClickCell"/>
+
+                    <ImageView
+                        android:id="@+id/cell_13"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/cell"
+                        android:padding="8dp"
+                        android:onClick="onClickCell"/>
+
+                    <ImageView
+                        android:id="@+id/cell_14"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell"
+                        android:padding="8dp"
+                        android:onClick="onClickCell"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:paddingTop="3dp"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp">
+
+                    <ImageView
+                        android:id="@+id/cell_15"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/cell"
+                        android:padding="8dp"
+                        android:onClick="onClickCell"/>
+
+                    <ImageView
+                        android:id="@+id/cell_16"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/cell"
+                        android:padding="8dp"
+                        android:onClick="onClickCell"/>
+
+                    <ImageView
+                        android:id="@+id/cell_17"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/cell"
+                        android:padding="8dp"
+                        android:onClick="onClickCell"/>
+
+                    <ImageView
+                        android:id="@+id/cell_18"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/cell"
+                        android:padding="8dp"
+                        android:onClick="onClickCell"/>
+
+                    <ImageView
+                        android:id="@+id/cell_19"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell"
+                        android:padding="8dp"
+                        android:onClick="onClickCell"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="8"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/firstBlock"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:paddingLeft="50dp"
+                    android:paddingRight="50dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/fontDark"
+                    android:text="@string/tutorial_1_1"/>
+
+                <ImageView
+                    android:id="@+id/imageAccent"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/cell"
+                    android:padding="8dp"
+                    app:srcCompat="@drawable/sorket_r" />
+
+                <TextView
+                    android:id="@+id/secondBlock"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:layout_marginTop="30dp"
+                    android:paddingLeft="50dp"
+                    android:paddingRight="50dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/fontDark"
+                    android:text="@string/tutorial_1_2"/>
+
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/button_next"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:background="@drawable/menu_button"
+                android:padding="0dp"
+                android:text="next"
+                android:textAllCaps="false"
+                android:textSize="17sp"
+                android:textColor="@color/backgroundOfBoard"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>
