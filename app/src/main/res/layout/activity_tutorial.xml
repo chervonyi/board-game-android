@@ -316,7 +316,18 @@
                 android:text="next"
                 android:textAllCaps="false"
                 android:textSize="17sp"
+                android:visibility="gone"
                 android:textColor="@color/backgroundOfBoard"/>
+
+
+            <TextView
+                android:id="@+id/hindToContinue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textColor="@color/fontLight"
+                android:textSize="15sp"
+                android:text="@string/hint_to_continue"/>
         </LinearLayout>
     </LinearLayout>
 

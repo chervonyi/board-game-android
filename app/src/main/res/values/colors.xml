@@ -3,6 +3,7 @@
 
     <!-- FONT -->
     <color name="fontDark">#424242</color>
+    <color name="fontLight">#999999</color>
     <color name="confirmButton">#578AB1</color>
 
 

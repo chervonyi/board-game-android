@@ -6,5 +6,7 @@
     <string name="tutorial_2_1">Now, let’s try to destroy the enemy figure using your Soldier figure:</string>
     <string name="tutorial_2_2">Click at this figure and then select a desired cell.</string>
     <string name="tutorial_3_1">Destroy the enemy’s Sortek figure to win and continue.</string>
-    <string name="tutorial_4_1">Now, let’s try your forces in a real battle!</string>
+    <string name="tutorial_4_1">YOU WON!</string>
+    <string name="tutorial_4_2">Now, let’s try your forces in a real battle!</string>
+    <string name="hint_to_continue">Win this battle to continue.</string>
 </resources>

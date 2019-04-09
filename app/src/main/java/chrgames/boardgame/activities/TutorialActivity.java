@@ -29,6 +29,7 @@ public class TutorialActivity extends AppCompatActivity {
     private TextView secondBlock;
     private ImageView imageAccent;
     private Button buttonNext;
+    private TextView hintToContinue;
 
     // Constants
     private final int CELL_COUNT = 20;
@@ -53,6 +54,7 @@ public class TutorialActivity extends AppCompatActivity {
         secondBlock = findViewById(R.id.secondBlock);
         imageAccent = findViewById(R.id.imageAccent);
         buttonNext = findViewById(R.id.button_next);
+        hintToContinue = findViewById(R.id.hindToContinue);
 
         // Connect all views of each cell (50)
         String pattern = "cell_";
@@ -205,6 +207,9 @@ public class TutorialActivity extends AppCompatActivity {
                 firstBlock.setText(R.string.tutorial_1_1);
                 secondBlock.setText(R.string.tutorial_1_2);
                 imageAccent.setImageResource(R.drawable.sorket_b);
+
+                buttonNext.setVisibility(View.VISIBLE);
+                hintToContinue.setVisibility(View.GONE);
                 break;
 
             case 1:
@@ -215,7 +220,9 @@ public class TutorialActivity extends AppCompatActivity {
                 firstBlock.setText(R.string.tutorial_2_1);
                 secondBlock.setText(R.string.tutorial_2_2);
                 imageAccent.setImageResource(R.drawable.soldier_b);
-                buttonNext.setVisibility(View.INVISIBLE);
+
+                buttonNext.setVisibility(View.GONE);
+                hintToContinue.setVisibility(View.VISIBLE);
                 break;
 
             case 2:
@@ -241,6 +248,10 @@ public class TutorialActivity extends AppCompatActivity {
             case 3:
 
                 firstBlock.setText(R.string.tutorial_4_1);
+                secondBlock.setText(R.string.tutorial_4_2);
+                secondBlock.setVisibility(View.VISIBLE);
+
+                hintToContinue.setVisibility(View.GONE);
                 buttonNext.setVisibility(View.VISIBLE);
                 buttonNext.setText("play");
                 break;
