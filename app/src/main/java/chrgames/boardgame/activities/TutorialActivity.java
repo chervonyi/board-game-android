@@ -2,6 +2,7 @@ package chrgames.boardgame.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -245,6 +246,13 @@ public class TutorialActivity extends AppCompatActivity {
                 break;
 
             case 4:
+
+                SharedPreferences pref = context.getSharedPreferences(MenuActivity.SHR_PREF_CODE, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.remove(MenuActivity.TUTORIAL_USED);
+                editor.putBoolean(MenuActivity.TUTORIAL_USED, true);
+                editor.apply();
+
                 startActivity(new Intent(this, BoardActivity.class));
                 finish();
                 break;

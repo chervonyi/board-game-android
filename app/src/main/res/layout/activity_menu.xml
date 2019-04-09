@@ -29,6 +29,7 @@
             android:background="@drawable/menu_button"
             android:padding="0dp"
             android:text="start"
+            android:layout_marginBottom="10dp"
             android:textAllCaps="false"
             android:textSize="17sp"
             android:textColor="@color/backgroundOfBoard"/>
@@ -45,7 +46,6 @@
                 android:layout_centerVertical="true"
                 android:background="@drawable/menu_button"
                 android:padding="0dp"
-                android:enabled="false"
                 android:text="multiplayer"
                 android:textAllCaps="false"
                 android:textSize="17sp"
@@ -54,12 +54,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:translationZ="2dp"
+                android:translationZ="10dp"
                 android:layout_alignEnd="@id/button_multiplayer"
                 android:layout_alignTop="@id/button_multiplayer"
                 android:layout_marginEnd="-10dp"
                 android:layout_marginTop="-5dp"
-
                 android:rotation="20"
                 android:paddingLeft="7dp"
                 android:paddingRight="5dp"
@@ -71,15 +70,39 @@
                 tools:ignore="UnusedAttribute" />
 
         </RelativeLayout>
-        <Button
-            android:id="@+id/button_tutorial"
-            android:layout_width="130dp"
-            android:layout_height="35dp"
-            android:background="@drawable/menu_button"
-            android:padding="0dp"
-            android:text="tutorial"
-            android:textAllCaps="false"
-            android:textSize="17sp"
-            android:textColor="@color/backgroundOfBoard" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <Button
+                android:id="@+id/button_tutorial"
+                android:layout_width="130dp"
+                android:layout_height="35dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/menu_button"
+                android:padding="0dp"
+                android:text="tutorial"
+                android:textAllCaps="false"
+                android:textSize="17sp"
+                android:textColor="@color/backgroundOfBoard" />
+
+            <ImageView
+                android:id="@+id/label_attention"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:translationZ="10dp"
+                android:rotation="-10"
+                android:background="@drawable/label_orange"
+                android:layout_marginTop="-10dp"
+                android:layout_alignStart="@id/button_tutorial"
+                android:layout_alignTop="@id/button_tutorial"
+                app:srcCompat="@drawable/ic_attention"
+                tools:ignore="UnusedAttribute,VectorDrawableCompat" />
+
+        </RelativeLayout>
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
