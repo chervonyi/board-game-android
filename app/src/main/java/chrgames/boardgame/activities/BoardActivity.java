@@ -387,5 +387,10 @@ public class BoardActivity extends AppCompatActivity {
         return rewardedAd;
     }
 
+    public void onClickMenu(View view) {
+        startActivity(new Intent(this, MenuActivity.class));
+        finish();
+    }
+
 
 }

@@ -9,4 +9,5 @@
     <string name="tutorial_4_1">YOU WON!</string>
     <string name="tutorial_4_2">Now, let’s try your forces in a real battle!</string>
     <string name="hint_to_continue">Win this battle to continue.</string>
+    <string name="menu_button">menu</string>
 </resources>

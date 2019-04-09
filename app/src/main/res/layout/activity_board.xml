@@ -28,6 +28,19 @@
                 android:text="+$2"/>
 
             <TextView
+                android:id="@+id/textViewMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-5dp"
+                android:textSize="18sp"
+                android:textColor="@color/fontLight"
+                android:textAllCaps="false"
+                android:clickable="true"
+                android:onClick="onClickMenu"
+                android:text="@string/menu_button"/>
+
+            <TextView
                 android:id="@+id/textViewAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
