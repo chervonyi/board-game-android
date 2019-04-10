@@ -5,6 +5,30 @@
 
 ## Changelog:
 
+### v.1.0.0
+* Add Tutorial
+* Create a special tutorial-game
+* Register the game in AdMob
+* Add watching of advertisement video (Adv Card)
+* Add block of rotation
+* Clean code and add some comments
+
+<img src="https://i.imgur.com/M1UZK1g.jpg" width="1200">
+
+### v.0.8.3
+* Add End activity
+* Fix income engine
+* Realize win and lose of game
+
+<img src="https://i.imgur.com/MwHftpG.png" width="300">
+
+### v.0.8.0
+* Add Menu activity
+* Add label on buttons on Menu activity
+* Improve a little bit Bot engine
+
+<img src="https://i.imgur.com/sng1BOk.png" width="300"> 
+
 ### v.0.7.0:
 * Add a custom ConfirmDialog
 * Refactor some code
