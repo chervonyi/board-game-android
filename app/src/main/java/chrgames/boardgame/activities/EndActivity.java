@@ -20,16 +20,13 @@ public class EndActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end);
 
+        final Context context = this;
         TextView mainText = findViewById(R.id.mainText);
-
         Intent intent = getIntent();
 
         String textToShow = intent.getBooleanExtra("user_win", false) ? WIN_STRING :
                 LOSE_STRING;
-
         mainText.setText(textToShow);
-
-        final Context context = this;
 
         findViewById(R.id.button_restart).setOnClickListener(new View.OnClickListener() {
             @Override

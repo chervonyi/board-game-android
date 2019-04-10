@@ -22,26 +22,27 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        final Context context = this;
 
         // Advertisement:
-        // TODO: Change sample id
         //MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713"); // SAMPLE
         MobileAds.initialize(this, "ca-app-pub-1247855442494877~1624978957"); // MY ID
 
         ImageView labelAttention = findViewById(R.id.label_attention);
 
-        final Context context = this;
-
+        // Check if tutorial was reviewed by this user.
         SharedPreferences pref = context.getSharedPreferences(MenuActivity.SHR_PREF_CODE, Context.MODE_PRIVATE);
         boolean tutorialWasUsed = pref.getBoolean(MenuActivity.TUTORIAL_USED, false);
 
         if (tutorialWasUsed) {
+            // Tutorial has not been reviewed by this user yet (Show label)
             labelAttention.setVisibility(View.INVISIBLE);
         } else {
+            // Tutorial was reviewed by this user (Hide label)
             labelAttention.setVisibility(View.VISIBLE);
         }
 
-
+        // Go to BoardActivity
         findViewById(R.id.button_start).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -50,6 +51,7 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+        // Go to TutorialActivity
         findViewById(R.id.button_tutorial).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

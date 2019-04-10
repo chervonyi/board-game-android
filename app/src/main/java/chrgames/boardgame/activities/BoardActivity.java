@@ -44,30 +44,48 @@ public class BoardActivity extends AppCompatActivity {
 
     // Vars
     private Game game;
-
     private Context context;
     private RewardedAd rewardedAd;
-    private RewardedAdLoadCallback adLoadCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
 
-        // Advertisement:
+        // Load ad video
         rewardedAd = createAndLoadRewardedAd();
 
+        context = this;
         cells = new ArrayList<>();
         products = new ArrayList<>();
         productsPrice = new ArrayList<>();
 
+        // Connect main UI views
         incomeView = findViewById(R.id.textViewIncome);
         amountView = findViewById(R.id.textViewAmount);
         shopLayout = findViewById(R.id.layout_shop);
         enemyTurnLayout = findViewById(R.id.layout_enemy_turn);
 
-        context = this;
+        connectAllViews();
 
+        // Start a new game
+        game = new Game(BoardActivity.this, 0, 2);
+
+        updateBoardContent();
+        updateShopContent();
+
+        setAmount(game.getAmount());
+        setIncome(game.getIncome());
+    }
+
+    /**
+     * Calls one-time from constructor to connect rest of views like
+     * cells, views with products and labels with prices.
+     * Also, this method set appropriate width for all cells
+     * according to height with MATCH_PARENT value.<br>
+     * It's required because all of cells must look like squares.
+     */
+    private void connectAllViews() {
         String pattern = "cell_";
 
         // Connect all views of each cell (50)
@@ -105,15 +123,6 @@ public class BoardActivity extends AppCompatActivity {
                 }
             }
         });
-
-        // Start a new game
-        game = new Game(BoardActivity.this, 0, 2);
-
-        updateBoardContent();
-        updateShopContent();
-
-        setAmount(game.getAmount());
-        setIncome(game.getIncome());
     }
 
     /**
@@ -122,13 +131,13 @@ public class BoardActivity extends AppCompatActivity {
      * @param view - selected cell
      */
     public void onClickCell(View view) {
-
         String fullName = view.getResources().getResourceName(view.getId());
         String name = fullName.substring(fullName.lastIndexOf("/cell_") + 6);
         int cellId = Integer.parseInt(name);
 
         Log.d("CHR_GAMES_TEST", "Pressed on: cell_" + cellId);
 
+        // If user should make move
         if (!game.isOver() && game.isPlayerTurn()) {
             game.selectCell(cellId);
 
@@ -179,6 +188,7 @@ public class BoardActivity extends AppCompatActivity {
      */
     public void updateBoardContent() {
 
+        // Some magic to update board content from game instance
         runOnUiThread(new Runnable() {
 
             @Override
@@ -375,10 +385,13 @@ public class BoardActivity extends AppCompatActivity {
         }
     }
 
-
-    // Load ad
+    /**
+     * Load a new advertisement video.<br>
+     * Calls every time after previous ad video was closed because instance of RewardedAd class
+     * is one-time-use object and it must be recreated every time before showing ad video.
+     * @return instance with loaded ad video
+     */
     public RewardedAd createAndLoadRewardedAd() {
-        // TODO: Change sample id
         //RewardedAd rewardedAd = new RewardedAd(this, "ca-app-pub-3940256099942544/5224354917"); // SAMPLE
         RewardedAd rewardedAd = new RewardedAd(this, "ca-app-pub-1247855442494877/9659381647"); // MY
 
@@ -390,17 +403,16 @@ public class BoardActivity extends AppCompatActivity {
             }
         };
 
-        rewardedAd.loadAd(new AdRequest.Builder()
-                        .addTestDevice("FAEC0F5443638FEA1C75F6A434A9BA73") // TODO: Remove before release
-                        .build(),
-                        adLoadCallback);
+        rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
         return rewardedAd;
     }
 
+    /**
+     * Listener on click button "Menu"
+     * @param view - instance of button
+     */
     public void onClickMenu(View view) {
         startActivity(new Intent(this, MenuActivity.class));
         finish();
     }
-
-
 }

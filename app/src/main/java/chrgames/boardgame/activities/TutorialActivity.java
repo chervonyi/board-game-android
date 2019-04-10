@@ -34,10 +34,9 @@ public class TutorialActivity extends AppCompatActivity {
     // Constants
     private final int CELL_COUNT = 20;
 
+    // Vars
     private TutorialGame game;
-
     private Context context;
-
     private int tutorialId;
 
     @Override
@@ -49,13 +48,35 @@ public class TutorialActivity extends AppCompatActivity {
         cells = new ArrayList<>();
         game = new TutorialGame(TutorialActivity.this);
 
-        // Connect all UI views
+        // Connect main UI views
         firstBlock = findViewById(R.id.firstBlock);
         secondBlock = findViewById(R.id.secondBlock);
         imageAccent = findViewById(R.id.imageAccent);
         buttonNext = findViewById(R.id.button_next);
         hintToContinue = findViewById(R.id.hindToContinue);
 
+        connectAllViews();
+
+        // On click upload the next tutorial
+        buttonNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadNextTutorial();
+            }
+        });
+
+        // Load the first tutorial
+        tutorialId = 0;
+        loadNextTutorial();
+    }
+
+    /**
+     * Calls one-time from constructor to connect rest of views.
+     * Also, this method set appropriate width for all cells
+     * according to height with MATCH_PARENT value.<br>
+     * It's required because all of cells must look like squares.
+     */
+    private void connectAllViews() {
         // Connect all views of each cell (50)
         String pattern = "cell_";
 
@@ -63,7 +84,6 @@ public class TutorialActivity extends AppCompatActivity {
             cells.add((ImageView) findViewById(getResources().getIdentifier(pattern + i,
                     "id", getPackageName())));
         }
-
 
         // Some magic to get actual size of height with value of MATCH_PARENT
         final ImageView sample = findViewById(R.id.cell_0);
@@ -78,29 +98,20 @@ public class TutorialActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
-        buttonNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadNextTutorial();
-            }
-        });
-
-        // Load tutorial
-        tutorialId = 0;
-        loadNextTutorial();
     }
 
-
+    /**
+     * Listener for each cell.
+     * Resend id of selected cell into appropriate game method to simulate a click.
+     * @param view - instance of ImageView
+     */
     public void onClickCell(View view) {
 
         String fullName = view.getResources().getResourceName(view.getId());
         String name = fullName.substring(fullName.lastIndexOf("/cell_") + 6);
         int cellId = Integer.parseInt(name);
 
-
+        // If user should make move right now
         if (!game.isOver() && game.isPlayerTurn()) {
             game.selectCell(cellId);
 
@@ -111,11 +122,14 @@ public class TutorialActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Update view of board according to data from 'game'. <br>
+     * Go through all cells and check if cell's view must be changed.
+     */
     public void updateBoardContent() {
 
+        // Some magic to update board content from instance of TutorialGame.
         runOnUiThread(new Runnable() {
-
             @Override
             public void run() {
 
@@ -132,12 +146,13 @@ public class TutorialActivity extends AppCompatActivity {
                         cells.get(i).setImageResource(imageId);
                     }
                 }
-
-                //changeBottomPanel();
             }
         });
     }
 
+    /**
+     * Set appropriate view for each cell according to occupation of it.
+     */
     private void updateBoardView() {
         ArrayList<Cell> board = game.getBoard();
         Cell cell;
@@ -178,7 +193,9 @@ public class TutorialActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Check if user destroyed enemy's figure and then load next tutorial
+     */
     private void checkOnWin() {
         if (game.isOver()) {
 
@@ -196,6 +213,10 @@ public class TutorialActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Update views of TutorialActivity according to number of tutorial.
+     * Each tutorial has unique view and task.
+     */
     private void loadNextTutorial() {
 
         switch (tutorialId) {
@@ -246,7 +267,6 @@ public class TutorialActivity extends AppCompatActivity {
                 break;
 
             case 3:
-
                 firstBlock.setText(R.string.tutorial_4_1);
                 secondBlock.setText(R.string.tutorial_4_2);
                 secondBlock.setVisibility(View.VISIBLE);
@@ -257,7 +277,6 @@ public class TutorialActivity extends AppCompatActivity {
                 break;
 
             case 4:
-
                 SharedPreferences pref = context.getSharedPreferences(MenuActivity.SHR_PREF_CODE, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
                 editor.remove(MenuActivity.TUTORIAL_USED);
