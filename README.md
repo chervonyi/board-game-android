@@ -1,4 +1,28 @@
-### A new board game with figures, cards and economy.
+## Sortek (Android)
+
+
+_**Description:**_ a new board game with pieces, cards and economy.
+
+**[Google Play](https://play.google.com/store/apps/details?id=chrgames.boardgame)**
+
+<details><summary><b>SCREENSHOTS <i>(clickable)</i></b></summary>
+  <br/>
+  <p align="center">
+    <img src="https://i.imgur.com/RhwSvvm.png" width="300" />
+    <img src="https://i.imgur.com/ZioJ1LL.png" width="300" />
+    <img src="https://i.imgur.com/4JkCS05.png" width="300" />
+    <img src="https://i.imgur.com/Ff0scwL.png" width="300" />
+    <img src="https://i.imgur.com/s4AKu4K.png" width="300" />
+    <img src="https://i.imgur.com/VFpovqa.png" width="300" />
+    <img src="https://i.imgur.com/pGcLC05.png" width="300" />
+    <img src="https://i.imgur.com/938PTjq.png" width="300" />
+    <img src="https://i.imgur.com/nLk8RGc.png" width="300" />
+    <img src="https://i.imgur.com/7qWwfDS.png" width="300" />
+    <img src="https://i.imgur.com/jf9CL8q.png" width="300" />
+    <img src="https://i.imgur.com/CO3IwwT.png" width="300" />
+    
+  </p>
+</details>
 
 <br>
 <br>
@@ -9,6 +33,7 @@
 * Add Tutorial
 * Create a special tutorial-game
 * Register the game in AdMob
+* Improve economy in the game
 * Add watching of advertisement video (Adv Card)
 * Add block of rotation
 * Clean code and add some comments
