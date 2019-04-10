@@ -131,7 +131,7 @@ public class Shop {
 
         // Find required Kind with appropriate range
         for (Map.Entry<Kind, Range> entry : currentHeap.entrySet()) {
-            if (entry.getValue().isInRanbe(num)) {
+            if (entry.getValue().isInRange(num)) {
                 kind = entry.getKey();
                 break;
             }

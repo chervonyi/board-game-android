@@ -68,14 +68,6 @@ public abstract class Figure extends Product {
         return redFigureIcon;
     }
 
-    /**
-     * This method should be always called before using <b>'getAvailableCellsToMoveFrom'</b> method.
-     * If this method returns 'true', you could call 'getAvailableCellsToMoveFrom' either.
-     * @return <b>true</b> if current figure is able to move;
-     * <b>false</b> if figure is not able to move.
-     */
-    public boolean isMoving() { return ableToMove; }
-
     public boolean isFighting() { return ableToFight; }
 
     public int getCost() {

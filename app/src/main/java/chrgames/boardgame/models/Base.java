@@ -64,7 +64,7 @@ public class Base {
      * @param board - list of cells
      * @return list of free cells (that are not occupied)
      */
-    public ArrayList<Integer> getFreeCells(ArrayList<Cell> board) {
+    ArrayList<Integer> getFreeCells(ArrayList<Cell> board) {
 
         ArrayList<Integer> vault = new ArrayList<>();
 
@@ -81,7 +81,7 @@ public class Base {
      * Looks for a random cell which are not occupied at this time.
      * @return position of random, free cell which belongs to current base.
      */
-    public int getRandomFreeCell(ArrayList<Cell> board) {
+    int getRandomFreeCell(ArrayList<Cell> board) {
         Random random = new Random();
 
         ArrayList<Integer> freeCells = getFreeCells(board);
@@ -91,13 +91,11 @@ public class Base {
         return freeCells.get(randPosition);
     }
 
-
-
     /**
      * Returns a owner of current base.
      * @return state of owner.
      */
-    public Game.PlayerState getOwner() {
+    Game.PlayerState getOwner() {
         return this.owner;
     }
 }

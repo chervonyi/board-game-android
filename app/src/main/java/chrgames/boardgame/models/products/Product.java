@@ -22,15 +22,12 @@ public abstract class Product {
         Reversal
     }
 
-
-
     protected String productView;
 
     /**
      * Figure price which will be shown in shop.
      */
     protected int cost;
-
 
     /**
      * Figure level affects the appearance time. This attribute answers on questions: <br>

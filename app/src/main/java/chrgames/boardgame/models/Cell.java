@@ -184,7 +184,6 @@ public class Cell {
         return new int[]{x, y};
     }
 
-
     /**
      * Checks if transmitted coordinates of cell are real.
      * @param x - X coordinate.
@@ -195,10 +194,16 @@ public class Cell {
         return x >= 0 && y >= 0 && x <= Game.COLUMNS - 1 && y <= Game.ROWS - 1;
     }
 
+    /**
+     * Check if given number is unreal position.
+     * @param position sequence number of cell on the main board (with 50 cells).
+     * @return
+     *      <b><u>true</u></b> if given number is unreal (not in the range from 0 to 49). <br>
+     *      <b><u>false</u></b> if it's number is real. (position is in [0, 49])
+     */
     public static boolean isBadPosition(int position) {
         return position < 0 || position >= Game.CELLS;
     }
-
 
     /**
      * Converts cell position in coordinate system to sequence number.

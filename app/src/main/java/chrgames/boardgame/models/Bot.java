@@ -16,40 +16,88 @@ import chrgames.boardgame.models.products.figures.Source;
 public class Bot {
 
     /**
-     * Sets of artificial times for bot thinking.
+     * Sets of artificial times of bot thinking.
      */
     private final int[] delaySamples = new int[]{500, 1000, 1500, 2000, 2500, 3000};
 
     private Shop shop;
 
+    /**
+     * Instance of class Player contains main information about bot's income and amount
+     */
     private Player botAccount;
 
     Bot(int amount, int income) {
 
         botAccount = new Player(amount, income);
-
         shop = new Shop(false);
     }
 
-    public Move getMove(Game game, ArrayList<Cell> board) {
+    /**
+     * Creating a move according to random decision:
+     *  - Make the best move;
+     *  - Make a random move;
+     *  - Buy some product from the shop.
+     *
+     * @param game instance of current game.
+     * @return some instance of class Move.<br><br>
+     * <b>Returned instance could be real and contains actual cells positions,
+     * or it could contain -1 for two variables that means Bot bought some product from the shop.</b>
+     */
+    Move getMove(Game game) {
 
-        Random random = new Random();
+        int prediction = new Random().nextInt(100);
 
-        int hazard = random.nextInt(100);
-
-        if (hazard > 40) {
-            // 60% to make the best move
-            return getBestMove(board);
-        } else if (hazard > 30) {
-            // 10% to make random move
-            return getRandomMove(board);
+        if (prediction > 40) {
+            // 60% change to make the best move
+            return getBestMove(game.getBoard());
+        } else if (prediction > 30) {
+            // 10% change to make random move
+            return getRandomMove(game.getBoard());
         } else if (buyRandomProduct(game)) {
-            // 30% to check if bot can make a random product.
+            // 30% change to check if bot can make a random product.
             // If not could buy - do the best move
             return new Move(-1, -1);
         }
 
-        return getBestMove(board);
+        return getBestMove(game.getBoard());
+    }
+
+    /**
+     * Creating a random friendly move.<br>
+     * <i>Friendly means that method will make move only on an empty cell.</i>
+     * @param board a list of all cells which describes situation on the board.
+     * @return some instance of class Move.<br><br>
+     *      * <b>Returned instance could be real and contains actual cells positions,
+     *      * or it could contain -1 for two variables that means Bot could not make move.</b>
+     */
+    Move getFriendlyMove(ArrayList<Cell> board) {
+        ArrayList<Move> moves = new ArrayList<>();
+
+        ArrayList<Integer> availableMovesForCell;
+
+        for (int i = 0; i < board.size(); i++) {
+
+            Cell cell = board.get(i);
+
+            if (cell.getOwner() == Game.PlayerState.ENEMY) {
+
+                availableMovesForCell = cell.getAvailableCellsToMove();
+
+                for (Integer cellId : availableMovesForCell) {
+                    if (board.get(cellId).isEmpty()) {
+                        moves.add(new Move(i, cellId));
+                    }
+                }
+            }
+        }
+
+        // Check if bot has any options for move
+        if (moves.size() == 0) {
+            return new Move(-1, -1);
+        }
+
+        return moves.get(new Random().nextInt(moves.size()));
     }
 
     private boolean buyRandomProduct(Game game) {
@@ -99,6 +147,11 @@ public class Bot {
         return availableMoves.get(priorityList.get(random.nextInt(priorityList.size())));
     }
 
+    /**
+     * Calculate priority for all available cells and then choice the best move.
+     * @param board list of 50 cells.
+     * @return instance of Move with the biggest priority to be moved.
+     */
     private Move getBestMove(ArrayList<Cell> board) {
         HashMap<Integer, Move> availableMoves = getMapOfAvailableMoves(board);
 
@@ -124,7 +177,7 @@ public class Bot {
      * In this map <b>keys</b> will be available cells to move,
      * and <b>variables</b> will be cells with figures that could make this move.
      * So each pair represents possible moves for Bot side.
-     * @param board - actual board (list of cells)
+     * @param board actual board (list of cells)
      * @return composed map of available moves.
      */
     private HashMap<Integer, Move> getMapOfAvailableMoves(ArrayList<Cell> board) {
@@ -160,6 +213,13 @@ public class Bot {
         return availableMoves;
     }
 
+    /**
+     * According to given variables calculate priority for some cell.
+     * @param board list of all 50 cells. Describes situation on the board.
+     * @param cellFrom instance of Cell which can move at position of 'cellTo' parameter.
+     * @param cellTo
+     * @return
+     */
     private int calculatePriority(ArrayList<Cell> board, Cell cellFrom, Cell cellTo) {
         int priority = 0;
 
@@ -183,6 +243,12 @@ public class Bot {
         return priority;
     }
 
+    /**
+     * Calculate a length from given cell to the nearest final piece (Sortek aka Source).
+     * @param board a list of all cells. Describes situation on the board.
+     * @param forCell an interested cell
+     * @return the length from given cell to the nearest final piece.
+     */
     private int getLengthToFinalFigure(ArrayList<Cell> board, Cell forCell) {
         ArrayList<Cell> finalFigures = new ArrayList<>();
 
@@ -212,6 +278,14 @@ public class Bot {
         return minLength;
     }
 
+    /**
+     * Return length from one cell to another cell.
+     * To calculate this length method uses two arrays with
+     * that describes absolute position of every cell on the board (like X and Y).
+     * @param a X and Y of cell #1
+     * @param b X and Y of cell #2
+     * @return the length between two cells.
+     */
     private int getLength(int[] a, int[] b) {
         return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]);
     }
@@ -225,43 +299,15 @@ public class Bot {
         return delaySamples[random.nextInt(delaySamples.length)];
     }
 
-    public void reward(int value) {
+    void reward(int value) {
         botAccount.reward(value);
     }
 
-    public void round() {
+    void round() {
         botAccount.round();
     }
 
-    public Player getBotAccount() {
+    Player getBotAccount() {
         return botAccount;
-    }
-
-    public Move getFriendlyMove(ArrayList<Cell> board) {
-        ArrayList<Move> moves = new ArrayList<>();
-
-        ArrayList<Integer> availableMovesForCell;
-
-        for (int i = 0; i < board.size(); i++) {
-
-            Cell cell = board.get(i);
-
-            if (cell.getOwner() == Game.PlayerState.ENEMY) {
-
-                availableMovesForCell = cell.getAvailableCellsToMove();
-
-                for (Integer cellId : availableMovesForCell) {
-                    if (board.get(cellId).isEmpty()) {
-                        moves.add(new Move(i, cellId));
-                    }
-                }
-            }
-        }
-
-        if (moves.size() == 0) {
-            return new Move(-1, -1);
-        }
-
-        return moves.get(new Random().nextInt(moves.size()));
     }
 }

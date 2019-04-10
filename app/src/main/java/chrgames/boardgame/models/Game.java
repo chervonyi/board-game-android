@@ -51,27 +51,19 @@ public class Game {
 
     // Constants:
     public static final int ROWS = 10;
-
     public static final int COLUMNS = 5;
-
     public static final int CELLS = ROWS * COLUMNS;
-
     static final int BASE_SIZE = 3;
 
     // Bases:
     private Base enemyBase;
-
     private Base allianceBase;
 
     private Player alliance;
 
-    //private Player enemy;
-
     // Vars to work with selection and moves:
     private int selectedCell;
-
     private int selectedProduct = -1;
-
     private int preparedProductToUse = -1;
 
     // Constructor:
@@ -101,10 +93,11 @@ public class Game {
         locateFirstFigures();
     }
 
-
-    // Main methods:
+    // -----------------------------------------------------
+    //                    MAIN METHODS
+    // -----------------------------------------------------
     /**
-     * Listener for every click on cells.
+     * Calls after every click on cells.
      * There are two different types of clicks:
      *      1. Player has not selected any alliance figure before.
      *         So, player does not have any selected cells and
@@ -157,6 +150,13 @@ public class Game {
         }
     }
 
+    /**
+     * This methods calls after every click at any product in shop.
+     *
+     * @param position - id of product in shop (sequence number)
+     * @return <b>true</b> if can buy selected product;
+     * <b>false</b> if user has not enough money to purchase selected product.
+     */
     public boolean selectProduct(int position) {
 
         if (canBuy(position)) {
@@ -187,8 +187,8 @@ public class Game {
         Cell cellFrom = board.get(from);
         Cell cellTo = board.get(to);
 
+        // Check if given Move is real. (If it's not occupied by alliance piece)
         if (!cellTo.isEmpty() && cellFrom.getOwner() != cellTo.getOwner()) {
-
 
             if (cellTo.isEndingFigure()) {
                 isRunning = false;
@@ -203,6 +203,7 @@ public class Game {
             }
         }
 
+        // Update cells state
         cellTo.setFigure(cellFrom);
         cellFrom.resetFigure();
 
@@ -224,8 +225,9 @@ public class Game {
         return boughtProduct;
     }
 
-
-    // ------------------------ Supporting methods ---------------------------
+    // -----------------------------------------------------
+    //                   SUPPORTING METHODS
+    // -----------------------------------------------------
     /**
      * Check if user has enough money to buy product with appropriate position number
      * @param position - sequence number
@@ -236,6 +238,9 @@ public class Game {
         return shop.canBuy(position, alliance.getAmount());
     }
 
+    /**
+     * Set 'false' value at 'isHighlighted' flag for each cell
+     */
     public void removeSelectionCells() {
         for (int i = 0; i < board.size(); i++) {
             board.get(i).setHighlighted(false);
@@ -244,6 +249,11 @@ public class Game {
         selectedProduct = -1;
     }
 
+    /**
+     * Update value of income for required player
+     * @param player - id of required player (enemy or alliance)
+     * @param newValue - new value of income
+     */
     public void setNewIncome(PlayerState player, int newValue) {
         if (player == PlayerState.ALLIANCE) {
             alliance.setIncome(newValue);
@@ -294,10 +304,16 @@ public class Game {
         }
     }
 
+    /**
+     * Set 'true' for 'isHighlighted' flag for each free cells on user's base
+     */
     public void highlightAllianceBase() {
         setHighlightForSet(allianceBase.getFreeCells(board), true);
     }
 
+    /**
+     * Make some delay and then call appropriate method from Bot class to get its move.
+     */
     private void makeBotMove() {
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
@@ -366,16 +382,31 @@ public class Game {
         }
     }
 
+    /**
+     * Call apropriate method in BoardActivity to show ad video.
+     * @param amountOfReward - amount of money to reward user for watching ad video
+     */
     public void showRewardedVideo(int amountOfReward) {
         activity.showRewardedVideo(amountOfReward);
     }
 
+    /**
+     * Update user's amount of money
+     * @param amountOfReward - amount of money to reward user for watching ad video
+     */
     public void rewardUser(int amountOfReward) {
         alliance.setAmount(alliance.getAmount() + amountOfReward);
     }
 
-    // ------------------- GETTERS -------------------------:
+    // -----------------------------------------------------
+    //                       GETTERS
+    // -----------------------------------------------------
 
+    /**
+     * Check if user won
+     * @return <b>true</b> if user won this battle;
+     * <b>false</b> - bot won current battle.
+     */
     public boolean isUserWin() {
         return win == PlayerState.ALLIANCE;
     }
@@ -486,12 +517,18 @@ public class Game {
         return player == PlayerState.ALLIANCE ? allianceBase : enemyBase;
     }
 
+    /**
+     * Return income of required player
+     * @param playerState - id of player(alliance or enemy).
+     * @return value of income.
+     */
     public int getPlayerIncome(PlayerState playerState) {
         return playerState == PlayerState.ALLIANCE ? alliance.getIncome() : bot.getBotAccount().getIncome();
     }
 
-
-    // Setters:
+    // -----------------------------------------------------
+    //                       SETTERS
+    // -----------------------------------------------------
     /**
      * Set figure at necessary cell.
      * @param figure - appropriate figure such as Stone, Soldier etc.
@@ -525,6 +562,10 @@ public class Game {
         this.shop = newSHop;
     }
 
+    /**
+     * Update value of 'isRunning' flag
+     * @param isRunning - new value
+     */
     public void setGameStatus(boolean isRunning) {
         this.isRunning = isRunning;
     }
