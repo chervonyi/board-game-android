@@ -15,7 +15,7 @@ public class Businessman extends Card {
 
     @Override
     public String getInformation() {
-        return "Add +1$ for every next moves for $" + cost;
+        return "Add +1$ for every subsequent move for $" + cost;
     }
 
     @Override

@@ -25,7 +25,8 @@ public class MenuActivity extends AppCompatActivity {
 
         // Advertisement:
         // TODO: Change sample id
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713"); // SAMPLE
+        //MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713"); // SAMPLE
+        MobileAds.initialize(this, "ca-app-pub-1247855442494877~1624978957"); // MY ID
 
         ImageView labelAttention = findViewById(R.id.label_attention);
 

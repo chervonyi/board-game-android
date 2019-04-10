@@ -56,7 +56,6 @@ public class BoardActivity extends AppCompatActivity {
 
         // Advertisement:
         rewardedAd = createAndLoadRewardedAd();
-        
 
         cells = new ArrayList<>();
         products = new ArrayList<>();
@@ -87,7 +86,7 @@ public class BoardActivity extends AppCompatActivity {
 
         pattern = "price_";
 
-        // Connect all viws of each price label (3)
+        // Connect all views of each price label (3)
         for (int i = 0; i < Shop.PRODUCT_COUNT; i++) {
             productsPrice.add((TextView)findViewById(getResources().getIdentifier(pattern + i,
                     "id", getPackageName())));
@@ -368,6 +367,7 @@ public class BoardActivity extends AppCompatActivity {
                     setAmount(game.getAmount());
                     Log.d("CHR_GAMES_TEST", "User was rewarded");
                 }
+
             };
             rewardedAd.show(this, adCallback);
         } else {
@@ -379,11 +379,21 @@ public class BoardActivity extends AppCompatActivity {
     // Load ad
     public RewardedAd createAndLoadRewardedAd() {
         // TODO: Change sample id
-        RewardedAd rewardedAd = new RewardedAd(this, "ca-app-pub-3940256099942544/5224354917");
+        //RewardedAd rewardedAd = new RewardedAd(this, "ca-app-pub-3940256099942544/5224354917"); // SAMPLE
+        RewardedAd rewardedAd = new RewardedAd(this, "ca-app-pub-1247855442494877/9659381647"); // MY
 
-        RewardedAdLoadCallback adLoadCallback = new RewardedAdLoadCallback();
+        RewardedAdLoadCallback adLoadCallback = new RewardedAdLoadCallback() {
+            @Override
+            public void onRewardedAdLoaded() {
+                super.onRewardedAdLoaded();
+                Log.d("CHR_GAMES_TEST", "Ad was loaded");
+            }
+        };
 
-        rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
+        rewardedAd.loadAd(new AdRequest.Builder()
+                        .addTestDevice("FAEC0F5443638FEA1C75F6A434A9BA73") // TODO: Remove before release
+                        .build(),
+                        adLoadCallback);
         return rewardedAd;
     }
 

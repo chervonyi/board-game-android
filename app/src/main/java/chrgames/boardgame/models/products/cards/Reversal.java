@@ -19,7 +19,7 @@ public class Reversal extends Card {
 
     @Override
     public String getInformation() {
-        return "Swap ALL figures with your opponent";
+        return "Swap ALL pieces with your opponent";
     }
 
     @Override

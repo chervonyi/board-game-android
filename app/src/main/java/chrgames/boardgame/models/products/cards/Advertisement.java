@@ -17,7 +17,7 @@ public class Advertisement extends Card {
 
     @Override
     public String getInformation() {
-        return "Watch ads video to get extra $" + REWARD + "!";
+        return "Watch video ads to get extra $" + REWARD + "!";
     }
 
     @Override

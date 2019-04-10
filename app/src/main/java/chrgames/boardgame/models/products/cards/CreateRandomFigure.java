@@ -25,7 +25,7 @@ public class CreateRandomFigure extends Card {
 
     @Override
     public String getInformation() {
-        return "Create a random figure for $" + cost;
+        return "Create a random piece for $" + cost;
     }
 
     @Override

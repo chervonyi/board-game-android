@@ -14,9 +14,10 @@
 
 
         <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
+        <!-- my app ID: ca-app-pub-1247855442494877~1624978957 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713" />
+            android:value="ca-app-pub-1247855442494877~1624978957" />
 
 
         <activity android:name=".activities.TutorialActivity"

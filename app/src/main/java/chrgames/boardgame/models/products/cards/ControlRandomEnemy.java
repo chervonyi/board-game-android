@@ -19,7 +19,7 @@ public class ControlRandomEnemy extends Card {
 
     @Override
     public String getInformation() {
-        return "Take control of the random enemy's figure for $" + cost;
+        return "Take control of the random enemy piece for $" + cost;
     }
 
     @Override
